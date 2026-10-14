@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#2E6B43">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Recetario · Cocina del mundo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF8F3; --surface:#FFFFFF; --surface-2:#F5EFE6;
+    --ink:#241F1B; --ink-soft:#75695C; --line:#EAE1D4;
+    --green:#2E6B43; --green-dark:#1F4D30; --green-soft:#E4EFE6;
+    --honey:#E0962A; --paprika:#C0492B;
+    --sh:0 1px 2px rgba(40,30,20,.05),0 6px 20px rgba(40,30,20,.06);
+    --r:18px;
+    --disp:'Fraunces',Georgia,serif;
+    --body:'Inter',system-ui,sans-serif;
+    --mono:'Space Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    font-family:var(--body);background:var(--bg);color:var(--ink);
+    line-height:1.5;overscroll-behavior-y:none;
+  }
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,select,textarea{font-family:inherit;font-size:16px}
+  ::selection{background:var(--green);color:#fff}
+
+  /* ---------- App shell ---------- */
+  #app{max-width:680px;margin:0 auto;min-height:100%;padding-bottom:84px}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;background:rgba(251,248,243,.86);
+    backdrop-filter:saturate(180%) blur(12px);
+    padding:max(14px,env(safe-area-inset-top)) 18px 12px;
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .brand-mark{
+    width:38px;height:38px;border-radius:11px;flex:none;
+    background:linear-gradient(145deg,var(--green),var(--green-dark));
+    display:grid;place-items:center;color:#fff;font-size:20px;
+    box-shadow:0 4px 12px rgba(46,107,67,.3);
+  }
+  .brand h1{font-family:var(--disp);font-weight:600;font-size:21px;letter-spacing:-.01em;line-height:1.05}
+  .brand small{display:block;font-family:var(--body);font-weight:500;font-size:11px;
+    text-transform:uppercase;letter-spacing:.14em;color:var(--ink-soft)}
+
+  .search{position:relative}
+  .search input{
+    width:100%;border:1px solid var(--line);background:var(--surface);
+    border-radius:14px;padding:12px 14px 12px 42px;color:var(--ink);
+    outline:none;transition:border-color .2s,box-shadow .2s;
+  }
+  .search input:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--green-soft)}
+  .search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);
+    width:18px;height:18px;stroke:var(--ink-soft)}
+
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:12px 18px 4px;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;border:1px solid var(--line);background:var(--surface);
+    border-radius:100px;padding:8px 14px;font-size:13.5px;font-weight:500;
+    color:var(--ink-soft);white-space:nowrap;transition:.18s;display:flex;gap:6px;align-items:center}
+  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .chip .em{font-size:15px}
+
+  /* ---------- Grid ---------- */
+  .wrap{padding:8px 18px 0}
+  .count{font-size:12.5px;color:var(--ink-soft);margin:8px 2px 14px;letter-spacing:.02em}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(min-width:560px){.grid{grid-template-columns:1fr 1fr 1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+    overflow:hidden;box-shadow:var(--sh);text-align:left;display:flex;flex-direction:column;
+    transition:transform .15s,box-shadow .15s}
+  .card:active{transform:scale(.975)}
+  .card .thumb{aspect-ratio:1.25;display:grid;place-items:center;font-size:44px;position:relative}
+  .card .fav{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;
+    background:rgba(255,255,255,.82);display:grid;place-items:center;backdrop-filter:blur(4px)}
+  .card .fav svg{width:16px;height:16px;stroke:var(--paprika);fill:none;stroke-width:2}
+  .card .fav.on svg{fill:var(--paprika)}
+  .card .body{padding:11px 12px 13px}
+  .card .cat{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--green)}
+  .card h3{font-family:var(--disp);font-weight:600;font-size:15.5px;line-height:1.15;margin:3px 0 7px;letter-spacing:-.01em}
+  .card .meta{display:flex;gap:10px;font-size:11.5px;color:var(--ink-soft);font-family:var(--mono)}
+  .empty{text-align:center;color:var(--ink-soft);padding:60px 20px}
+  .empty .em{font-size:40px;display:block;margin-bottom:10px}
+
+  /* ---------- Detail ---------- */
+  .sheet{position:fixed;inset:0;z-index:40;background:var(--bg);overflow-y:auto;
+    transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1)}
+  .sheet.open{transform:translateX(0)}
+  .sheet-inner{max-width:680px;margin:0 auto}
+  .hero{padding:46px 22px;display:grid;place-items:center;font-size:74px;position:relative}
+  .back{position:absolute;top:max(14px,env(safe-area-inset-top));left:14px;
+    width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.9);
+    display:grid;place-items:center;box-shadow:var(--sh);z-index:2}
+  .back svg{width:20px;height:20px;stroke:var(--ink);stroke-width:2.2;fill:none}
+  .heart-top{position:absolute;top:max(14px,env(safe-area-inset-top));right:14px;
+    width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.9);
+    display:grid;place-items:center;box-shadow:var(--sh);z-index:2}
+  .heart-top svg{width:19px;height:19px;stroke:var(--paprika);fill:none;stroke-width:2}
+  .heart-top.on svg{fill:var(--paprika)}
+
+  .detail{background:var(--surface);border-radius:26px 26px 0 0;margin-top:-22px;
+    padding:24px 22px 40px;position:relative;min-height:60vh}
+  .d-cat{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--green)}
+  .detail h2{font-family:var(--disp);font-weight:600;font-size:27px;line-height:1.1;letter-spacing:-.015em;margin:5px 0 4px}
+  .d-country{color:var(--ink-soft);font-size:13.5px}
+  .stats{display:flex;gap:8px;margin:18px 0 6px;flex-wrap:wrap}
+  .stat{background:var(--surface-2);border-radius:12px;padding:9px 13px;flex:1;min-width:88px}
+  .stat .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-soft)}
+  .stat .v{font-family:var(--mono);font-weight:700;font-size:15px;margin-top:2px}
+
+  .scaler-card{border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;
+    margin:20px 0;display:flex;align-items:center;justify-content:space-between;
+    background:linear-gradient(180deg,var(--green-soft),#fff)}
+  .scaler-card .lab{font-size:12.5px;color:var(--green-dark);font-weight:600}
+  .scaler-card .lab b{display:block;font-family:var(--disp);font-size:16px;color:var(--ink);font-weight:600}
+  .stepper{display:flex;align-items:center;gap:0;background:#fff;border:1px solid var(--line);
+    border-radius:100px;overflow:hidden}
+  .stepper button{width:42px;height:42px;font-size:22px;color:var(--green-dark);font-weight:700;display:grid;place-items:center}
+  .stepper button:active{background:var(--green-soft)}
+  .stepper .num{font-family:var(--mono);font-weight:700;font-size:18px;min-width:34px;text-align:center}
+
+  .sec-title{font-family:var(--disp);font-weight:600;font-size:18px;margin:26px 0 12px;letter-spacing:-.01em;
+    display:flex;align-items:baseline;gap:10px}
+  .sec-title::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .ing{display:flex;align-items:baseline;gap:12px;padding:9px 0;border-bottom:1px dashed var(--line)}
+  .ing .q{font-family:var(--mono);font-weight:700;font-size:14px;color:var(--green-dark);
+    min-width:78px;flex:none;transition:color .2s}
+  .ing .n{font-size:15px}
+  .ing.flash .q{color:var(--honey)}
+
+  .step{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+  .step .no{font-family:var(--mono);font-weight:700;color:var(--honey);font-size:14px;flex:none;
+    width:26px;height:26px;border-radius:50%;border:1.5px solid var(--honey);display:grid;place-items:center}
+  .step .tx{font-size:15px;line-height:1.55}
+  .step .tmr{margin-top:8px;display:inline-flex;align-items:center;gap:6px;background:var(--surface-2);
+    border-radius:9px;padding:6px 11px;font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--paprika)}
+  .step .tmr svg{width:14px;height:14px;stroke:var(--paprika);fill:none;stroke-width:2}
+
+  .tip{background:var(--green-soft);border-radius:var(--r);padding:14px 16px;margin-top:22px;font-size:14px;line-height:1.55}
+  .tip b{color:var(--green-dark)}
+
+  .cook-btn{position:sticky;bottom:18px;width:100%;margin-top:26px;
+    background:var(--green);color:#fff;border-radius:14px;padding:16px;font-weight:600;font-size:15.5px;
+    box-shadow:0 8px 24px rgba(46,107,67,.35);display:flex;align-items:center;justify-content:center;gap:9px}
+  .cook-btn:active{background:var(--green-dark)}
+
+  /* ---------- Cook mode ---------- */
+  .cook{position:fixed;inset:0;z-index:60;background:var(--green-dark);color:#fff;
+    display:none;flex-direction:column;padding:max(20px,env(safe-area-inset-top)) 24px 30px}
+  .cook.open{display:flex}
+  .cook-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:auto}
+  .cook-top .x{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center}
+  .cook-top .x svg{width:20px;height:20px;stroke:#fff;stroke-width:2.2}
+  .cook-dots{display:flex;gap:6px;flex-wrap:wrap;max-width:60%;justify-content:center}
+  .cook-dots span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3)}
+  .cook-dots span.on{background:var(--honey)}
+  .cook-dots span.done{background:#fff}
+  .cook-body{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center}
+  .cook-no{font-family:var(--mono);font-size:14px;letter-spacing:.2em;color:var(--honey);text-transform:uppercase}
+  .cook-tx{font-family:var(--disp);font-weight:500;font-size:25px;line-height:1.32;margin-top:14px}
+  .cook-timer{margin:24px auto 0;font-family:var(--mono);font-weight:700;font-size:46px;letter-spacing:.02em;display:none}
+  .cook-timer.on{display:block}
+  .cook-timer-btn{margin:18px auto 0;background:var(--honey);color:#241F1B;font-weight:700;
+    border-radius:100px;padding:11px 22px;font-size:14px;display:none}
+  .cook-timer-btn.show{display:inline-block}
+  .cook-nav{display:flex;gap:12px;margin-top:auto}
+  .cook-nav button{flex:1;border-radius:14px;padding:16px;font-weight:600;font-size:15px}
+  .cook-nav .prev{background:rgba(255,255,255,.14);color:#fff}
+  .cook-nav .next{background:#fff;color:var(--green-dark)}
+
+  /* ---------- Bottom nav ---------- */
+  .tabbar{position:fixed;bottom:0;left:0;right:0;z-index:30;
+    background:rgba(251,248,243,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line);
+    display:flex;max-width:680px;margin:0 auto;padding:8px 8px max(8px,env(safe-area-inset-bottom))}
+  .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;color:var(--ink-soft);font-size:10.5px;font-weight:600}
+  .tab svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.8}
+  .tab.on{color:var(--green)}
+  .tab.add svg{stroke:#fff}
+  .tab.add .ic{width:46px;height:38px;border-radius:13px;background:var(--green);display:grid;place-items:center;
+    box-shadow:0 6px 16px rgba(46,107,67,.35);margin-top:-14px}
+
+  /* ---------- Add form ---------- */
+  .form{padding:18px}
+  .form h2{font-family:var(--disp);font-weight:600;font-size:24px;margin-bottom:4px}
+  .form .sub{color:var(--ink-soft);font-size:13.5px;margin-bottom:20px}
+  .fld{margin-bottom:14px}
+  .fld label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}
+  .fld input,.fld select,.fld textarea{width:100%;border:1px solid var(--line);background:var(--surface);
+    border-radius:12px;padding:12px 14px;color:var(--ink);outline:none}
+  .fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--green-soft)}
+  .row2{display:flex;gap:10px}.row2>*{flex:1}
+  .dyn-row{display:flex;gap:8px;margin-bottom:8px}
+  .dyn-row input{flex:1}
+  .dyn-row .q{flex:none;width:88px}
+  .dyn-row .del{flex:none;width:42px;border:1px solid var(--line);border-radius:12px;color:var(--paprika);font-size:18px}
+  .addline{font-size:13px;font-weight:600;color:var(--green);padding:8px 0}
+  .save{width:100%;background:var(--green);color:#fff;border-radius:14px;padding:16px;font-weight:600;font-size:15.5px;margin-top:10px}
+  .save:active{background:var(--green-dark)}
+  .ghost{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:13px;font-weight:600;color:var(--ink-soft);margin-top:10px}
+
+  .toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--ink);color:#fff;padding:12px 20px;border-radius:100px;font-size:13.5px;font-weight:500;
+    opacity:0;transition:.3s;z-index:80;pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ---------- Módulo "¿Qué cocino?" ---------- */
+  .pantry{padding:18px}
+  .pantry-head{margin-bottom:18px}
+  .pantry-head h2{font-family:var(--disp);font-weight:600;font-size:24px;letter-spacing:-.015em}
+  .pantry-head p{color:var(--ink-soft);font-size:13.5px;margin-top:4px}
+  .pgroup{margin-bottom:18px}
+  .pgroup .gt{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--ink-soft);margin-bottom:9px;display:flex;align-items:center;gap:7px}
+  .pgroup .gt .n{background:var(--green);color:#fff;border-radius:100px;padding:1px 7px;font-size:10.5px}
+  .pills{display:flex;flex-wrap:wrap;gap:7px}
+  .pill{border:1px solid var(--line);background:var(--surface);border-radius:100px;
+    padding:7px 12px;font-size:13px;font-weight:500;color:var(--ink-soft);transition:.15s}
+  .pill.on{background:var(--green);border-color:var(--green);color:#fff;font-weight:600}
+  .pill.eq.on{background:var(--honey);border-color:var(--honey);color:#241F1B}
+  .psearch{position:relative;margin-bottom:16px}
+  .psearch input{width:100%;border:1px solid var(--line);background:var(--surface);
+    border-radius:12px;padding:11px 14px;outline:none}
+  .psearch input:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--green-soft)}
+
+  .pantry-bar{position:sticky;bottom:78px;z-index:15;padding-top:8px;
+    background:linear-gradient(to top,var(--bg) 65%,transparent)}
+  .go{width:100%;background:var(--green);color:#fff;border-radius:14px;padding:16px;
+    font-weight:600;font-size:15.5px;box-shadow:0 8px 24px rgba(46,107,67,.32);
+    display:flex;align-items:center;justify-content:center;gap:9px}
+  .go:active{background:var(--green-dark)}
+  .go.dim{background:var(--line);color:var(--ink-soft);box-shadow:none}
+  .clearsel{width:100%;background:none;color:var(--ink-soft);font-size:13px;font-weight:600;padding:11px}
+
+  .res-head{display:flex;align-items:center;gap:9px;margin:22px 0 12px}
+  .res-head .badge{border-radius:100px;padding:4px 11px;font-size:11.5px;font-weight:700;
+    text-transform:uppercase;letter-spacing:.05em}
+  .res-head .badge.ok{background:var(--green-soft);color:var(--green-dark)}
+  .res-head .badge.near{background:#FBEBD9;color:#8A5410}
+  .res-head span{font-size:12.5px;color:var(--ink-soft)}
+  .res-card{width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--r);padding:14px 15px;margin-bottom:10px;box-shadow:var(--sh);
+    display:flex;gap:13px;align-items:flex-start;transition:transform .15s}
+  .res-card:active{transform:scale(.985)}
+  .res-card .ic{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;
+    font-size:25px;flex:none}
+  .res-card .rc-body{flex:1;min-width:0}
+  .res-card .tec{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--green)}
+  .res-card h4{font-family:var(--disp);font-weight:600;font-size:16.5px;line-height:1.15;margin:3px 0 5px}
+  .res-card .rmeta{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);display:flex;gap:10px;flex-wrap:wrap}
+  .miss{margin-top:7px;font-size:12.5px;color:#8A5410;background:#FBEBD9;border-radius:9px;padding:5px 9px;display:inline-block}
+  .uses{margin-top:6px;font-size:12px;color:var(--ink-soft);line-height:1.4}
+
+  .ai-box{border:1px dashed var(--line);border-radius:var(--r);padding:16px;margin-top:24px;background:var(--surface)}
+  .ai-box h4{font-family:var(--disp);font-size:16px;font-weight:600;margin-bottom:5px}
+  .ai-box p{font-size:13px;color:var(--ink-soft);line-height:1.5;margin-bottom:12px}
+  .ai-btn{width:100%;background:linear-gradient(135deg,#5B3FA8,#7B5BD6);color:#fff;border-radius:12px;
+    padding:14px;font-weight:600;font-size:14.5px}
+  .ai-btn:disabled{opacity:.55}
+  .ai-out{margin-top:14px;font-size:14px;line-height:1.6;white-space:pre-wrap}
+  .ai-cfg{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+    margin-bottom:10px;font-size:13px;outline:none}
+  .spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.35);
+    border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">🍽️</div>
+      <div>
+        <h1>Recetario</h1>
+        <small>Cocina del mundo</small>
+      </div>
+    </div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="q" type="search" placeholder="Buscar receta, ingrediente o país…" autocomplete="off">
+    </div>
+  </div>
+
+  <div class="chips" id="chips"></div>
+
+  <div class="wrap">
+    <div class="count" id="count"></div>
+    <div class="grid" id="grid"></div>
+  </div>
+</div>
+
+<!-- Detail sheet -->
+<div class="sheet" id="sheet"><div class="sheet-inner" id="sheetInner"></div></div>
+
+<!-- Cook mode -->
+<div class="cook" id="cook">
+  <div class="cook-top">
+    <button class="x" id="cookClose" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="cook-dots" id="cookDots"></div>
+    <div style="width:40px"></div>
+  </div>
+  <div class="cook-body">
+    <div class="cook-no" id="cookNo"></div>
+    <div class="cook-tx" id="cookTx"></div>
+    <div class="cook-timer" id="cookTimer"></div>
+    <button class="cook-timer-btn" id="cookTimerBtn"></button>
+  </div>
+  <div class="cook-nav">
+    <button class="prev" id="cookPrev">Anterior</button>
+    <button class="next" id="cookNext">Siguiente</button>
+  </div>
+</div>
+
+<!-- Tab bar -->
+<nav class="tabbar" id="tabbar"></nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ Storage (safe: works on Netlify, degrades in preview) ============ */
+const store = {
+  get(k,def){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):def; }catch(e){ return def; } },
+  set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+};
+
+/* ============ Categories ============ */
+const CATS = [
+  {id:'all', name:'Todas', em:'✨'},
+  {id:'desayuno', name:'Desayunos', em:'🍳'},
+  {id:'sopa', name:'Sopas', em:'🥣'},
+  {id:'carne', name:'Carnes', em:'🥩'},
+  {id:'ave', name:'Aves', em:'🍗'},
+  {id:'pescado', name:'Pescados', em:'🐟'},
+  {id:'pasta', name:'Pastas', em:'🍝'},
+  {id:'arroz', name:'Arroces', em:'🍚'},
+  {id:'veg', name:'Vegetariano', em:'🥗'},
+  {id:'postre', name:'Postres', em:'🍰'},
+  {id:'pan', name:'Panadería', em:'🥖'},
+  {id:'bebida', name:'Bebidas', em:'🥤'},
+  {id:'salsa', name:'Salsas y bases', em:'🥫'},
+];
+const catName = id => (CATS.find(c=>c.id===id)||{}).name || id;
+const catEm   = id => (CATS.find(c=>c.id===id)||{}).em || '🍽️';
+
+/* ============ Seed recipes (escritas de forma original) ============ */
+const SEED = [
+  {id:'r1',name:'Huevos pericos',cat:'desayuno',pais:'Colombia',min:12,dif:'Fácil',serv:2,em:'🍳',
+   ing:[[3,'',"huevos"],[1,'',"tomate maduro picado"],[2,'cda',"cebolla larga picada"],[1,'cda',"mantequilla"],[0.5,'cdta',"sal"]],
+   pasos:[["Bate los huevos con la sal en un tazón."],["Sofríe la cebolla y el tomate en la mantequilla a fuego medio hasta ablandar.",3],["Vierte los huevos y revuelve suavemente hasta cuajar, sin secar.",2]],
+   tip:"Acompaña con arepa caliente y queso fresco."},
+
+  {id:'r2',name:'Arepa de huevo',cat:'desayuno',pais:'Colombia',min:30,dif:'Media',serv:4,em:'🥯',
+   ing:[[2,'taza',"harina de maíz precocida"],[2,'taza',"agua tibia"],[1,'cdta',"sal"],[4,'',"huevos"],[3,'taza',"aceite para freír"]],
+   pasos:[["Mezcla la harina, la sal y el agua hasta formar una masa suave. Deja reposar 5 min.",5],["Forma bolas y aplánalas en discos de medio cm."],["Fríe cada arepa 1 min por lado hasta que infle, retira.",2],["Abre un costado con cuidado, vierte un huevo dentro y vuelve a freír hasta dorar.",3]],
+   tip:"El aceite debe estar bien caliente para que la arepa infle y forme la bolsa."},
+
+  {id:'r3',name:'Sancocho de gallina',cat:'sopa',pais:'Colombia',min:90,dif:'Media',serv:6,em:'🍲',
+   ing:[[1,'',"gallina en presas"],[2,'',"plátano verde en trozos"],[3,'',"yuca en trozos"],[2,'',"mazorca en rodajas"],[1,'',"cebolla"],[3,'',"dientes de ajo"],[1,'manojo',"cilantro"],[2,'lt',"agua"],[1,'cdta',"sal"]],
+   pasos:[["Cocina la gallina en el agua con cebolla, ajo y sal hasta ablandar.",45],["Agrega el plátano y la mazorca, cocina 15 min.",15],["Añade la yuca y cocina hasta que todo esté tierno.",20],["Apaga y agrega el cilantro picado."]],
+   tip:"Sirve con arroz blanco, aguacate y ají al lado."},
+
+  {id:'r4',name:'Ajiaco santafereño',cat:'sopa',pais:'Colombia',min:75,dif:'Media',serv:6,em:'🥣',
+   ing:[[3,'',"pechugas de pollo"],[1,'kg',"papa criolla"],[2,'',"papa pastusa en rodajas"],[2,'',"mazorca en trozos"],[3,'rama',"guascas"],[2,'lt',"agua"],[1,'taza',"crema de leche"],[2,'cda',"alcaparras"]],
+   pasos:[["Cocina el pollo en el agua con sal hasta ablandar; retira y desmecha.",30],["En el mismo caldo cocina las papas y la mazorca con las guascas hasta espesar.",30],["Regresa el pollo desmechado y calienta."],["Sirve con crema, alcaparras y aguacate aparte."]],
+   tip:"La papa criolla se deshace y le da el cuerpo espeso característico."},
+
+  {id:'r5',name:'Bandeja paisa',cat:'carne',pais:'Colombia',min:60,dif:'Media',serv:4,em:'🍛',
+   ing:[[400,'g',"carne molida"],[1,'taza',"fríjoles cocidos"],[4,'',"huevos"],[2,'',"plátanos maduros"],[8,'',"tajadas de chicharrón"],[2,'taza',"arroz blanco cocido"],[2,'',"arepas"]],
+   pasos:[["Guisa la carne molida con hogao a fuego medio.",10],["Calienta los fríjoles y fríe los chicharrones hasta dorar.",8],["Fríe los plátanos maduros en tajadas y los huevos.",6],["Monta cada plato con todos los componentes y la arepa al lado."]],
+   tip:"Es un plato de montaje: ten todo cocido y arma justo antes de servir."},
+
+  {id:'r6',name:'Posta negra cartagenera',cat:'carne',pais:'Colombia',min:120,dif:'Media',serv:6,em:'🥩',
+   ing:[[1.2,'kg',"muchacho de res"],[0.5,'taza',"panela rallada"],[3,'cda',"salsa negra"],[1,'',"cebolla"],[4,'',"dientes de ajo"],[2,'taza',"caldo de res"]],
+   pasos:[["Sella la carne entera por todos los lados en una olla caliente.",6],["Agrega cebolla, ajo, panela, salsa negra y caldo; tapa.",2],["Cocina a fuego bajo girando la carne hasta ablandar y oscurecer.",90],["Retira, deja reposar y corta en rodajas; reduce la salsa.",10]],
+   tip:"El reposo antes de cortar evita que la carne se desbarate."},
+
+  {id:'r7',name:'Pollo al curry',cat:'ave',pais:'India',min:40,dif:'Fácil',serv:4,em:'🍗',
+   ing:[[600,'g',"pechuga en cubos"],[1,'',"cebolla picada"],[2,'cda',"curry en polvo"],[400,'ml',"leche de coco"],[2,'',"dientes de ajo"],[1,'cda',"aceite"],[1,'cdta',"sal"]],
+   pasos:[["Sofríe cebolla y ajo en el aceite hasta dorar.",4],["Agrega el pollo y sella por fuera.",5],["Incorpora el curry y tuesta 1 min para soltar aroma.",1],["Vierte la leche de coco y cocina a fuego bajo hasta espesar.",15]],
+   tip:"Sirve sobre arroz basmati con cilantro fresco."},
+
+  {id:'r8',name:'Mojarra frita',cat:'pescado',pais:'Colombia',min:25,dif:'Fácil',serv:2,em:'🐟',
+   ing:[[2,'',"mojarras limpias"],[3,'cda',"harina de trigo"],[1,'',"limón"],[2,'',"dientes de ajo molido"],[1,'cdta',"sal"],[3,'taza',"aceite para freír"]],
+   pasos:[["Haz cortes diagonales en el pescado y adóbalo con limón, ajo y sal. Reposa 15 min.",15],["Pásalo por harina cubriendo bien."],["Fríe en aceite caliente hasta dorar y quedar crocante por fuera.",8]],
+   tip:"Acompaña con patacón, arroz con coco y ensalada."},
+
+  {id:'r9',name:'Cazuela de mariscos',cat:'pescado',pais:'Colombia',min:45,dif:'Media',serv:4,em:'🦐',
+   ing:[[200,'g',"camarón"],[200,'g',"calamar en aros"],[200,'g',"pescado en cubos"],[200,'g',"mejillones"],[400,'ml',"leche de coco"],[2,'cda',"hogao"],[1,'cda',"fécula de maíz"]],
+   pasos:[["Sofríe el hogao y agrega la leche de coco; deja calentar.",5],["Incorpora primero los mariscos firmes (calamar) y luego los delicados.",8],["Espesa con la fécula disuelta en un poco de agua.",3],["Cocina hasta que todo esté a punto, sin sobrecocinar.",3]],
+   tip:"Agrega el camarón al final: con 3 minutos basta para que quede jugoso."},
+
+  {id:'r10',name:'Pasta al ajo y aceite',cat:'pasta',pais:'Italia',min:18,dif:'Fácil',serv:2,em:'🍝',
+   ing:[[200,'g',"espagueti"],[4,'',"dientes de ajo laminados"],[5,'cda',"aceite de oliva"],[1,'pizca',"ají en hojuelas"],[2,'cda',"perejil picado"],[1,'cdta',"sal"]],
+   pasos:[["Cocina la pasta en agua con sal hasta al dente; reserva un poco del agua.",9],["Dora el ajo en el aceite a fuego bajo con el ají, sin quemar.",3],["Mezcla la pasta con el aceite y un chorrito del agua de cocción."],["Termina con perejil fresco."]],
+   tip:"El agua de cocción con almidón ayuda a ligar la salsa al fideo."},
+
+  {id:'r11',name:'Salsa boloñesa',cat:'pasta',pais:'Italia',min:60,dif:'Media',serv:6,em:'🍝',
+   ing:[[500,'g',"carne molida"],[1,'',"cebolla picada"],[1,'',"zanahoria rallada"],[2,'',"dientes de ajo"],[400,'g',"tomate triturado"],[1,'taza',"caldo"],[2,'cda',"aceite"]],
+   pasos:[["Sofríe cebolla, zanahoria y ajo hasta ablandar.",6],["Agrega la carne y dora bien, separando los grumos.",8],["Incorpora el tomate y el caldo; baja el fuego.",2],["Cocina lento hasta concentrar y espesar.",40]],
+   tip:"Mientras más lenta la cocción, más profundo el sabor."},
+
+  {id:'r12',name:'Arroz con pollo',cat:'arroz',pais:'Colombia',min:50,dif:'Media',serv:6,em:'🍚',
+   ing:[[3,'taza',"arroz"],[2,'',"pechugas desmechadas"],[1,'taza',"arvejas y zanahoria"],[2,'cda',"hogao"],[5,'taza',"caldo de pollo"],[1,'cdta',"color o azafrán"]],
+   pasos:[["Sofríe el hogao con el color y las verduras.",4],["Agrega el arroz y mezcla para impregnar.",2],["Vierte el caldo caliente y el pollo; tapa.",2],["Cocina a fuego bajo hasta secar y graniar.",25]],
+   tip:"No destapes mientras seca: el vapor termina de cocer el grano."},
+
+  {id:'r13',name:'Arroz con coco',cat:'arroz',pais:'Colombia',min:45,dif:'Media',serv:6,em:'🥥',
+   ing:[[3,'taza',"arroz"],[400,'ml',"leche de coco"],[3,'cda',"panela rallada"],[3,'taza',"agua"],[1,'cdta',"sal"],[3,'cda',"pasas"]],
+   pasos:[["Reduce la leche de coco con la panela hasta formar un titoté oscuro.",15],["Agrega el agua, la sal y las pasas; deja hervir.",3],["Incorpora el arroz y cocina hasta secar.",20],["Tapa y deja graniar a fuego mínimo.",5]],
+   tip:"El titoté (el coco caramelizado) es lo que le da el color y sabor."},
+
+  {id:'r14',name:'Patacones',cat:'veg',pais:'Colombia',min:20,dif:'Fácil',serv:4,em:'🍌',
+   ing:[[2,'',"plátanos verdes"],[3,'taza',"aceite"],[1,'cdta',"sal"],[2,'',"dientes de ajo (opcional)"]],
+   pasos:[["Pela y corta el plátano en trozos gruesos."],["Fríe a fuego medio hasta dorar levemente.",5],["Aplasta cada trozo y vuelve a freír hasta crocante.",4],["Escurre y sazona con sal (y agua con ajo si quieres)."]],
+   tip:"Sumérgelos un segundo en agua con sal y ajo antes del segundo frito."},
+
+  {id:'r15',name:'Arroz con leche',cat:'postre',pais:'Colombia',min:45,dif:'Fácil',serv:6,em:'🍮',
+   ing:[[1,'taza',"arroz"],[4,'taza',"leche"],[1,'taza',"agua"],[0.75,'taza',"azúcar"],[1,'rama',"canela"],[1,'pizca',"sal"]],
+   pasos:[["Cocina el arroz en el agua con la canela hasta ablandar.",15],["Agrega la leche y cocina a fuego bajo removiendo.",20],["Añade el azúcar y la sal; cocina hasta espesar.",8],["Sirve tibio o frío con canela en polvo."]],
+   tip:"Remueve seguido al final para que no se pegue ni se corte."},
+
+  {id:'r16',name:'Flan de caramelo',cat:'postre',pais:'México',min:70,dif:'Media',serv:8,em:'🍮',
+   ing:[[1,'taza',"azúcar (para caramelo)"],[4,'',"huevos"],[400,'ml',"leche condensada"],[400,'ml',"leche evaporada"],[1,'cdta',"esencia de vainilla"]],
+   pasos:[["Derrite el azúcar hasta caramelo y cubre el molde.",6],["Licúa huevos, leches y vainilla."],["Vierte sobre el caramelo y hornea a baño maría.",50],["Enfría completamente y desmolda.",2]],
+   tip:"El baño maría evita que el flan se cuaje con burbujas."},
+
+  {id:'r17',name:'Pandebono',cat:'pan',pais:'Colombia',min:35,dif:'Media',serv:10,em:'🧀',
+   ing:[[2,'taza',"almidón de yuca"],[1,'taza',"queso costeño rallado"],[0.5,'taza',"queso fresco"],[1,'',"huevo"],[2,'cda',"leche"]],
+   pasos:[["Mezcla los quesos con el almidón."],["Agrega el huevo y la leche; amasa hasta unir.",4],["Forma bolitas o roscas."],["Hornea a 220°C hasta dorar e inflar.",18]],
+   tip:"La masa debe quedar húmeda; añade leche de a poco si está seca."},
+
+  {id:'r18',name:'Limonada de coco',cat:'bebida',pais:'Colombia',min:8,dif:'Fácil',serv:4,em:'🥥',
+   ing:[[3,'',"limones (jugo)"],[200,'ml',"leche de coco"],[3,'cda',"azúcar"],[2,'taza',"hielo"],[1,'taza',"agua"]],
+   pasos:[["Licúa el jugo de limón, la leche de coco, el azúcar y el agua."],["Agrega el hielo y licúa hasta espumar.",1],["Sirve de inmediato bien frío."]],
+   tip:"No la licúes de más con el limón para que no amargue."},
+
+  {id:'r19',name:'Aguapanela con limón',cat:'bebida',pais:'Colombia',min:12,dif:'Fácil',serv:4,em:'🍵',
+   ing:[[1,'',"bloque de panela"],[5,'taza',"agua"],[2,'',"limones (jugo)"]],
+   pasos:[["Hierve el agua con la panela hasta disolver.",8],["Retira del fuego y deja entibiar."],["Agrega el jugo de limón al gusto. Sirve fría o caliente."]],
+   tip:"Caliente con limón es remedio clásico para la gripa."},
+
+  {id:'r20',name:'Hogao (base criolla)',cat:'salsa',pais:'Colombia',min:15,dif:'Fácil',serv:8,em:'🥫',
+   ing:[[3,'',"tomates maduros picados"],[4,'cda',"cebolla larga picada"],[2,'',"dientes de ajo"],[2,'cda',"aceite"],[1,'cdta',"color"],[1,'cdta',"sal"]],
+   pasos:[["Calienta el aceite con el color.",1],["Sofríe la cebolla hasta cristalizar.",4],["Agrega el tomate y el ajo; cocina hasta deshacer.",8],["Sazona con sal y reserva."]],
+   tip:"Es la base de medio recetario colombiano: guárdalo y úsalo en todo."},
+];
+
+/* ============ State ============ */
+let state = {
+  cat:'all', q:'', tab:'home',
+  favs: store.get('rec_favs', []),
+  custom: store.get('rec_custom', []),
+  current:null, cookStep:0, timer:null,
+};
+const allRecipes = () => [...state.custom, ...SEED, ...(typeof PREPS!=='undefined'?PREPS:[])];
+const isFav = id => state.favs.includes(id);
+
+/* ============================================================
+   IMÁGENES — Pega aquí la foto de cada plato (generada en Gemini).
+   Formato:  r1:'data:image/jpeg;base64,XXXXXXXX',
+   Deja '' si todavía no la tienes (se muestra el emoji).
+   Consejo: redimensiona a ~800px y JPEG ~70% para no inflar el archivo.
+   ============================================================ */
+const IMAGES = {
+  r1:'',   // Huevos pericos
+  r2:'',   // Arepa de huevo
+  r3:'',   // Sancocho de gallina
+  r4:'',   // Ajiaco santafereño
+  r5:'',   // Bandeja paisa
+  r6:'',   // Posta negra cartagenera
+  r7:'',   // Pollo al curry
+  r8:'',   // Mojarra frita
+  r9:'',   // Cazuela de mariscos
+  r10:'',  // Pasta al ajo y aceite
+  r11:'',  // Salsa boloñesa
+  r12:'',  // Arroz con pollo
+  r13:'',  // Arroz con coco
+  r14:'',  // Patacones
+  r15:'',  // Arroz con leche
+  r16:'',  // Flan de caramelo
+  r17:'',  // Pandebono
+  r18:'',  // Limonada de coco
+  r19:'',  // Aguapanela con limón
+  r20:'',  // Hogao (base criolla)
+};
+const imgOf = r => (r && (r.img || IMAGES[r.id])) || '';
+
+/* ============ Quantity formatting + scaling ============ */
+const FR = {0.25:'¼',0.5:'½',0.75:'¾',0.33:'⅓',0.67:'⅔',0.125:'⅛'};
+function fmtQty(n){
+  if(n===0) return '';
+  const whole = Math.floor(n);
+  let frac = +(n-whole).toFixed(2);
+  // snap to nearest known fraction
+  let best=null,bd=1;
+  for(const k in FR){ const d=Math.abs(frac-k); if(d<bd){bd=d;best=k;} }
+  if(best && bd<0.06){
+    return (whole? whole+' ':'')+FR[best];
+  }
+  if(n<1) return (+n.toFixed(2)).toString();
+  return (+n.toFixed(n<10?1:0)).toString();
+}
+function scaledIng(ing, base, cur){
+  return ing.map(([q,u,name])=>{
+    const v = q*(cur/base);
+    return {q: fmtQty(v), u, name: (typeof ING!=='undefined' && ING[name]) ? ING[name] : name};
+  });
+}
+
+/* ============ Render: chips ============ */
+function renderChips(){
+  const el = document.getElementById('chips');
+  el.innerHTML = CATS.map(c=>
+    `<button class="chip ${state.cat===c.id?'on':''}" data-cat="${c.id}">
+       <span class="em">${c.em}</span>${c.name}</button>`).join('');
+  el.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{state.cat=b.dataset.cat;renderChips();renderGrid();});
+}
+
+/* ============ Render: grid ============ */
+function matches(r){
+  if(state.tab==='favs' && !isFav(r.id)) return false;
+  if(state.cat!=='all' && r.cat!==state.cat) return false;
+  if(state.q){
+    const q=state.q.toLowerCase();
+    const ingNames=r.ing.map(i=>(typeof ING!=='undefined'&&ING[i[2]])?ING[i[2]]:i[2]).join(' ');
+    const hay=(r.name+' '+r.pais+' '+(r.tec||'')+' '+ingNames).toLowerCase();
+    if(!hay.includes(q)) return false;
+  }
+  return true;
+}
+function renderGrid(){
+  const grid=document.getElementById('grid');
+  const count=document.getElementById('count');
+  let list=allRecipes().filter(matches);
+  count.textContent = list.length? `${list.length} receta${list.length>1?'s':''}` : '';
+  if(!list.length){
+    grid.innerHTML='';
+    count.innerHTML=`<div class="empty"><span class="em">🔎</span>
+      ${state.tab==='favs'?'Aún no tienes favoritos. Toca el corazón en una receta.':'No encontramos recetas con ese filtro.'}</div>`;
+    return;
+  }
+  grid.innerHTML=list.map(r=>{const im=imgOf(r);return `
+    <button class="card" data-id="${r.id}">
+      <div class="thumb" style="${im?`background-image:url('${im}');background-size:cover;background-position:center;font-size:0`:`background:${tint(r.cat)}`}">
+        ${im?'':(r.em||catEm(r.cat))}
+        <span class="fav ${isFav(r.id)?'on':''}" data-fav="${r.id}">
+          <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-8.5C.5 9 2 5.5 5.5 5.5 8 5.5 12 8 12 8s4-2.5 6.5-2.5C22 5.5 23.5 9 21.5 12.5 19 16.5 12 21 12 21z"/></svg>
+        </span>
+      </div>
+      <div class="body">
+        <div class="cat">${catName(r.cat)}</div>
+        <h3>${r.name}</h3>
+        <div class="meta"><span>⏱ ${r.min}m</span><span>👥 ${r.serv}</span></div>
+      </div>
+    </button>`;}).join('');
+  grid.querySelectorAll('.card').forEach(c=>c.onclick=e=>{
+    if(e.target.closest('[data-fav]')) return;
+    openDetail(c.dataset.id);
+  });
+  grid.querySelectorAll('[data-fav]').forEach(f=>f.onclick=e=>{e.stopPropagation();toggleFav(f.dataset.fav);});
+}
+function tint(cat){
+  const map={desayuno:'#FFF3DC',sopa:'#FDEBDB',carne:'#F6E0DC',ave:'#FBEFD7',pescado:'#DDEEF3',
+    pasta:'#FDF0D6',arroz:'#F1EBDC',veg:'#E4F1E1',postre:'#FBE4EC',pan:'#F4E8D6',bebida:'#E2F0F2',salsa:'#F6E2D5'};
+  return map[cat]||'#F2ECE0';
+}
+
+/* ============ Favorites ============ */
+function toggleFav(id){
+  if(isFav(id)) state.favs=state.favs.filter(x=>x!==id);
+  else state.favs=[...state.favs,id];
+  store.set('rec_favs',state.favs);
+  renderGrid();
+  if(state.current && state.current.id===id) updateHeartTop();
+  toast(isFav(id)?'Agregada a favoritos':'Quitada de favoritos');
+}
+
+/* ============ Detail ============ */
+function openDetail(id){
+  const r = (typeof id === 'object' && id) ? id : allRecipes().find(x=>x.id===id);
+  if(!r) return;
+  state.current=r; state.servNow=r.serv;
+  const inner=document.getElementById('sheetInner');
+  const dim=imgOf(r);
+  inner.innerHTML=`
+    <div class="hero" style="${dim?`background-image:url('${dim}');background-size:cover;background-position:center;min-height:230px`:`background:${tint(r.cat)}`}">
+      <button class="back" id="back"><svg viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="heart-top ${isFav(r.id)?'on':''}" id="heartTop"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-8.5C.5 9 2 5.5 5.5 5.5 8 5.5 12 8 12 8s4-2.5 6.5-2.5C22 5.5 23.5 9 21.5 12.5 19 16.5 12 21 12 21z"/></svg></button>
+      ${dim?'':`<div style="font-size:84px">${r.em||catEm(r.cat)}</div>`}
+    </div>
+    <div class="detail">
+      <div class="d-cat">${catName(r.cat)}</div>
+      <h2>${r.name}</h2>
+      <div class="d-country">📍 ${r.pais}</div>
+      <div class="stats">
+        <div class="stat"><div class="k">Tiempo</div><div class="v">${r.min} min</div></div>
+        <div class="stat"><div class="k">Dificultad</div><div class="v">${r.dif}</div></div>
+        <div class="stat"><div class="k">Base</div><div class="v">${r.serv} porc.</div></div>
+      </div>
+
+      <div class="scaler-card">
+        <div class="lab">Ajustar porciones<b id="servLbl">${r.serv} personas</b></div>
+        <div class="stepper">
+          <button id="minus">−</button>
+          <span class="num" id="servNum">${r.serv}</span>
+          <button id="plus">+</button>
+        </div>
+      </div>
+
+      <div class="sec-title">Ingredientes</div>
+      <div id="ingList"></div>
+
+      <div class="sec-title">Preparación</div>
+      <div id="stepList">${r.pasos.map((p,i)=>`
+        <div class="step">
+          <div class="no">${i+1}</div>
+          <div><div class="tx">${p[0]}</div>
+          ${p[1]?`<span class="tmr"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8"/><path d="M12 13V9M9 2h6"/></svg>${p[1]} min</span>`:''}</div>
+        </div>`).join('')}</div>
+
+      ${r.tip?`<div class="tip"><b>Tip del chef · </b>${r.tip}</div>`:''}
+      ${r.custom?`<button class="ghost" id="delRec" style="margin-top:18px;color:var(--paprika)">Eliminar esta receta</button>`:''}
+
+      <button class="cook-btn" id="startCook">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2"><path d="M8 5v14l11-7z"/></svg>
+        Modo cocina paso a paso
+      </button>
+    </div>`;
+  renderIng();
+  const sheet=document.getElementById('sheet'); sheet.classList.add('open');
+  document.getElementById('back').onclick=closeDetail;
+  document.getElementById('heartTop').onclick=()=>toggleFav(r.id);
+  document.getElementById('minus').onclick=()=>changeServ(-1);
+  document.getElementById('plus').onclick=()=>changeServ(1);
+  document.getElementById('startCook').onclick=startCook;
+  if(r.custom) document.getElementById('delRec').onclick=()=>delRecipe(r.id);
+  sheet.scrollTop=0;
+}
+function renderIng(flash){
+  const r=state.current;
+  const list=scaledIng(r.ing,r.serv,state.servNow);
+  document.getElementById('ingList').innerHTML=list.map(i=>`
+    <div class="ing ${flash?'flash':''}"><span class="q">${i.q} ${i.u}</span><span class="n">${i.name}</span></div>`).join('');
+}
+function changeServ(d){
+  state.servNow=Math.max(1,Math.min(40,state.servNow+d));
+  document.getElementById('servNum').textContent=state.servNow;
+  document.getElementById('servLbl').textContent=state.servNow+' personas';
+  renderIng(true);
+  setTimeout(()=>document.querySelectorAll('.ing').forEach(e=>e.classList.remove('flash')),350);
+}
+function updateHeartTop(){
+  const h=document.getElementById('heartTop'); if(h) h.classList.toggle('on',isFav(state.current.id));
+}
+function closeDetail(){ document.getElementById('sheet').classList.remove('open'); }
+
+/* ============ Cook mode ============ */
+function startCook(){
+  state.cookStep=0;
+  document.getElementById('cook').classList.add('open');
+  renderCook();
+}
+function renderCook(){
+  const r=state.current, steps=r.pasos, i=state.cookStep, p=steps[i];
+  clearTimer();
+  document.getElementById('cookNo').textContent=`Paso ${i+1} de ${steps.length}`;
+  document.getElementById('cookTx').textContent=p[0];
+  document.getElementById('cookDots').innerHTML=steps.map((_,j)=>
+    `<span class="${j<i?'done':j===i?'on':''}"></span>`).join('');
+  const tBtn=document.getElementById('cookTimerBtn'), tDisp=document.getElementById('cookTimer');
+  tDisp.classList.remove('on');
+  if(p[1]){
+    tBtn.classList.add('show');
+    tBtn.textContent=`▶ Iniciar temporizador (${p[1]} min)`;
+    tBtn.onclick=()=>runTimer(p[1]*60);
+  } else { tBtn.classList.remove('show'); }
+  document.getElementById('cookPrev').style.visibility=i===0?'hidden':'visible';
+  document.getElementById('cookNext').textContent=i===steps.length-1?'Terminar ✓':'Siguiente';
+}
+function runTimer(sec){
+  clearTimer();
+  const tDisp=document.getElementById('cookTimer'); tDisp.classList.add('on');
+  let left=sec;
+  const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+  tDisp.textContent=fmt(left);
+  state.timer=setInterval(()=>{
+    left--; tDisp.textContent=fmt(left);
+    if(left<=0){ clearTimer(); beep(); tDisp.textContent='¡Listo! ⏰'; }
+  },1000);
+}
+function clearTimer(){ if(state.timer){clearInterval(state.timer);state.timer=null;} }
+function beep(){
+  try{ const a=new (window.AudioContext||window.webkitAudioContext)();
+    const o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);
+    o.frequency.value=880;g.gain.value=0.15;o.start();
+    setTimeout(()=>{o.stop();a.close();},600);
+  }catch(e){}
+}
+document.getElementById('cookClose').onclick=()=>{clearTimer();document.getElementById('cook').classList.remove('open');};
+document.getElementById('cookPrev').onclick=()=>{if(state.cookStep>0){state.cookStep--;renderCook();}};
+document.getElementById('cookNext').onclick=()=>{
+  if(state.cookStep<state.current.pasos.length-1){state.cookStep++;renderCook();}
+  else{clearTimer();document.getElementById('cook').classList.remove('open');toast('¡Buen provecho! 🍽️');}
+};
+
+/* ============ Tabs ============ */
+const TABS=[
+  {id:'home',name:'Explorar',svg:'<path d="M3 11l9-8 9 8M5 10v10h14V10"/>'},
+  {id:'pantry',name:'¿Qué cocino?',svg:'<path d="M5 3v8a4 4 0 008 0V3M9 11v10M17 3c-1.5 2-2 4-2 7v11"/>'},
+  {id:'add',name:'Agregar',add:true,svg:'<path d="M12 5v14M5 12h14"/>'},
+  {id:'favs',name:'Favoritos',svg:'<path d="M12 21s-7-4.5-9.5-8.5C.5 9 2 5.5 5.5 5.5 8 5.5 12 8 12 8s4-2.5 6.5-2.5C22 5.5 23.5 9 21.5 12.5 19 16.5 12 21 12 21z"/>'},
+  {id:'mine',name:'Mis recetas',svg:'<path d="M4 5h16M4 12h16M4 19h10"/>'},
+];
+function renderTabs(){
+  const el=document.getElementById('tabbar');
+  el.innerHTML=TABS.map(t=>`
+    <button class="tab ${t.add?'add':''} ${state.tab===t.id?'on':''}" data-tab="${t.id}">
+      ${t.add?`<span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2">${t.svg}</svg></span>`
+             :`<svg viewBox="0 0 24 24" fill="none">${t.svg}</svg>`}
+      <span>${t.name}</span></button>`).join('');
+  el.querySelectorAll('.tab').forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
+}
+function switchTab(tab){
+  if(tab==='add'){ openForm(); return; }
+  state.tab=tab; state.cat='all'; state.q='';
+  renderTabs();
+  if(tab==='pantry'){ renderPantry(); return; }
+  // restaurar la estructura normal de la vista
+  const wrap=document.querySelector('.wrap');
+  if(!document.getElementById('grid')){
+    wrap.innerHTML='<div class="count" id="count"></div><div class="grid" id="grid"></div>';
+  }
+  document.getElementById('q').value='';
+  document.querySelector('.topbar').style.display = tab==='mine'?'none':'block';
+  document.querySelector('.chips').style.display = (tab==='favs')?'flex':(tab==='mine'?'none':'flex');
+  if(tab==='mine') renderMine(); else { renderChips(); renderGrid(); }
+  window.scrollTo(0,0);
+}
+
+/* ============ Mis recetas ============ */
+function renderMine(){
+  const wrap=document.querySelector('.wrap');
+  const count=document.getElementById('count'), grid=document.getElementById('grid');
+  if(!state.custom.length){
+    count.innerHTML=`<div class="empty"><span class="em">📖</span>
+      Aquí van tus propias recetas.<br>Toca <b>Agregar</b> para crear la primera.</div>`;
+    grid.innerHTML=''; return;
+  }
+  count.textContent=`${state.custom.length} receta${state.custom.length>1?'s':''} tuyas`;
+  grid.innerHTML=state.custom.map(r=>{const im=imgOf(r);return `
+    <button class="card" data-id="${r.id}">
+      <div class="thumb" style="${im?`background-image:url('${im}');background-size:cover;background-position:center;font-size:0`:`background:${tint(r.cat)}`}">${im?'':(r.em||catEm(r.cat))}</div>
+      <div class="body"><div class="cat">${catName(r.cat)}</div><h3>${r.name}</h3>
+      <div class="meta"><span>⏱ ${r.min}m</span><span>👥 ${r.serv}</span></div></div>
+    </button>`;}).join('');
+  grid.querySelectorAll('.card').forEach(c=>c.onclick=()=>openDetail(c.dataset.id));
+}
+
+/* ============ Add recipe form ============ */
+function openForm(){
+  const inner=document.getElementById('sheetInner');
+  inner.innerHTML=`
+  <div class="form">
+    <button class="back" style="position:static;margin-bottom:14px" id="formBack"><svg viewBox="0 0 24 24" fill="none" stroke="#241F1B" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <h2>Nueva receta</h2>
+    <div class="sub">Crea tu propia receta y quedará guardada en el dispositivo.</div>
+    <div class="fld"><label>Nombre</label><input id="f-name" placeholder="Ej: Frijoles de la abuela"></div>
+    <div class="row2">
+      <div class="fld"><label>Categoría</label><select id="f-cat">${CATS.filter(c=>c.id!=='all').map(c=>`<option value="${c.id}">${c.em} ${c.name}</option>`).join('')}</select></div>
+      <div class="fld"><label>Emoji</label><input id="f-em" placeholder="🍲" maxlength="2"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>País / origen</label><input id="f-pais" placeholder="Colombia"></div>
+      <div class="fld"><label>Tiempo (min)</label><input id="f-min" type="number" inputmode="numeric" placeholder="45"></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label>Dificultad</label><select id="f-dif"><option>Fácil</option><option>Media</option><option>Difícil</option></select></div>
+      <div class="fld"><label>Porciones base</label><input id="f-serv" type="number" inputmode="numeric" placeholder="4"></div>
+    </div>
+
+    <div class="fld"><label>Ingredientes</label><div id="ingRows"></div>
+      <button class="addline" id="addIng">+ Agregar ingrediente</button></div>
+
+    <div class="fld"><label>Pasos</label><div id="stepRows"></div>
+      <button class="addline" id="addStep">+ Agregar paso</button></div>
+
+    <button class="save" id="saveRec">Guardar receta</button>
+    <button class="ghost" id="cancelRec">Cancelar</button>
+  </div>`;
+  document.getElementById('sheet').classList.add('open');
+  document.getElementById('formBack').onclick=()=>{document.getElementById('sheet').classList.remove('open');switchTab(state.tab);};
+  document.getElementById('cancelRec').onclick=()=>{document.getElementById('sheet').classList.remove('open');switchTab(state.tab);};
+  const ingRows=document.getElementById('ingRows'), stepRows=document.getElementById('stepRows');
+  const addIngRow=()=>{const d=document.createElement('div');d.className='dyn-row';
+    d.innerHTML=`<input class="q ig-q" placeholder="2 taza"><input class="ig-n" placeholder="harina"><button class="del">×</button>`;
+    d.querySelector('.del').onclick=()=>d.remove();ingRows.appendChild(d);};
+  const addStepRow=()=>{const d=document.createElement('div');d.className='dyn-row';
+    d.innerHTML=`<input class="st-t" placeholder="Describe el paso…"><input class="q st-m" placeholder="min" inputmode="numeric"><button class="del">×</button>`;
+    d.querySelector('.del').onclick=()=>d.remove();stepRows.appendChild(d);};
+  addIngRow();addIngRow();addIngRow();addStepRow();addStepRow();
+  document.getElementById('addIng').onclick=addIngRow;
+  document.getElementById('addStep').onclick=addStepRow;
+  document.getElementById('saveRec').onclick=saveRecipe;
+  document.getElementById('sheet').scrollTop=0;
+}
+function parseQty(s){ // "2 taza" -> [2,'taza'] ; "harina" handled separately
+  s=(s||'').trim(); const m=s.match(/^([\d.,/]+)\s*(.*)$/);
+  if(!m) return [1,''];
+  let num=m[1].replace(',','.'); if(num.includes('/')){const[a,b]=num.split('/');num=(+a/+b);}
+  return [parseFloat(num)||1, m[2]||''];
+}
+function saveRecipe(){
+  const v=id=>document.getElementById(id).value.trim();
+  const name=v('f-name');
+  if(!name){toast('Ponle un nombre a la receta');return;}
+  const ing=[...document.querySelectorAll('#ingRows .dyn-row')].map(r=>{
+    const q=r.querySelector('.ig-q').value, n=r.querySelector('.ig-n').value.trim();
+    if(!n) return null; const [num,unit]=parseQty(q); return [num,unit,n];
+  }).filter(Boolean);
+  const pasos=[...document.querySelectorAll('#stepRows .dyn-row')].map(r=>{
+    const t=r.querySelector('.st-t').value.trim(), m=parseInt(r.querySelector('.st-m').value);
+    if(!t) return null; return m?[t,m]:[t];
+  }).filter(Boolean);
+  if(!ing.length||!pasos.length){toast('Agrega al menos un ingrediente y un paso');return;}
+  const rec={id:'c'+Date.now(),custom:true,name,cat:v('f-cat'),pais:v('f-pais')||'—',
+    min:+v('f-min')||30,dif:v('f-dif'),serv:+v('f-serv')||4,em:v('f-em'),ing,pasos,tip:''};
+  state.custom=[rec,...state.custom]; store.set('rec_custom',state.custom);
+  document.getElementById('sheet').classList.remove('open');
+  switchTab('mine'); toast('Receta guardada ✓');
+}
+function delRecipe(id){
+  state.custom=state.custom.filter(r=>r.id!==id); store.set('rec_custom',state.custom);
+  closeDetail(); switchTab('mine'); toast('Receta eliminada');
+}
+
+/* ============ Toast ============ */
+let toastT;
+function toast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),1900);
+}
+
+/* ============ Search ============ */
+document.getElementById('q').addEventListener('input',e=>{
+  state.q=e.target.value; if(state.tab==='mine'){state.tab='home';renderTabs();} renderGrid();
+});
+
+/* ============================================================
+   MOTOR "¿QUÉ COCINO?"  ·  Base de insumos
+   ============================================================ */
+const ING = {
+  /* Proteínas */
+  huevo:'Huevos', pollo:'Pollo (presas)', pechuga:'Pechuga de pollo',
+  carne_molida:'Carne molida', carne_res:'Carne de res', solomillo:'Solomillo / lomo fino',
+  cerdo:'Cerdo (lomo/chuleta)', tocino:'Tocino / panceta', chorizo:'Chorizo',
+  pescado:'Pescado blanco', atun:'Atún en lata', camaron:'Camarón', calamar:'Calamar',
+  /* Verduras y frutas */
+  ajo:'Ajo', cebolla:'Cebolla cabezona', cebollalarga:'Cebolla larga', tomate:'Tomate',
+  pimenton:'Pimentón', papa:'Papa', yuca:'Yuca', platanoverde:'Plátano verde',
+  platanomaduro:'Plátano maduro', zanahoria:'Zanahoria', calabacin:'Calabacín',
+  espinaca:'Espinaca', brocoli:'Brócoli', champinon:'Champiñones', maiz:'Maíz',
+  arveja:'Arvejas', aguacate:'Aguacate', lechuga:'Lechuga', pepino:'Pepino',
+  limon:'Limón', naranja:'Naranja', banano:'Banano', manzana:'Manzana',
+  /* Almidones */
+  arroz:'Arroz', pasta:'Pasta', harina:'Harina de trigo', harinamaiz:'Harina de maíz',
+  almidonyuca:'Almidón de yuca', pan:'Pan', lenteja:'Lentejas', frijol:'Fríjoles',
+  garbanzo:'Garbanzos', avena:'Avena',
+  /* Lácteos */
+  leche:'Leche', queso:'Queso', crema:'Crema de leche', mantequilla:'Mantequilla',
+  yogur:'Yogur', lechecoco:'Leche de coco',
+  /* Despensa */
+  aceite:'Aceite', sal:'Sal', pimienta:'Pimienta', vinagre:'Vinagre', azucar:'Azúcar',
+  panela:'Panela', soya:'Salsa de soya', caldo:'Caldo (cubo o casero)',
+  tomatelata:'Tomate enlatado', mostaza:'Mostaza', mayonesa:'Mayonesa', miel:'Miel',
+  vino:'Vino', chocolate:'Chocolate / cacao',
+  /* Especias y hierbas */
+  comino:'Comino', oregano:'Orégano', laurel:'Laurel', canela:'Canela', curry:'Curry',
+  paprika:'Paprika / color', ajipicante:'Ají picante', cilantro:'Cilantro',
+  perejil:'Perejil', albahaca:'Albahaca', guascas:'Guascas', vainilla:'Vainilla',
+  levadura:'Levadura', bicarbonato:'Polvo de hornear',
+};
+const GROUPS = [
+  {t:'Proteínas', em:'🥩', ids:['huevo','pollo','pechuga','carne_molida','carne_res','solomillo','cerdo','tocino','chorizo','pescado','atun','camaron','calamar']},
+  {t:'Verduras y frutas', em:'🥬', ids:['ajo','cebolla','cebollalarga','tomate','pimenton','papa','yuca','platanoverde','platanomaduro','zanahoria','calabacin','espinaca','brocoli','champinon','maiz','arveja','aguacate','lechuga','pepino','limon','naranja','banano','manzana']},
+  {t:'Granos y harinas', em:'🌾', ids:['arroz','pasta','harina','harinamaiz','almidonyuca','pan','lenteja','frijol','garbanzo','avena']},
+  {t:'Lácteos', em:'🥛', ids:['leche','queso','crema','mantequilla','yogur','lechecoco']},
+  {t:'Despensa', em:'🫙', ids:['aceite','sal','pimienta','vinagre','azucar','panela','soya','caldo','tomatelata','mostaza','mayonesa','miel','vino','chocolate']},
+  {t:'Especias y hierbas', em:'🌿', ids:['comino','oregano','laurel','canela','curry','paprika','ajipicante','cilantro','perejil','albahaca','guascas','vainilla','levadura','bicarbonato']},
+];
+const BASICOS = ['aceite','sal','pimienta'];  // preseleccionados
+
+const EQUIPOS = {
+  estufa:'Estufa', sarten:'Sartén', olla:'Olla', horno:'Horno', licuadora:'Licuadora',
+  airfryer:'Freidora de aire', microondas:'Microondas', parrilla:'Parrilla / asador',
+  arrocera:'Arrocera', batidora:'Batidora',
+};
+
+/* Sustituciones: si te falta A, sirve B */
+const SUSTITUTOS = {
+  solomillo:['carne_res'], carne_res:['solomillo','carne_molida'],
+  pechuga:['pollo'], pollo:['pechuga'],
+  cebolla:['cebollalarga'], cebollalarga:['cebolla'],
+  tomatelata:['tomate'], tomate:['tomatelata'],
+  crema:['leche'], mantequilla:['aceite'],
+  limon:['naranja','vinagre'], caldo:['sal'],
+  perejil:['cilantro'], cilantro:['perejil'],
+  paprika:['comino'], papa:['yuca'],
+};
+
+/* ============================================================
+   BIBLIOTECA DE PREPARACIONES
+   ing: [cantidad, unidad, idIngrediente]  ·  opt: mejoras opcionales
+   eq: equipos necesarios  ·  tec: técnica culinaria
+   ============================================================ */
+const P = (id,name,cat,pais,tec,min,dif,serv,em,eq,ing,opt,pasos,tip)=>
+  ({id,name,cat,pais,tec,min,dif,serv,em,eq,ing,opt,pasos,tip,prep:true});
+
+const PREPS = [
+/* ---------- RES ---------- */
+P('p1','Solomillo al ajillo','carne','España','Salteado',20,'Fácil',2,'🥩',['estufa','sarten'],
+  [[400,'g','solomillo'],[5,'','ajo'],[3,'cda','aceite'],[1,'cdta','sal'],[1,'pizca','pimienta']],['perejil','vino'],
+  [['Corta el solomillo en medallones o tiras y sécalo bien con papel; sazona con sal y pimienta.'],
+   ['Calienta el aceite y dora los ajos laminados a fuego medio, sin quemarlos. Retíralos y resérvalos.',3],
+   ['Sube el fuego al máximo y sella la carne por tandas, sin amontonarla.',4],
+   ['Regresa el ajo, saltea 30 segundos y sirve de inmediato.',1]],
+  'La clave es el fuego alto y no llenar la sartén: si amontonas la carne, se cuece en vez de dorarse.'),
+
+P('p2','Salteado criollo de res','carne','Colombia','Salteado',25,'Fácil',3,'🍳',['estufa','sarten'],
+  [[400,'g','carne_res'],[3,'','ajo'],[1,'','cebolla'],[2,'','tomate'],[2,'cda','aceite'],[1,'cdta','sal']],['cilantro','comino','pimenton'],
+  [['Corta la carne en tiras finas contra la fibra y sazona.'],
+   ['Sella la carne a fuego alto en el aceite y retírala del sartén.',4],
+   ['En la misma grasa sofríe cebolla, ajo y tomate hasta deshacer.',7],
+   ['Regresa la carne, mezcla y cocina 2 minutos más para unir sabores.',2]],
+  'Sella la carne primero y sácala: si la dejas mientras se cocina el sofrito, se pone dura.'),
+
+P('p3','Lomo salteado','carne','Perú','Salteado',30,'Media',3,'🥘',['estufa','sarten'],
+  [[400,'g','solomillo'],[1,'','cebolla'],[2,'','tomate'],[3,'cda','soya'],[2,'cda','vinagre'],[2,'','papa'],[3,'cda','aceite']],['ajipicante','cilantro','ajo'],
+  [['Corta la papa en bastones y fríela hasta dorar; reserva.',8],
+   ['Corta la carne en tiras gruesas y séllala a fuego muy alto.',4],
+   ['Agrega la cebolla en pluma y el tomate en gajos; saltea sin deshacerlos.',3],
+   ['Vierte la soya y el vinagre, deja evaporar y mezcla con las papas.',2]],
+  'La verdura debe quedar crocante, no blanda: 3 minutos de wok y afuera.'),
+
+P('p4','Carne molida guisada','carne','Colombia','Guiso',25,'Fácil',4,'🍲',['estufa','sarten'],
+  [[500,'g','carne_molida'],[1,'','cebolla'],[3,'','ajo'],[2,'','tomate'],[2,'cda','aceite'],[1,'cdta','sal']],['comino','pimenton','cilantro','zanahoria'],
+  [['Sofríe cebolla y ajo picados hasta transparentar.',4],
+   ['Agrega la carne y dórala bien, separando los grumos con cuchara.',7],
+   ['Incorpora el tomate picado y cocina hasta que se deshaga.',8],
+   ['Ajusta sal y especias; deja concentrar sin líquido suelto.',4]],
+  'Dora bien la carne antes de añadir el tomate: ahí se forma el sabor.'),
+
+P('p5','Albóndigas en salsa','carne','Italia','Guiso',45,'Media',4,'🍝',['estufa','sarten'],
+  [[500,'g','carne_molida'],[1,'','huevo'],[0.5,'taza','pan'],[3,'','ajo'],[1,'','cebolla'],[400,'g','tomatelata'],[2,'cda','aceite']],['oregano','albahaca','queso','leche'],
+  [['Mezcla la carne con el huevo, el pan remojado, ajo picado y sal; forma bolitas.',10],
+   ['Dora las albóndigas por fuera en el aceite y retíralas.',6],
+   ['En la misma sartén sofríe cebolla y ajo, agrega el tomate y sazona.',5],
+   ['Regresa las albóndigas y cocina a fuego bajo hasta espesar.',20]],
+  'No las cocines del todo al dorarlas: terminan de hacerse dentro de la salsa y quedan jugosas.'),
+
+P('p6','Res al vino tinto','carne','Francia','Reducción',60,'Media',4,'🍷',['estufa','sarten'],
+  [[600,'g','carne_res'],[1,'','cebolla'],[3,'','ajo'],[1,'taza','vino'],[1,'taza','caldo'],[2,'cda','mantequilla'],[1,'','zanahoria']],['laurel','perejil','champinon'],
+  [['Sella la carne en trozos por todos los lados en la mantequilla.',6],
+   ['Sofríe cebolla, ajo y zanahoria en la misma olla.',6],
+   ['Vierte el vino y deja reducir a la mitad para evaporar el alcohol.',8],
+   ['Agrega el caldo, tapa y cocina a fuego bajo hasta que la carne esté tierna.',40]],
+  'Reduce siempre el vino antes de añadir el caldo: si no, la salsa queda ácida.'),
+
+/* ---------- POLLO ---------- */
+P('p7','Pollo al ajillo','ave','España','Salteado',30,'Fácil',3,'🍗',['estufa','sarten'],
+  [[600,'g','pollo'],[6,'','ajo'],[4,'cda','aceite'],[1,'cdta','sal'],[1,'pizca','pimienta']],['vino','perejil','limon'],
+  [['Trocea el pollo en presas pequeñas y sazona bien.'],
+   ['Dora los ajos laminados en el aceite y resérvalos.',3],
+   ['Dora el pollo a fuego medio-alto por todos los lados.',12],
+   ['Regresa el ajo, tapa y termina de cocinar a fuego bajo.',8]],
+  'Trozos pequeños se cocinan parejo y quedan dorados por fuera y jugosos por dentro.'),
+
+P('p8','Pechuga a la plancha con limón','ave','Mundo','Plancha',18,'Fácil',2,'🍋',['estufa','sarten'],
+  [[2,'','pechuga'],[1,'','limon'],[2,'cda','aceite'],[1,'cdta','sal'],[1,'pizca','pimienta']],['ajo','oregano','mantequilla'],
+  [['Abre la pechuga en mariposa o aplánala para grosor parejo.'],
+   ['Adóbala con limón, aceite, sal y pimienta; deja reposar 10 min.',10],
+   ['Cocina en sartén bien caliente 4 minutos por lado sin moverla.',8],
+   ['Deja reposar 3 minutos antes de cortar.',3]],
+  'El grosor parejo es todo: si un lado es grueso, se seca el delgado esperando al otro.'),
+
+P('p9','Pollo guisado criollo','ave','Colombia','Guiso',45,'Fácil',4,'🍲',['estufa','olla'],
+  [[800,'g','pollo'],[1,'','cebolla'],[4,'','ajo'],[3,'','tomate'],[2,'','papa'],[2,'cda','aceite'],[1,'cdta','sal']],['cilantro','comino','pimenton','zanahoria','caldo'],
+  [['Sella las presas de pollo en el aceite hasta dorar.',8],
+   ['Agrega cebolla, ajo y tomate; cocina hasta formar el guiso.',8],
+   ['Añade la papa en trozos y agua o caldo que cubra a medias.',2],
+   ['Tapa y cocina a fuego bajo hasta que todo esté tierno.',25]],
+  'Sellar el pollo antes deja fondo dorado en la olla: ahí está el sabor del guiso.'),
+
+P('p10','Pollo al curry con coco','ave','India','Guiso',35,'Fácil',4,'🍛',['estufa','sarten'],
+  [[600,'g','pechuga'],[1,'','cebolla'],[3,'','ajo'],[2,'cda','curry'],[400,'ml','lechecoco'],[2,'cda','aceite']],['cilantro','arroz','ajipicante','limon'],
+  [['Sofríe cebolla y ajo hasta dorar levemente.',5],
+   ['Agrega el pollo en cubos y séllalo por fuera.',5],
+   ['Incorpora el curry y tuéstalo 1 minuto para que suelte el aroma.',1],
+   ['Vierte la leche de coco y cocina a fuego bajo hasta espesar.',15]],
+  'Tostar la especia en la grasa antes del líquido multiplica el sabor. Se llama "florear" el curry.'),
+
+P('p11','Pollo apanado','ave','Mundo','Fritura',30,'Fácil',3,'🍗',['estufa','sarten'],
+  [[3,'','pechuga'],[2,'','huevo'],[1,'taza','pan'],[0.5,'taza','harina'],[2,'taza','aceite'],[1,'cdta','sal']],['ajo','paprika','oregano','limon'],
+  [['Aplana las pechugas y sazónalas.'],
+   ['Pasa cada una por harina, luego huevo batido y por último pan rallado.',6],
+   ['Fríe en aceite medio-caliente hasta dorar por ambos lados.',8],
+   ['Escurre sobre rejilla o papel para que no se ablande.',2]],
+  'El orden harina → huevo → pan no es capricho: la harina seca la superficie para que el empanizado pegue.'),
+
+P('p12','Pollo al horno con papas','ave','Mundo','Horneado',60,'Fácil',4,'🔥',['horno'],
+  [[1,'kg','pollo'],[4,'','papa'],[5,'','ajo'],[1,'','limon'],[3,'cda','aceite'],[1,'cdta','sal'],[1,'cdta','oregano']],['cebolla','paprika','mantequilla','vino'],
+  [['Adoba el pollo con ajo machacado, limón, aceite, sal y orégano.',10],
+   ['Corta las papas en gajos y acomódalas en la bandeja como cama.'],
+   ['Coloca el pollo encima y hornea a 200°C.',45],
+   ['Sube a 220°C los últimos minutos para dorar la piel.',8]],
+  'Las papas debajo absorben los jugos del pollo. Es la mejor parte del plato.'),
+
+P('p13','Alitas glaseadas caseras','ave','Mundo','Horneado',45,'Fácil',3,'🍯',['horno'],
+  [[800,'g','pollo'],[3,'cda','miel'],[3,'cda','soya'],[1,'cda','mostaza'],[3,'','ajo'],[1,'cdta','sal']],['ajipicante','limon','paprika','vinagre'],
+  [['Sazona las alitas y hornéalas a 200°C hasta dorar.',30],
+   ['Mezcla miel, soya, mostaza y ajo rallado para el glaseado.',3],
+   ['Baña las alitas y regrésalas al horno para caramelizar.',10],
+   ['Repite el baño una vez más para capa brillante.',5]],
+  'Nunca pongas el glaseado al inicio: el azúcar se quema antes de que el pollo se cocine.'),
+
+/* ---------- CERDO ---------- */
+P('p14','Cerdo agridulce','carne','China','Salteado',30,'Media',3,'🍍',['estufa','sarten'],
+  [[500,'g','cerdo'],[1,'','pimenton'],[1,'','cebolla'],[3,'cda','soya'],[3,'cda','vinagre'],[3,'cda','azucar'],[2,'cda','aceite']],['ajo','maiz','harina','ajipicante'],
+  [['Corta el cerdo en cubos y séllalo a fuego alto.',6],
+   ['Retíralo y saltea el pimentón y la cebolla, dejándolos crocantes.',3],
+   ['Mezcla soya, vinagre y azúcar; viértelo y deja burbujear.',3],
+   ['Regresa el cerdo y glasea hasta que la salsa lo cubra.',4]],
+  'El equilibrio agridulce se ajusta al final: prueba y corrige con más vinagre o azúcar.'),
+
+P('p15','Chuleta de cerdo a la sartén','carne','Mundo','Plancha',25,'Fácil',2,'🐖',['estufa','sarten'],
+  [[2,'','cerdo'],[3,'','ajo'],[2,'cda','aceite'],[1,'cdta','sal'],[1,'pizca','pimienta']],['mantequilla','limon','oregano','vino'],
+  [['Saca la carne del frío 20 minutos antes y sazónala.',10],
+   ['Sella en sartén muy caliente 3 minutos por lado.',6],
+   ['Baja el fuego, agrega ajo y mantequilla y baña la carne con la grasa.',3],
+   ['Retira y deja reposar 5 minutos antes de cortar.',5]],
+  'Bañarla con la mantequilla al final (arrosear) le da sabor y termina la cocción suave.'),
+
+P('p16','Tocino crocante','carne','Mundo','Fritura',15,'Fácil',3,'🥓',['estufa','sarten'],
+  [[250,'g','tocino'],[1,'pizca','sal']],['panela','pimienta'],
+  [['Coloca el tocino en sartén FRÍA, sin aceite.'],
+   ['Enciende a fuego medio-bajo y deja que suelte su propia grasa.',8],
+   ['Voltea cuando esté dorado y termina el otro lado.',5],
+   ['Escurre sobre papel; queda crocante al enfriar.',2]],
+  'Empezar en sartén fría es el truco: la grasa se derrite lento y queda parejo, no quemado por fuera y crudo por dentro.'),
+
+/* ---------- HUEVOS ---------- */
+P('p17','Tortilla española','desayuno','España','Cuajado',35,'Media',4,'🥔',['estufa','sarten'],
+  [[5,'','huevo'],[4,'','papa'],[1,'','cebolla'],[1,'taza','aceite'],[1,'cdta','sal']],['perejil','ajo'],
+  [['Corta la papa en láminas finas y la cebolla en pluma.'],
+   ['Confítalas en aceite a fuego bajo hasta blandas, sin dorar. Escurre.',18],
+   ['Bate los huevos con sal y mezcla con la papa; reposa 5 min.',5],
+   ['Cuaja en sartén con poco aceite y voltea con ayuda de un plato.',8]],
+  'La papa se confita, no se fríe: debe quedar blanda y pálida para que la tortilla sea cremosa.'),
+
+P('p18','Huevos revueltos con champiñones','desayuno','Mundo','Salteado',15,'Fácil',2,'🍄',['estufa','sarten'],
+  [[4,'','huevo'],[150,'g','champinon'],[2,'','ajo'],[2,'cda','mantequilla'],[1,'cdta','sal']],['perejil','queso','crema','cebollalarga'],
+  [['Saltea los champiñones laminados a fuego alto hasta dorar.',6],
+   ['Agrega el ajo picado y saltea 30 segundos.',1],
+   ['Baja el fuego, vierte los huevos batidos y revuelve lento.',3],
+   ['Retira cuando aún estén cremosos: siguen cocinándose fuera del fuego.',1]],
+  'Champiñón a fuego alto y sin sal al principio: si le echas sal, suelta agua y se cuece en vez de dorar.'),
+
+P('p19','Omelette de queso y espinaca','desayuno','Francia','Cuajado',12,'Fácil',1,'🧀',['estufa','sarten'],
+  [[3,'','huevo'],[1,'taza','espinaca'],[50,'g','queso'],[1,'cda','mantequilla'],[1,'cdta','sal']],['cebolla','tomate','champinon','pimienta'],
+  [['Bate los huevos con sal hasta homogéneos, sin exceso de aire.'],
+   ['Saltea la espinaca en la mantequilla hasta marchitar y resérvala.',2],
+   ['Vierte el huevo en sartén a fuego medio-bajo y remueve los bordes hacia dentro.',3],
+   ['Cuando esté casi cuajado, agrega relleno y dóblalo por la mitad.',2]],
+  'Fuego medio-bajo: el omelette francés no debe dorarse, queda pálido y tierno.'),
+
+P('p20','Huevos rancheros','desayuno','México','Guiso',20,'Fácil',2,'🌶️',['estufa','sarten'],
+  [[4,'','huevo'],[3,'','tomate'],[1,'','cebolla'],[2,'','ajo'],[2,'cda','aceite'],[1,'cdta','sal']],['ajipicante','cilantro','queso','aguacate','harinamaiz'],
+  [['Sofríe cebolla, ajo y tomate hasta formar salsa.',8],
+   ['Licúa o machaca la salsa y regrésala a la sartén.',2],
+   ['Haz huecos en la salsa y casca los huevos dentro.',1],
+   ['Tapa y cocina hasta que la clara cuaje y la yema quede líquida.',6]],
+  'Tapar la sartén cuaja la clara por arriba sin secar la yema.'),
+
+/* ---------- PASTAS ---------- */
+P('p21','Pasta al pomodoro','pasta','Italia','Hervido',25,'Fácil',3,'🍅',['estufa','olla','sarten'],
+  [[300,'g','pasta'],[400,'g','tomatelata'],[4,'','ajo'],[4,'cda','aceite'],[1,'cdta','sal']],['albahaca','queso','cebolla','azucar'],
+  [['Pon a hervir agua con bastante sal para la pasta.',8],
+   ['Dora el ajo en el aceite a fuego bajo, sin quemarlo.',3],
+   ['Agrega el tomate y cocina hasta que pierda la acidez.',12],
+   ['Mezcla la pasta al dente con la salsa y un poco del agua de cocción.',2]],
+  'Guarda siempre una taza del agua de cocción: el almidón liga la salsa al fideo.'),
+
+P('p22','Carbonara casera','pasta','Italia','Emulsión',22,'Media',2,'🥓',['estufa','olla','sarten'],
+  [[250,'g','pasta'],[150,'g','tocino'],[3,'','huevo'],[80,'g','queso'],[1,'cdta','pimienta']],['ajo','perejil'],
+  [['Cuece la pasta en agua con sal; reserva una taza del agua.',9],
+   ['Dora el tocino en tiras hasta crocante en su propia grasa.',7],
+   ['Bate las yemas con el queso rallado y mucha pimienta.',2],
+   ['Fuera del fuego, mezcla la pasta caliente con el huevo y agua poco a poco.',2]],
+  'La carbonara no lleva crema: la cremosidad sale del huevo emulsionado. Y siempre fuera del fuego, o se hace revuelto.'),
+
+P('p23','Pasta con champiñones a la crema','pasta','Italia','Salteado',25,'Fácil',3,'🍄',['estufa','olla','sarten'],
+  [[300,'g','pasta'],[250,'g','champinon'],[200,'ml','crema'],[3,'','ajo'],[2,'cda','mantequilla'],[1,'cdta','sal']],['perejil','queso','cebolla','vino'],
+  [['Cuece la pasta al dente.',9],
+   ['Saltea los champiñones a fuego alto hasta dorar bien.',7],
+   ['Agrega ajo, luego la crema y deja reducir un poco.',5],
+   ['Mezcla con la pasta y ajusta con agua de cocción.',2]],
+  'Dora los champiñones en tandas si son muchos: amontonados sueltan agua y no doran.'),
+
+P('p24','Pasta con atún','pasta','Italia','Salteado',20,'Fácil',3,'🐟',['estufa','olla','sarten'],
+  [[300,'g','pasta'],[2,'lata','atun'],[3,'','tomate'],[3,'','ajo'],[3,'cda','aceite'],[1,'cdta','sal']],['perejil','ajipicante','cebolla','limon'],
+  [['Cuece la pasta en agua con sal.',9],
+   ['Sofríe el ajo en aceite y agrega el tomate picado.',6],
+   ['Incorpora el atún escurrido y calienta sin deshacerlo del todo.',3],
+   ['Mezcla con la pasta y termina con perejil fresco.',1]],
+  'Agrega el atún al final: si lo cocinas mucho, se seca y se vuelve harinoso.'),
+
+/* ---------- ARROCES ---------- */
+P('p25','Arroz blanco graniado','arroz','Colombia','Absorción',25,'Fácil',4,'🍚',['estufa','olla'],
+  [[2,'taza','arroz'],[4,'taza','caldo'],[1,'cda','aceite'],[1,'cdta','sal']],['ajo','cebollalarga','mantequilla'],
+  [['Sofríe el arroz en el aceite un minuto para sellar el grano.',2],
+   ['Agrega el agua o caldo caliente y la sal; deja hervir destapado.',5],
+   ['Cuando se vean los "ojos" en la superficie, baja el fuego al mínimo y tapa.',2],
+   ['Cocina tapado sin destapar; apaga y deja reposar 5 min.',18]],
+  'Regla de oro: no destapes. El vapor atrapado es lo que termina de cocer el grano.'),
+
+P('p26','Arroz frito oriental','arroz','China','Salteado',20,'Fácil',4,'🥡',['estufa','sarten'],
+  [[3,'taza','arroz'],[2,'','huevo'],[1,'','zanahoria'],[0.5,'taza','arveja'],[3,'cda','soya'],[2,'cda','aceite']],['pechuga','camaron','ajo','cebollalarga','tocino'],
+  [['Usa arroz cocido del día anterior, bien frío y suelto.'],
+   ['Revuelve el huevo en la sartén y resérvalo aparte.',2],
+   ['Saltea la zanahoria en cubos y las arvejas a fuego alto.',4],
+   ['Agrega el arroz, la soya y el huevo; saltea sin parar de mover.',5]],
+  'Arroz del día anterior, no recién hecho: el arroz caliente y húmedo se apelmaza y queda papilla.'),
+
+P('p27','Arroz con camarones','arroz','Colombia','Absorción',35,'Media',4,'🦐',['estufa','olla'],
+  [[2,'taza','arroz'],[400,'g','camaron'],[1,'','cebolla'],[3,'','ajo'],[2,'','tomate'],[4,'taza','caldo'],[2,'cda','aceite']],['pimenton','cilantro','limon','lechecoco','paprika'],
+  [['Saltea los camarones 1 minuto por lado y retíralos.',2],
+   ['Sofríe cebolla, ajo, tomate y pimentón en la misma olla.',6],
+   ['Agrega el arroz, mezcla y vierte el caldo caliente.',3],
+   ['Cocina tapado y añade los camarones en los últimos 3 minutos.',20]],
+  'El camarón solo necesita 2-3 minutos. Si lo cocinas con el arroz desde el inicio queda como caucho.'),
+
+P('p28','Risotto de champiñones','arroz','Italia','Risotto',35,'Media',3,'🍄',['estufa','olla'],
+  [[1.5,'taza','arroz'],[300,'g','champinon'],[1,'','cebolla'],[5,'taza','caldo'],[3,'cda','mantequilla'],[80,'g','queso']],['vino','ajo','perejil','crema'],
+  [['Mantén el caldo caliente en otra olla; es clave.',3],
+   ['Sofríe la cebolla, agrega el arroz y tuéstalo 2 minutos.',4],
+   ['Añade caldo caliente cucharón a cucharón, removiendo, esperando a que absorba.',20],
+   ['Fuera del fuego, integra mantequilla fría y queso hasta cremoso.',3]],
+  'El caldo SIEMPRE caliente: si lo agregas frío, cortas la cocción y el grano se abre mal.'),
+
+/* ---------- SOPAS ---------- */
+P('p29','Sopa de verduras','sopa','Mundo','Hervido',35,'Fácil',4,'🥣',['estufa','olla'],
+  [[2,'','papa'],[2,'','zanahoria'],[1,'','cebolla'],[3,'','ajo'],[1,'','calabacin'],[6,'taza','caldo'],[2,'cda','aceite']],['cilantro','maiz','arveja','brocoli','laurel'],
+  [['Sofríe cebolla y ajo en la olla hasta transparentar.',4],
+   ['Agrega las verduras duras (papa, zanahoria) y saltea 2 minutos.',3],
+   ['Vierte el caldo y deja hervir a fuego medio.',15],
+   ['Añade las verduras blandas al final para que no se deshagan.',8]],
+  'Verduras duras primero, blandas después: así todo termina en su punto al mismo tiempo.'),
+
+P('p30','Crema de tomate','sopa','Mundo','Crema',30,'Fácil',4,'🍅',['estufa','olla','licuadora'],
+  [[6,'','tomate'],[1,'','cebolla'],[3,'','ajo'],[3,'taza','caldo'],[100,'ml','crema'],[2,'cda','aceite']],['albahaca','azucar','pan','mantequilla'],
+  [['Sofríe cebolla y ajo hasta dorar levemente.',5],
+   ['Agrega el tomate en trozos y cocina hasta deshacer.',12],
+   ['Vierte el caldo, hierve y licúa hasta muy liso.',8],
+   ['Regresa a la olla, integra la crema y ajusta sal.',3]],
+  'Una pizca de azúcar corrige la acidez del tomate sin que sepa dulce.'),
+
+P('p31','Crema de espinaca','sopa','Mundo','Crema',25,'Fácil',4,'🥬',['estufa','olla','licuadora'],
+  [[400,'g','espinaca'],[1,'','papa'],[1,'','cebolla'],[3,'','ajo'],[3,'taza','caldo'],[100,'ml','crema'],[2,'cda','mantequilla']],['queso','leche','pimienta'],
+  [['Sofríe cebolla y ajo en la mantequilla.',4],
+   ['Agrega la papa en cubos y el caldo; cocina hasta blanda.',12],
+   ['Añade la espinaca y cocina solo 2 minutos para conservar el color.',2],
+   ['Licúa, regresa a la olla y termina con la crema.',4]],
+  'La espinaca al final y poco tiempo: si la hierves, pierde el verde brillante.'),
+
+P('p32','Sopa de lentejas','sopa','Mundo','Hervido',45,'Fácil',5,'🍛',['estufa','olla'],
+  [[2,'taza','lenteja'],[1,'','cebolla'],[4,'','ajo'],[2,'','zanahoria'],[2,'','tomate'],[6,'taza','caldo'],[2,'cda','aceite']],['chorizo','comino','laurel','papa','cilantro'],
+  [['Sofríe cebolla, ajo, zanahoria y tomate para el fondo.',7],
+   ['Agrega las lentejas lavadas y mezcla.',2],
+   ['Vierte el caldo y cocina a fuego medio hasta ablandar.',30],
+   ['Sazona al final con sal y ajusta el espesor.',4]],
+  'Sala las lentejas al final: la sal temprana puede endurecer la piel del grano.'),
+
+P('p33','Caldo de costilla','sopa','Colombia','Hervido',60,'Fácil',4,'🍖',['estufa','olla'],
+  [[700,'g','carne_res'],[3,'','papa'],[3,'','cebollalarga'],[4,'','ajo'],[8,'taza','caldo'],[1,'cdta','sal']],['cilantro','huevo','laurel'],
+  [['Pon la carne en agua fría y lleva a hervor; retira la espuma.',15],
+   ['Agrega cebolla larga, ajo y sal; cocina a fuego bajo.',30],
+   ['Añade la papa entera y cocina hasta blanda.',15],
+   ['Sirve con cilantro fresco picado encima.']],
+  'Empieza en agua fría y retira la espuma: así el caldo queda limpio y no turbio.'),
+
+/* ---------- LEGUMBRES ---------- */
+P('p34','Fríjoles guisados','veg','Colombia','Guiso',40,'Fácil',5,'🫘',['estufa','olla'],
+  [[3,'taza','frijol'],[1,'','platanomaduro'],[1,'','cebolla'],[3,'','ajo'],[2,'','tomate'],[2,'cda','aceite'],[1,'cdta','sal']],['tocino','zanahoria','comino','cilantro'],
+  [['Prepara un sofrito con cebolla, ajo y tomate.',7],
+   ['Agrega el plátano maduro picado y deja que se deshaga.',8],
+   ['Incorpora los fríjoles cocidos con parte de su caldo.',3],
+   ['Cocina a fuego bajo hasta espesar y ligar.',20]],
+  'El plátano maduro deshecho es lo que da el dulce y el cuerpo espeso al fríjol paisa.'),
+
+P('p35','Lentejas con chorizo','veg','España','Guiso',45,'Fácil',4,'🌭',['estufa','olla'],
+  [[2,'taza','lenteja'],[2,'','chorizo'],[1,'','cebolla'],[4,'','ajo'],[1,'','zanahoria'],[6,'taza','caldo'],[2,'cda','aceite']],['paprika','laurel','papa','pimenton'],
+  [['Dora el chorizo en rodajas y reserva; deja la grasa.',5],
+   ['Sofríe cebolla, ajo y zanahoria en esa grasa.',6],
+   ['Agrega las lentejas y el caldo; cocina hasta ablandar.',28],
+   ['Regresa el chorizo los últimos minutos.',5]],
+  'La grasa que suelta el chorizo es el mejor fondo para el sofrito. No la botes.'),
+
+P('p36','Garbanzos salteados','veg','Mundo','Salteado',20,'Fácil',3,'🧆',['estufa','sarten'],
+  [[2,'taza','garbanzo'],[4,'','ajo'],[1,'','cebolla'],[1,'cdta','paprika'],[3,'cda','aceite'],[1,'cdta','sal']],['espinaca','tomate','comino','limon','chorizo'],
+  [['Escurre y seca bien los garbanzos cocidos.'],
+   ['Dora el ajo laminado y la cebolla en el aceite.',5],
+   ['Agrega los garbanzos y saltea hasta que doren un poco.',8],
+   ['Espolvorea la paprika fuera del fuego para que no se queme.',1]],
+  'Las especias en polvo se queman rápido: agrégalas al final o fuera del fuego.'),
+
+/* ---------- VERDURAS Y GUARNICIONES ---------- */
+P('p37','Puré de papa','veg','Mundo','Puré',25,'Fácil',4,'🥔',['estufa','olla'],
+  [[6,'','papa'],[100,'ml','leche'],[4,'cda','mantequilla'],[1,'cdta','sal']],['queso','ajo','pimienta','crema'],
+  [['Cuece las papas peladas en agua con sal hasta muy blandas.',18],
+   ['Escúrrelas y déjalas secar 1 minuto al fuego para perder humedad.',1],
+   ['Aplástalas en caliente e integra la mantequilla primero.',3],
+   ['Agrega la leche tibia poco a poco hasta la textura deseada.',3]],
+  'Mantequilla antes que leche: la grasa cubre el almidón y evita que el puré quede gomoso.'),
+
+P('p38','Papas al horno crocantes','veg','Mundo','Horneado',45,'Fácil',4,'🍟',['horno'],
+  [[6,'','papa'],[4,'cda','aceite'],[1,'cdta','sal'],[1,'cdta','paprika'],[4,'','ajo']],['oregano','perejil','queso','pimienta'],
+  [['Corta las papas en gajos parejos y sécalas muy bien.'],
+   ['Mézclalas con aceite, sal y especias hasta cubrirlas todas.',3],
+   ['Extiéndelas en una sola capa, sin encimarlas, en la bandeja.',2],
+   ['Hornea a 210°C volteando a mitad de cocción.',35]],
+  'Sin amontonar y bien secas: la humedad genera vapor y el vapor impide que doren.'),
+
+P('p39','Verduras salteadas al wok','veg','China','Salteado',15,'Fácil',3,'🥦',['estufa','sarten'],
+  [[1,'','brocoli'],[1,'','zanahoria'],[1,'','pimenton'],[4,'','ajo'],[3,'cda','soya'],[2,'cda','aceite']],['champinon','calabacin','ajipicante','miel','camaron'],
+  [['Corta todas las verduras del mismo tamaño antes de encender el fuego.',5],
+   ['Calienta la sartén hasta que humee ligeramente.',2],
+   ['Saltea primero las duras (zanahoria, brócoli) moviendo constante.',4],
+   ['Agrega las blandas, el ajo y la soya; saltea 2 minutos más.',2]],
+  'En el wok todo se corta antes: una vez arrancas, no hay tiempo de picar nada.'),
+
+P('p40','Brócoli al ajillo','veg','Mundo','Salteado',15,'Fácil',3,'🥦',['estufa','sarten'],
+  [[1,'','brocoli'],[5,'','ajo'],[3,'cda','aceite'],[1,'cdta','sal'],[1,'','limon']],['ajipicante','queso','almendra'],
+  [['Corta el brócoli en floretes y blanquéalo 3 min en agua hirviendo con sal.',4],
+   ['Pásalo a agua fría de inmediato para fijar el color verde.',1],
+   ['Dora el ajo laminado en el aceite a fuego medio.',3],
+   ['Saltea el brócoli escurrido y termina con limón.',3]],
+  'El choque de agua fría (shock térmico) es lo que mantiene el verde intenso.'),
+
+P('p41','Plátanos maduros con queso','veg','Colombia','Horneado',35,'Fácil',3,'🍌',['horno'],
+  [[3,'','platanomaduro'],[200,'g','queso'],[2,'cda','mantequilla']],['panela','canela','bocadillo'],
+  [['Haz un corte a lo largo del plátano sin partirlo, con la cáscara.'],
+   ['Úntale mantequilla y hornea a 200°C hasta muy blando.',25],
+   ['Abre el corte y rellena con el queso.',2],
+   ['Regresa al horno hasta que el queso funda.',6]],
+  'Entre más negra la cáscara, más dulce el resultado. No uses plátano amarillo firme.'),
+
+/* ---------- ENSALADAS Y FRÍOS ---------- */
+P('p42','Guacamole','veg','México','Machacado',12,'Fácil',4,'🥑',['estufa'],
+  [[3,'','aguacate'],[1,'','limon'],[0.5,'','cebolla'],[1,'','tomate'],[1,'cdta','sal']],['cilantro','ajipicante','ajo','comino'],
+  [['Machaca el aguacate con un tenedor, dejando textura.'],
+   ['Agrega el limón de inmediato para que no se oxide.'],
+   ['Incorpora cebolla y tomate picados muy finos.',4],
+   ['Sazona con sal y cilantro al gusto.']],
+  'El limón primero, no al final: es lo que impide que se ponga café.'),
+
+P('p43','Ensalada de aguacate y tomate','veg','Mundo','Crudo',10,'Fácil',3,'🥗',['estufa'],
+  [[2,'','aguacate'],[3,'','tomate'],[0.5,'','cebolla'],[1,'','limon'],[3,'cda','aceite'],[1,'cdta','sal']],['cilantro','albahaca','queso','oregano','pepino'],
+  [['Corta el tomate y el aguacate en gajos parejos.'],
+   ['Remoja la cebolla en pluma en agua fría 5 min para quitarle lo fuerte.',5],
+   ['Mezcla aceite, limón y sal para la vinagreta.'],
+   ['Alíñala justo antes de servir para que no suelte agua.']],
+  'Aliñar al final: la sal saca el agua del tomate y aguada la ensalada si esperas.'),
+
+P('p44','Vinagreta base','salsa','Francia','Emulsión',5,'Fácil',6,'🫗',['estufa'],
+  [[6,'cda','aceite'],[2,'cda','vinagre'],[1,'cdta','mostaza'],[1,'cdta','sal'],[1,'pizca','pimienta']],['miel','ajo','limon','oregano'],
+  [['Mezcla vinagre, mostaza, sal y pimienta en un tazón.'],
+   ['Agrega el aceite en hilo delgado mientras bates sin parar.',2],
+   ['Sigue hasta que espese y quede homogénea.'],
+   ['Guarda en frasco; agita antes de usar.']],
+  'Proporción clásica: 3 partes de aceite por 1 de vinagre. La mostaza es el emulsionante que las une.'),
+
+/* ---------- PESCADOS Y MARISCOS ---------- */
+P('p45','Pescado a la plancha con limón','pescado','Mundo','Plancha',18,'Fácil',2,'🐟',['estufa','sarten'],
+  [[2,'','pescado'],[1,'','limon'],[3,'','ajo'],[3,'cda','aceite'],[1,'cdta','sal']],['perejil','mantequilla','pimienta','alcaparra'],
+  [['Seca muy bien el pescado y sazónalo justo antes de cocinar.'],
+   ['Calienta la sartén con aceite hasta que esté bien caliente.',2],
+   ['Cocina primero el lado de la piel, presionando, sin moverlo.',5],
+   ['Voltea solo una vez y termina con ajo, limón y mantequilla.',4]],
+  'Voltea una sola vez. Si lo mueves de más, el pescado se rompe.'),
+
+P('p46','Pescado en salsa de coco','pescado','Colombia','Guiso',30,'Fácil',4,'🥥',['estufa','sarten'],
+  [[600,'g','pescado'],[400,'ml','lechecoco'],[1,'','cebolla'],[3,'','ajo'],[1,'','tomate'],[2,'cda','aceite'],[1,'','limon']],['cilantro','pimenton','ajipicante','curry'],
+  [['Adoba el pescado con limón y sal; reposa 10 min.',10],
+   ['Sofríe cebolla, ajo y tomate hasta formar base.',6],
+   ['Vierte la leche de coco y deja reducir un poco.',6],
+   ['Añade el pescado y cocina a fuego bajo, sin revolver.',8]],
+  'No revuelvas: mueve la sartén en vez de usar cuchara, así el pescado no se desbarata.'),
+
+P('p47','Camarones al ajillo','pescado','España','Salteado',15,'Fácil',3,'🦐',['estufa','sarten'],
+  [[500,'g','camaron'],[6,'','ajo'],[4,'cda','aceite'],[1,'cdta','sal'],[1,'cdta','ajipicante']],['perejil','limon','vino','mantequilla'],
+  [['Seca bien los camarones pelados.'],
+   ['Calienta el aceite con el ajo laminado a fuego medio.',3],
+   ['Sube el fuego, agrega los camarones y saltea 1 minuto por lado.',2],
+   ['Retira apenas se pongan rosados; termina con perejil.',1]],
+  'Cuando el camarón forma una C está listo; si forma una O, ya se pasó.'),
+
+P('p48','Tortas de atún','pescado','Mundo','Fritura',20,'Fácil',3,'🥫',['estufa','sarten'],
+  [[3,'lata','atun'],[2,'','huevo'],[0.5,'taza','pan'],[0.5,'','cebolla'],[3,'cda','aceite'],[1,'cdta','sal']],['perejil','limon','ajo','queso','mayonesa'],
+  [['Escurre muy bien el atún y desmenúzalo.'],
+   ['Mezcla con huevo, pan rallado y cebolla picada fina.',4],
+   ['Forma tortas y deja reposar 10 min para que compacten.',10],
+   ['Fríe a fuego medio hasta dorar por ambos lados.',6]],
+  'El reposo en frío es lo que evita que se desarmen en la sartén.'),
+
+/* ---------- MASAS Y PANADERÍA ---------- */
+P('p49','Arepas de maíz','pan','Colombia','Asado',25,'Fácil',4,'🫓',['estufa','sarten'],
+  [[2,'taza','harinamaiz'],[2.5,'taza','leche'],[1,'cdta','sal'],[1,'cda','mantequilla']],['queso','huevo'],
+  [['Mezcla el líquido con la sal y agrega la harina en lluvia.'],
+   ['Amasa hasta suave y deja reposar 5 min para que hidrate.',5],
+   ['Forma discos parejos de 1 cm de grosor.',5],
+   ['Ásalas en sartén caliente hasta dorar por ambos lados.',12]],
+  'Si la masa se agrieta al formar, le falta líquido. Debe sentirse como plastilina suave.'),
+
+P('p50','Panqueques','desayuno','Mundo','Cuajado',20,'Fácil',4,'🥞',['estufa','sarten'],
+  [[1.5,'taza','harina'],[1,'taza','leche'],[2,'','huevo'],[2,'cda','azucar'],[2,'cdta','bicarbonato'],[2,'cda','mantequilla']],['vainilla','miel','banano','canela','chocolate'],
+  [['Mezcla los secos por un lado y los húmedos por otro.'],
+   ['Únelos removiendo lo mínimo: deben quedar grumos.',2],
+   ['Deja reposar la mezcla 10 minutos.',10],
+   ['Cocina en sartén a fuego medio; voltea cuando salgan burbujas.',8]],
+  'Mezclar de menos es la clave. Si bates hasta liso, desarrollas gluten y quedan chiclosos.'),
+
+P('p51','Crepes','desayuno','Francia','Cuajado',25,'Media',4,'🫓',['estufa','sarten','licuadora'],
+  [[1,'taza','harina'],[1.5,'taza','leche'],[3,'','huevo'],[2,'cda','mantequilla'],[1,'pizca','sal']],['vainilla','azucar','queso','chocolate','jamon'],
+  [['Licúa todos los ingredientes hasta muy liso.',2],
+   ['Deja reposar la mezcla mínimo 20 minutos en frío.',20],
+   ['Vierte poca mezcla en sartén caliente y gírala para cubrir.',1],
+   ['Cocina 1 minuto por lado; el primero casi siempre sale mal.',2]],
+  'El reposo relaja el gluten y por eso el crepe queda delgado y flexible en vez de correoso.'),
+
+/* ---------- SALSAS BASE ---------- */
+P('p52','Salsa bechamel','salsa','Francia','Roux',15,'Media',6,'🥛',['estufa','olla'],
+  [[3,'cda','mantequilla'],[3,'cda','harina'],[2,'taza','leche'],[1,'cdta','sal'],[1,'pizca','pimienta']],['queso','ajo'],
+  [['Derrite la mantequilla a fuego medio sin dorarla.',2],
+   ['Agrega la harina y cocina removiendo 2 minutos (esto es el roux).',2],
+   ['Vierte la leche tibia poco a poco batiendo sin parar.',5],
+   ['Cocina hasta espesar y sazona.',5]],
+  'Leche tibia y de a poco: si la echas fría y de golpe, se hacen grumos que no salen.'),
+
+P('p53','Salsa de tomate base','salsa','Italia','Reducción',35,'Fácil',6,'🍅',['estufa','olla'],
+  [[800,'g','tomatelata'],[1,'','cebolla'],[4,'','ajo'],[4,'cda','aceite'],[1,'cdta','sal'],[1,'cdta','azucar']],['albahaca','oregano','laurel','zanahoria'],
+  [['Sofríe la cebolla en el aceite hasta transparentar.',6],
+   ['Agrega el ajo y cocina 1 minuto más.',1],
+   ['Incorpora el tomate, la sal y el azúcar.',2],
+   ['Cocina a fuego bajo hasta concentrar y oscurecer.',25]],
+  'Congélala en porciones: es la base de pastas, pizzas, guisos y huevos rancheros.'),
+
+P('p54','Mayonesa casera','salsa','Francia','Emulsión',8,'Media',6,'🥚',['licuadora'],
+  [[1,'','huevo'],[1,'taza','aceite'],[1,'cda','limon'],[1,'cdta','mostaza'],[1,'cdta','sal']],['ajo','perejil','ajipicante'],
+  [['Pon el huevo entero, limón, mostaza y sal en el vaso.'],
+   ['Agrega el aceite encima y deja asentar 30 segundos.',1],
+   ['Licúa con la batidora al fondo, sin moverla, hasta que emulsione.',1],
+   ['Sube la batidora despacio para integrar todo el aceite.',2]],
+  'Todo a temperatura ambiente. Si el huevo está frío, la emulsión se corta.'),
+
+/* ---------- POSTRES ---------- */
+P('p55','Torta de banano','postre','Mundo','Horneado',60,'Fácil',8,'🍌',['horno'],
+  [[3,'','banano'],[2,'taza','harina'],[0.75,'taza','azucar'],[2,'','huevo'],[0.5,'taza','mantequilla'],[2,'cdta','bicarbonato']],['canela','vainilla','chocolate','avena'],
+  [['Machaca los bananos bien maduros con un tenedor.',3],
+   ['Bate la mantequilla con el azúcar y luego los huevos.',5],
+   ['Integra el banano y por último la harina con el polvo de hornear.',3],
+   ['Hornea a 180°C hasta que el palillo salga limpio.',45]],
+  'Entre más negro el banano, mejor la torta. Los verdes no tienen ni dulce ni aroma.'),
+
+P('p56','Brownie casero','postre','Mundo','Horneado',45,'Fácil',9,'🍫',['horno'],
+  [[200,'g','chocolate'],[0.75,'taza','mantequilla'],[1,'taza','azucar'],[3,'','huevo'],[1,'taza','harina'],[1,'cdta','vainilla']],['canela','sal'],
+  [['Derrite el chocolate con la mantequilla a baño maría.',6],
+   ['Bate los huevos con el azúcar hasta pálidos y espumosos.',5],
+   ['Integra el chocolate tibio y luego la harina con movimientos suaves.',3],
+   ['Hornea a 180°C; sácalo cuando el centro aún tiemble un poco.',28]],
+  'Sácalo antes de que se vea "listo": el brownie termina de cuajar fuera del horno y así queda húmedo.'),
+
+P('p57','Compota rápida de manzana','postre','Mundo','Cocción',25,'Fácil',4,'🍎',['estufa','olla'],
+  [[4,'','manzana'],[3,'cda','azucar'],[1,'','limon'],[1,'cdta','canela'],[0.5,'taza','agua']],['panela','vainilla','yogur'],
+  [['Pela y corta las manzanas en cubos.',5],
+   ['Ponlas en la olla con agua, azúcar, limón y canela.',2],
+   ['Cocina tapado a fuego bajo hasta que se deshagan.',15],
+   ['Machaca para textura rústica o licúa para lisa.',2]],
+  'El limón mantiene el color claro y equilibra el dulce.'),
+
+/* ---------- BASES Y APROVECHAMIENTO ---------- */
+P('p58','Hogao (base criolla)','salsa','Colombia','Sofrito',15,'Fácil',6,'🥫',['estufa','sarten'],
+  [[3,'','tomate'],[3,'cda','cebollalarga'],[3,'','ajo'],[2,'cda','aceite'],[1,'cdta','sal']],['comino','paprika','cilantro','cebolla'],
+  [['Calienta el aceite con la paprika si la tienes.',1],
+   ['Sofríe la cebolla hasta que cristalice, sin dorarla.',5],
+   ['Agrega el tomate picado y el ajo; cocina hasta deshacer.',8],
+   ['Sazona y reserva: sirve para arroces, carnes, huevos y fríjoles.']],
+  'Es la base de medio recetario colombiano. Haz doble y congélala en cubetas de hielo.'),
+
+P('p59','Carne encebollada','carne','Colombia','Salteado',25,'Fácil',3,'🧅',['estufa','sarten'],
+  [[400,'g','carne_res'],[2,'','cebolla'],[4,'','ajo'],[3,'cda','aceite'],[1,'cdta','sal'],[1,'pizca','pimienta']],['tomate','soya','comino','cilantro','vinagre'],
+  [['Corta la carne en tiras y la cebolla en pluma gruesa.',5],
+   ['Sella la carne a fuego alto por tandas y resérvala.',5],
+   ['Sofríe la cebolla en la misma sartén hasta dorar en los bordes.',6],
+   ['Regresa la carne, mezcla y sazona.',3]],
+  'Cebolla en pluma gruesa: la fina se deshace y desaparece en el plato.'),
+
+P('p60','Bistec a caballo','carne','Colombia','Plancha',20,'Fácil',2,'🍳',['estufa','sarten'],
+  [[2,'','carne_res'],[2,'','huevo'],[2,'','tomate'],[1,'','cebolla'],[3,'','ajo'],[3,'cda','aceite'],[1,'cdta','sal']],['cilantro','comino','arroz'],
+  [['Aplana los bistecs y sazona con ajo, sal y pimienta.',3],
+   ['Prepara un sofrito rápido con cebolla y tomate; resérvalo.',7],
+   ['Sella los bistecs a fuego alto, 2 minutos por lado.',4],
+   ['Fríe los huevos y monta: carne, sofrito y huevo encima.',4]],
+  'El nombre viene del huevo "montado a caballo" sobre la carne.'),
+
+P('p61','Salsa criolla fresca','salsa','Perú','Crudo',10,'Fácil',4,'🧅',['estufa'],
+  [[1,'','cebolla'],[1,'','tomate'],[1,'','limon'],[2,'cda','aceite'],[1,'cdta','sal']],['ajipicante','cilantro','ajo','vinagre'],
+  [['Corta la cebolla en pluma muy fina y el tomate en tiras.',5],
+   ['Enjuaga la cebolla en agua fría para quitarle el ardor.',2],
+   ['Mezcla todo con limón, aceite y sal.'],
+   ['Deja reposar 5 minutos antes de servir.',5]],
+  'Enjuagar la cebolla es lo que hace la diferencia entre agradable y agresiva.'),
+
+P('p62','Tomates confitados al ajo','veg','Italia','Confitado',40,'Fácil',4,'🍅',['horno'],
+  [[8,'','tomate'],[6,'','ajo'],[5,'cda','aceite'],[1,'cdta','sal'],[1,'cdta','azucar']],['oregano','albahaca','pimienta','vinagre'],
+  [['Corta los tomates por la mitad y acomódalos en la bandeja.',5],
+   ['Reparte el ajo entero con cáscara y baña todo con aceite.',3],
+   ['Espolvorea sal, azúcar y hierbas.'],
+   ['Hornea a 150°C lento hasta concentrar y arrugar.',35]],
+  'Fuego bajo y tiempo largo: el azúcar del tomate se concentra en vez de quemarse.'),
+];
+
+/* ============================================================
+   MOTOR DE COINCIDENCIAS
+   ============================================================ */
+let pantry = new Set(store.get('rec_pantry', BASICOS));
+let equipo = new Set(store.get('rec_equipo', ['estufa','sarten','olla']));
+
+function tengo(id){
+  if(pantry.has(id)) return {ok:true, sust:null};
+  const subs = SUSTITUTOS[id]||[];
+  for(const s of subs) if(pantry.has(s)) return {ok:true, sust:s};
+  return {ok:false, sust:null};
+}
+
+function evaluar(p){
+  // equipos: si falta alguno, no se puede hacer
+  const faltaEq = p.eq.filter(e=>!equipo.has(e));
+  const req = p.ing.map(i=>i[2]);
+  const falta=[], sustituciones=[], usa=[];
+  req.forEach(id=>{
+    const t=tengo(id);
+    if(t.ok){ usa.push(id); if(t.sust) sustituciones.push([id,t.sust]); }
+    else falta.push(id);
+  });
+  const extras = (p.opt||[]).filter(id=>pantry.has(id));
+  // puntaje: cuántos de tus ingredientes aprovecha + qué tan completa está
+  const cobertura = usa.length/req.length;
+  const score = cobertura*100 + usa.length*4 + extras.length*3 - faltaEq.length*100;
+  return {p, falta, faltaEq, sustituciones, extras, usa, cobertura, score};
+}
+
+function buscarPreparaciones(){
+  const evaluadas = PREPS.map(evaluar).filter(r=>!r.faltaEq.length);
+  const listas = evaluadas.filter(r=>r.falta.length===0).sort((a,b)=>b.score-a.score);
+  const cerca  = evaluadas.filter(r=>r.falta.length>0 && r.falta.length<=2)
+                          .sort((a,b)=>a.falta.length-b.falta.length || b.score-a.score);
+  return {listas, cerca:cerca.slice(0,12)};
+}
+
+/* ============================================================
+   VISTA "¿QUÉ COCINO?"
+   ============================================================ */
+function renderPantry(){
+  const app=document.getElementById('app');
+  document.querySelector('.topbar').style.display='none';
+  document.querySelector('.chips').style.display='none';
+  document.querySelector('.wrap').innerHTML=`
+   <div class="pantry">
+     <div class="pantry-head">
+       <h2>¿Qué cocino hoy?</h2>
+       <p>Marca lo que tienes en casa y te digo qué puedes preparar ahora mismo.</p>
+     </div>
+     <div class="psearch"><input id="pq" placeholder="Buscar ingrediente…" autocomplete="off"></div>
+
+     <div class="pgroup">
+       <div class="gt">🔧 Con qué cocinas <span class="n" id="nEq">${equipo.size}</span></div>
+       <div class="pills" id="eqPills"></div>
+     </div>
+
+     <div id="groups"></div>
+
+     <div class="pantry-bar">
+       <button class="go" id="goBtn"></button>
+       <button class="clearsel" id="clearSel">Limpiar todo</button>
+     </div>
+
+     <div id="resultados"></div>
+   </div>`;
+  renderPills();
+  document.getElementById('pq').addEventListener('input',e=>renderPills(e.target.value.toLowerCase()));
+  document.getElementById('goBtn').onclick=mostrarResultados;
+  document.getElementById('clearSel').onclick=()=>{
+    pantry=new Set(BASICOS); savePantry(); renderPills();
+    document.getElementById('resultados').innerHTML='';
+    toast('Despensa reiniciada');
+  };
+  window.scrollTo(0,0);
+}
+function savePantry(){
+  store.set('rec_pantry',[...pantry]); store.set('rec_equipo',[...equipo]);
+}
+function renderPills(filtro){
+  const eq=document.getElementById('eqPills');
+  eq.innerHTML=Object.keys(EQUIPOS).map(k=>
+    `<button class="pill eq ${equipo.has(k)?'on':''}" data-eq="${k}">${EQUIPOS[k]}</button>`).join('');
+  eq.querySelectorAll('[data-eq]').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.eq; equipo.has(k)?equipo.delete(k):equipo.add(k);
+    savePantry(); renderPills(filtro);
+  });
+  document.getElementById('nEq').textContent=equipo.size;
+
+  document.getElementById('groups').innerHTML=GROUPS.map(g=>{
+    const ids=g.ids.filter(id=>!filtro || ING[id].toLowerCase().includes(filtro));
+    if(!ids.length) return '';
+    const n=g.ids.filter(id=>pantry.has(id)).length;
+    return `<div class="pgroup">
+      <div class="gt">${g.em} ${g.t} ${n?`<span class="n">${n}</span>`:''}</div>
+      <div class="pills">${ids.map(id=>
+        `<button class="pill ${pantry.has(id)?'on':''}" data-ing="${id}">${ING[id]}</button>`).join('')}</div>
+    </div>`;
+  }).join('');
+  document.querySelectorAll('[data-ing]').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.ing; pantry.has(k)?pantry.delete(k):pantry.add(k);
+    savePantry(); b.classList.toggle('on');
+    actualizarBoton();
+    document.querySelectorAll('.pgroup .gt .n').forEach(()=>{});
+    renderPills(filtro);
+  });
+  actualizarBoton();
+}
+function actualizarBoton(){
+  const b=document.getElementById('goBtn'); if(!b) return;
+  const n=pantry.size;
+  b.className='go'+(n<3?' dim':'');
+  b.innerHTML = n<3 ? 'Marca al menos 3 ingredientes'
+    : `🔎 Ver qué puedo cocinar con ${n} ingredientes`;
+}
+
+function mostrarResultados(){
+  if(pantry.size<3){ toast('Marca al menos 3 ingredientes'); return; }
+  const {listas,cerca}=buscarPreparaciones();
+  const box=document.getElementById('resultados');
+  let html='';
+
+  html+=`<div class="res-head"><span class="badge ok">Puedes hacerlo ya</span>
+         <span>${listas.length} preparacion${listas.length===1?'':'es'}</span></div>`;
+  html+= listas.length
+    ? listas.map(r=>cardHTML(r,false)).join('')
+    : `<div class="empty" style="padding:26px"><span class="em">🧑‍🍳</span>
+       Con esa combinación no sale un plato completo todavía.<br>Mira abajo lo que está a punto.</div>`;
+
+  if(cerca.length){
+    html+=`<div class="res-head"><span class="badge near">Te falta poco</span>
+           <span>${cerca.length} a un paso</span></div>`;
+    html+= cerca.map(r=>cardHTML(r,true)).join('');
+  }
+
+  html+=aiBoxHTML();
+  box.innerHTML=html;
+
+  box.querySelectorAll('[data-prep]').forEach(c=>c.onclick=()=>{
+    const p=PREPS.find(x=>x.id===c.dataset.prep); if(p) openDetail(p);
+  });
+  document.getElementById('aiBtn').onclick=pedirIA;
+  box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function cardHTML(r,esCerca){
+  const p=r.p;
+  const nombres=ids=>ids.map(i=>ING[i]||i).join(', ');
+  return `<button class="res-card" data-prep="${p.id}">
+    <div class="ic" style="background:${tint(p.cat)}">${p.em}</div>
+    <div class="rc-body">
+      <div class="tec">${p.tec} · ${p.pais}</div>
+      <h4>${p.name}</h4>
+      <div class="rmeta"><span>⏱ ${p.min}m</span><span>👥 ${p.serv}</span><span>${p.dif}</span></div>
+      ${esCerca?`<div class="miss">Te falta: ${nombres(r.falta)}</div>`:''}
+      ${r.sustituciones.length?`<div class="uses">↔ Puedes reemplazar ${nombres(r.sustituciones.map(s=>s[0]))} con ${nombres(r.sustituciones.map(s=>s[1]))}</div>`:''}
+      ${(!esCerca&&r.extras.length)?`<div class="uses">✨ Mejóralo con: ${nombres(r.extras.slice(0,4))}</div>`:''}
+    </div>
+  </button>`;
+}
+
+/* ---------- Capa IA opcional ---------- */
+function aiBoxHTML(){
+  return `<div class="ai-box">
+    <h4>✨ Sorpréndeme con IA</h4>
+    <p>Ideas creativas fuera de la biblioteca, pensadas por un chef con IA usando justo lo que marcaste.</p>
+    <button class="ai-btn" id="aiBtn">Proponerme algo creativo</button>
+    <div class="ai-out" id="aiOut"></div>
+  </div>`;
+}
+const AI_ENDPOINT = '/.netlify/functions/chef';  // mismo sitio, sin configurar nada
+
+function md(t){  // Markdown mínimo → HTML (seguro: escapa primero)
+  const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return esc(t)
+    .replace(/^## (.+)$/gm,'<h4 style="font-family:var(--disp);font-size:17px;margin:18px 0 6px">$1</h4>')
+    .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
+    .replace(/^(\d+)\.\s(.+)$/gm,'<div style="margin:3px 0 3px 4px">$1. $2</div>')
+    .replace(/^-\s(.+)$/gm,'<div style="margin:3px 0 3px 4px">• $1</div>')
+    .replace(/\n{2,}/g,'<br>');
+}
+
+async function pedirIA(){
+  const out=document.getElementById('aiOut'), btn=document.getElementById('aiBtn');
+  const lista=[...pantry].map(i=>ING[i]||i).join(', ');
+  const eqs=[...equipo].map(e=>EQUIPOS[e]).join(', ');
+  if(!lista){ out.textContent='Marca primero algunos ingredientes.'; return; }
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span> El chef está pensando…'; out.textContent='';
+  try{
+    const res=await fetch(AI_ENDPOINT,{method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ingredientes:lista,equipos:eqs})});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok || data.error){
+      out.textContent = data.error || `El servidor respondió ${res.status}.`;
+    } else if(data.texto){
+      out.innerHTML = md(data.texto);
+    } else {
+      out.textContent = 'Respuesta vacía del servidor.';
+    }
+  }catch(e){
+    out.textContent='No se pudo conectar. Si estás abriendo el archivo localmente, esto solo funciona una vez publicado en Netlify.';
+  }
+  btn.disabled=false; btn.textContent='Proponerme algo creativo';
+}
+
+/* ============ Init ============ */
+renderChips(); renderGrid(); renderTabs();
+</script>
+</body>
+</html>
