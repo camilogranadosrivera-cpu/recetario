@@ -21,7 +21,7 @@ const REGLAS = [
 export default async (request) => {
   if (request.method === "OPTIONS") return new Response("", { status: 204, headers: CORS });
 
-  const key = Netlify.env.get("ANTHROPIC_API_KEY");
+  const key = (Netlify.env.get("ANTHROPIC_API_KEY") || "").trim();
   if (!key) return Response.json({ error: "Falta ANTHROPIC_API_KEY en Netlify." }, { status: 500, headers: CORS });
 
   const b = await request.json().catch(() => ({}));
@@ -36,16 +36,29 @@ export default async (request) => {
     headers: { "content-type": "application/json", "x-api-key": key, "anthropic-version": "2023-06-01" },
     body: JSON.stringify({
       model: "claude-haiku-5-5",
-      max_tokens: 1500,
+      max_tokens: 4000,
+      output_config: { effort: "low" },
+      thinking: { type: "disabled" },
       system: REGLAS,
       messages: [{ role: "user", content: pregunta }],
     }),
   }).catch(() => null);
 
   if (!r) return Response.json({ error: "No se pudo contactar la API." }, { status: 502, headers: CORS });
-  if (!r.ok) return Response.json({ error: "La API respondio " + r.status + ". Revisa tu key o tu saldo." }, { status: 502, headers: CORS });
 
-  const data = await r.json();
-  const texto = (data.content || []).filter(x => x.type === "text").map(x => x.text).join("\n").trim();
+  const data = await r.json().catch(() => null);
+
+  if (!r.ok) {
+    const detalle = data && data.error && data.error.message ? data.error.message : "";
+    return Response.json({ error: "La API respondio " + r.status + ". " + detalle }, { status: 502, headers: CORS });
+  }
+
+  const texto = ((data && data.content) || []).filter(x => x.type === "text").map(x => x.text).join("\n").trim();
+
+  if (!texto) {
+    const motivo = data && data.stop_reason ? " (stop_reason: " + data.stop_reason + ")" : "";
+    return Response.json({ error: "El modelo no devolvio texto" + motivo + "." }, { status: 502, headers: CORS });
+  }
+
   return Response.json({ texto }, { headers: CORS });
 };
