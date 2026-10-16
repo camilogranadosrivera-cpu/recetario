@@ -213,8 +213,13 @@
   .ph-top h2{margin:0;min-width:0}
   .libro.oscuro{margin:0;flex:none}
   .libro{width:34px;height:34px;border-radius:50%;border:1px solid rgba(21,24,26,.16);
-    background:none;display:grid;place-items:center;margin-left:auto;margin-right:8px;flex:none}
+    background:none;display:grid;place-items:center;margin-left:auto;margin-right:8px;
+    flex:none;align-self:center}
   .libro svg{width:17px;height:17px;stroke:var(--tinta);opacity:.72}
+  /* La barra de arriba es oscura: ahí el icono va claro o no se ve. */
+  .topbar .libro{border-color:rgba(242,237,228,.22)}
+  .topbar .libro svg{stroke:var(--papel);opacity:.8}
+  .topbar .libro:active{background:rgba(242,237,228,.08)}
   .ftabs{display:flex;gap:7px;margin:0 0 8px;overflow-x:auto;scrollbar-width:none;
     -webkit-overflow-scrolling:touch;
     padding-right:max(16px,env(safe-area-inset-right,0px));
