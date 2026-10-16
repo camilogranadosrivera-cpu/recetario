@@ -117,6 +117,194 @@
   .empty{text-align:center;color:var(--ink-3);padding:56px 20px;font-size:14.5px;line-height:1.6}
   .empty .em{font-size:34px;display:block;margin-bottom:12px;opacity:.5}
 
+  /* ---------- Maridaje ---------- */
+  .leyenda{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 18px}
+  .pars{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+  .par{font-size:12px;padding:4px 9px;border-radius:2px;border:1px solid;white-space:nowrap}
+  .par.puente   {border-color:rgba(122,154,160,.45);color:#9FBEC4}
+  .par.refuerzo {border-color:rgba(160,120,78,.5); color:#C9A273}
+  .par.corte    {border-color:rgba(126,154,110,.45);color:#A6C293}
+  .par.contraste{border-color:rgba(150,74,86,.5);  color:#D8A6AC}
+  .par.tradicion{border-color:rgba(184,145,79,.5); color:var(--laton)}
+  .par.casa{border-color:rgba(184,145,79,.75);background:rgba(184,145,79,.12);color:var(--laton)}
+  .firma{margin:0 0 20px;padding:13px 15px;background:rgba(184,145,79,.1);
+    border-left:2px solid var(--laton);font-size:13.5px;line-height:1.6;
+    color:rgba(242,237,228,.86)}
+  .base .para{font-size:13px;line-height:1.55;color:rgba(242,237,228,.68);margin:10px 0 0}
+  .base .para em{font-style:normal;font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--laton);opacity:.8;margin-right:5px}
+  .base .como{font-size:13.5px;line-height:1.6;color:rgba(242,237,228,.58);margin:8px 0 0}
+  .par.si{background:rgba(242,237,228,.1);font-weight:500}
+  .par.audaz{border-style:dashed}
+  .mar .como{color:rgba(242,237,228,.6);font-size:13px}
+  .ftab.solo{display:block;margin:0 0 16px}
+  .heredado{font-size:11px;letter-spacing:.06em;color:var(--laton);opacity:.75;margin:6px 0 0}
+  #qMar{width:100%;min-width:0;background:rgba(242,237,228,.05);color:var(--papel);
+    border:1px solid rgba(242,237,228,.16);border-radius:2px;padding:11px 13px;
+    font-family:var(--cuerpo);font-size:15px}
+  #qMar:focus{outline:none;border-color:var(--laton)}
+  #sugiere:empty{display:none}
+  #sugiere .sug-sub{font-size:12.5px;line-height:1.5;color:rgba(21,24,26,.5);margin:0 0 10px}
+  .pill.sug{border-style:dashed;border-color:rgba(184,145,79,.6);color:#8A6A2E}
+
+  /* ---------- Pastas y anatomía ---------- */
+  .plato h3{font-family:var(--disp);font-weight:500;font-size:23px;color:var(--papel);
+    margin:0 0 8px;line-height:1.15}
+  .plato > .como{font-size:14px;line-height:1.6;color:rgba(242,237,228,.76);margin:0 0 16px}
+  .parte{display:grid;grid-template-columns:minmax(78px,26%) 1fr;gap:12px;
+    padding:11px 0;border-top:1px solid rgba(242,237,228,.07)}
+  .parte b{font-family:var(--disp);font-weight:500;font-size:15px;color:var(--laton);
+    min-width:0;line-height:1.3}
+  .parte b i{font-style:normal;opacity:.8}
+  .parte span{font-size:13px;line-height:1.55;color:rgba(242,237,228,.72);min-width:0}
+  @media (max-width:360px){ .parte{grid-template-columns:1fr;gap:2px} }
+
+  /* ---------- Seguridad, rendimiento y despiece ---------- */
+  .pasos{list-style:none;counter-reset:p;margin:0;padding:0}
+  .pasos li{counter-increment:p;display:grid;grid-template-columns:22px 1fr;gap:3px 11px;
+    padding:12px 0;border-bottom:1px solid rgba(242,237,228,.07)}
+  .pasos li::before{content:counter(p);grid-row:span 2;font-family:var(--disp);font-size:15px;
+    color:var(--laton);opacity:.8;padding-top:1px}
+  .pasos b{font-family:var(--disp);font-weight:500;font-size:16px;color:var(--papel)}
+  .pasos span{font-size:13.5px;line-height:1.55;color:rgba(242,237,228,.72)}
+  .alerta{margin:22px 0 4px;padding:14px 16px;background:rgba(110,42,51,.22);
+    border-left:2px solid #A4545F}
+  .alerta .tc-k{color:#E0A9AF}
+  .alerta p{font-size:13.5px;line-height:1.55;color:rgba(242,237,228,.84);margin:5px 0 0}
+  .zona{padding:12px 0 12px 12px;border-left:2px solid rgba(242,237,228,.18);margin-bottom:4px}
+  .zona.alerta{background:none;padding:12px 0 12px 12px;margin:0 0 4px;border-left-color:#C98A3C}
+  .zona.alerta .grados{color:#D9A45F}
+  .zona.bien{border-left-color:var(--laton)}
+  .zona.frio{border-left-color:#6D93A8}
+  .zona.frio .grados{color:#8FB4C8}
+  .zona .como{font-size:13px;line-height:1.5;color:rgba(242,237,228,.6);margin:4px 0 0}
+  .claves{list-style:none;margin:10px 0 0;padding:0}
+  .claves li{position:relative;padding:5px 0 5px 16px;font-size:13px;line-height:1.5;
+    color:rgba(242,237,228,.62)}
+  .claves li::before{content:'';position:absolute;left:0;top:12px;width:5px;height:5px;
+    border-radius:50%;background:var(--laton);opacity:.7}
+  .formula{margin:14px 0 18px;padding:12px 14px;border:1px solid rgba(184,145,79,.35);
+    border-radius:2px;font-size:13.5px;color:var(--laton);text-align:center;
+    font-variant-numeric:tabular-nums}
+  .calc{margin:0 0 20px}
+  .calc label{display:block;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
+    color:rgba(242,237,228,.45);margin-bottom:7px}
+  .calc-in{display:flex;align-items:center;gap:9px}
+  .calc-in input{flex:1;min-width:0;background:rgba(242,237,228,.05);color:var(--papel);
+    border:1px solid rgba(242,237,228,.16);border-radius:2px;padding:11px 13px;
+    font-family:var(--disp);font-size:21px;font-variant-numeric:tabular-nums}
+  .calc-in input:focus{outline:none;border-color:var(--laton)}
+  .calc-in span{font-size:13px;color:rgba(242,237,228,.5);flex:none}
+  .rend .met b{font-family:var(--disp);font-weight:500;font-size:17px;color:var(--papel);
+    font-variant-numeric:tabular-nums}
+  .rend .met span:last-child b{color:#D8A6AC}
+  .ficha .item > .ojo{font-size:12.5px;line-height:1.55;color:var(--laton);margin:5px 0 0}
+  .ficha .item > .ojo em{font-style:normal;font-size:9px;letter-spacing:.14em;
+    text-transform:uppercase;opacity:.65;margin-right:4px}
+
+  /* ---------- Fichas de cocina ---------- */
+  .ficha .item{padding:15px 0;border-bottom:1px solid rgba(242,237,228,.07)}
+  .ficha .fila{display:flex;align-items:baseline;justify-content:space-between;gap:14px}
+  .ficha .nombre{font-family:var(--disp);font-weight:500;font-size:18px;
+    color:var(--papel);min-width:0}
+  .ficha .item > .como{font-size:13.5px;line-height:1.55;
+    color:rgba(242,237,228,.74);margin:8px 0 0}
+  .ph-top{display:flex;align-items:center;justify-content:space-between;gap:14px}
+  .ph-top h2{margin:0;min-width:0}
+  .libro.oscuro{margin:0;flex:none}
+  .libro{width:34px;height:34px;border-radius:50%;border:1px solid rgba(21,24,26,.16);
+    background:none;display:grid;place-items:center;margin-left:auto;margin-right:8px;flex:none}
+  .libro svg{width:17px;height:17px;stroke:var(--tinta);opacity:.72}
+  .ftabs{display:flex;gap:7px;margin:0 0 8px;overflow-x:auto;scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+    padding-right:max(16px,env(safe-area-inset-right,0px));
+    margin-right:calc(-1 * max(16px,env(safe-area-inset-right,0px)))}
+  .ftabs::-webkit-scrollbar{display:none}
+  .ftab{flex:none;white-space:nowrap}
+  .ftab{font-family:var(--cuerpo);font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+    background:none;color:rgba(242,237,228,.5);border:1px solid rgba(242,237,228,.14);
+    border-radius:2px;padding:7px 12px}
+  .ftab.on{background:rgba(184,145,79,.17);border-color:rgba(184,145,79,.55);color:var(--laton)}
+  .ficha .h2sub{color:rgba(242,237,228,.5);font-size:13.5px;line-height:1.6;margin:14px 0 4px}
+  .f-sec.mini{margin:16px 0 9px;border:none;padding:0}
+  .grados{flex:none;font-family:var(--disp);font-size:19px;color:var(--laton);white-space:nowrap}
+  .grados em{font-style:normal;font-size:11px;letter-spacing:.08em;color:rgba(242,237,228,.42)}
+  .medida{flex:none;font-size:12px;letter-spacing:.1em;color:var(--laton);white-space:nowrap}
+  .tc-g{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:4px}
+  .tc-g span{font-size:13px;color:rgba(242,237,228,.76);font-variant-numeric:tabular-nums}
+  .tc-g em{display:block;font-style:normal;font-size:9px;letter-spacing:.14em;
+    text-transform:uppercase;color:rgba(242,237,228,.34);margin-bottom:1px}
+  .escala{display:flex;align-items:center;gap:10px;margin:9px 0 2px;min-height:20px}
+  .escala i{display:block;background:var(--laton);opacity:.75;border-radius:1px;flex:none}
+  .met{display:flex;flex-wrap:wrap;gap:7px 20px;margin-top:3px}
+  .met span{font-size:13px;color:rgba(242,237,228,.78)}
+  .met em{display:block;font-style:normal;font-size:9px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--laton);opacity:.8;margin-bottom:1px}
+  .salsa .base{font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--laton);margin:5px 0 8px}
+  .der{display:flex;gap:10px;align-items:baseline;padding:5px 0;border-top:1px solid rgba(242,237,228,.06)}
+  .der b{font-family:var(--disp);font-weight:500;font-size:14.5px;color:var(--papel);flex:none}
+  .der span{font-size:12.5px;color:rgba(242,237,228,.6);min-width:0}
+  .mp{display:flex;flex-wrap:wrap;gap:5px 14px;margin-top:7px;padding-top:8px;
+    border-top:1px dotted rgba(242,237,228,.12)}
+  .mp span{font-size:12px;color:rgba(242,237,228,.6)}
+  .mp em{display:block;font-style:normal;font-size:9px;letter-spacing:.14em;
+    text-transform:uppercase;color:rgba(242,237,228,.3);margin-bottom:1px}
+  .rz{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+  .rz span{font-size:12.5px;padding:5px 10px;border-radius:2px;
+    border:1px solid rgba(242,237,228,.13);color:rgba(242,237,228,.66)}
+  .rz span.si{border-color:rgba(184,145,79,.5);background:rgba(184,145,79,.13);color:var(--laton)}
+  .rz i{font-style:normal;font-size:10px;letter-spacing:.07em;opacity:.75}
+  .tempcard{margin:16px 0 0;padding:14px 16px;background:rgba(21,24,26,.05);
+    border-left:2px solid var(--laton)}
+  .tc-k{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--laton);margin-bottom:5px}
+  .tc-n{font-family:var(--disp);font-weight:500;font-size:26px;color:var(--tinta);line-height:1.1}
+  .tc-n em{font-style:normal;font-family:var(--cuerpo);font-size:11.5px;letter-spacing:.07em;
+    color:rgba(21,24,26,.5);margin-left:9px}
+  .tempcard p{font-size:13px;line-height:1.55;color:rgba(21,24,26,.66);margin:7px 0 0}
+  .tempcard .tc-g span{color:rgba(21,24,26,.72)}
+  .tempcard .tc-g em{color:rgba(21,24,26,.4)}
+  .realza{margin:16px 0 0}
+  .realza .tc-k{color:rgba(21,24,26,.45)}
+  .realza .rz span{border-color:rgba(21,24,26,.14);color:rgba(21,24,26,.6)}
+  .realza .rz span.si{border-color:rgba(184,145,79,.6);background:rgba(184,145,79,.13);color:#8A6A2E}
+
+  /* ---------- Ficha de cortes y cocciones ---------- */
+  .pill .aka{display:block;font-style:normal;font-size:10px;letter-spacing:.06em;
+    text-transform:uppercase;opacity:.55;margin-top:2px}
+  .gi{width:17px;height:17px;border-radius:50%;border:1px solid var(--laton);
+    color:var(--laton);background:none;font-family:var(--disp);font-size:11px;
+    line-height:1;margin-left:8px;vertical-align:middle;cursor:pointer}
+  .ficha{padding:max(22px,env(safe-area-inset-top)) 22px 56px;position:relative}
+  .back.fx{position:static;background:none;border:1px solid rgba(242,237,228,.22);margin-bottom:20px}
+  .f-cat{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--laton);margin-bottom:6px}
+  .ficha h2{font-family:var(--disp);font-weight:500;font-size:30px;line-height:1.12;
+    color:var(--papel);margin:0 0 26px}
+  .f-sec{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,237,228,.4);
+    margin:30px 0 14px;padding-bottom:7px;border-bottom:1px solid rgba(242,237,228,.1)}
+  .fc{padding:13px 0;border-bottom:1px solid rgba(242,237,228,.07)}
+  .fc-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+  .fc-top b{font-family:var(--disp);font-weight:500;font-size:17px;color:var(--papel)}
+  .coc{flex:none;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+    padding:3px 8px;border-radius:2px;white-space:nowrap}
+  .coc.rapida{background:rgba(184,145,79,.17);color:var(--laton)}
+  .coc.lenta{background:rgba(110,42,51,.3);color:#D8A6AC}
+  .coc.ambos{background:rgba(242,237,228,.08);color:rgba(242,237,228,.6)}
+  .fc-eq{display:flex;flex-wrap:wrap;gap:5px 14px;margin-top:8px}
+  .fc-eq span{font-size:12.5px;color:rgba(242,237,228,.72)}
+  .fc-eq em{display:block;font-style:normal;font-size:9px;letter-spacing:.14em;
+    text-transform:uppercase;color:rgba(242,237,228,.34);margin-bottom:1px}
+  .fc-eq .dudoso{font-size:11px;color:var(--laton);opacity:.8;align-self:flex-end}
+  .ff{padding:16px 0;border-bottom:1px solid rgba(242,237,228,.07)}
+  .ff h4{font-family:var(--disp);font-weight:500;font-size:18px;color:var(--papel);margin:0 0 7px}
+  .ff .como{font-size:14px;line-height:1.55;color:rgba(242,237,228,.8);margin:0 0 7px}
+  .ff .ojo{font-size:13.5px;line-height:1.55;color:var(--laton);margin:0 0 9px}
+  .ff .quienes{font-size:11.5px;line-height:1.6;color:rgba(242,237,228,.42);margin:0}
+  .f-pie{font-size:12px;line-height:1.6;color:rgba(242,237,228,.38);margin:30px 0 0;
+    padding-top:16px;border-top:1px solid rgba(242,237,228,.1)}
+  .previo{font-size:12.5px;line-height:1.5;color:var(--laton);
+    border-left:2px solid var(--laton);padding:2px 0 2px 11px;margin:12px 0 0}
+
   /* ---------- Ficha del plato ---------- */
   .sheet{position:fixed;inset:0;z-index:40;background:var(--tinta);overflow-y:auto;
     transform:translateX(100%);transition:transform .3s cubic-bezier(.32,.72,0,1)}
@@ -138,6 +326,7 @@
   .detail h2{font-family:var(--disp);font-weight:500;font-size:29px;line-height:1.08;
     letter-spacing:-.02em;margin:7px 0 5px;color:var(--ink)}
   .d-country{color:var(--ink-3);font-size:13.5px}
+  .corte{color:var(--vino);font-weight:600}
 
   .stats{display:flex;gap:0;margin:22px 0 4px;border-top:2px solid var(--tinta);
     border-bottom:1px solid var(--papel-linea)}
@@ -250,6 +439,7 @@
     padding:7px 12px;font-size:12.5px;font-weight:500;color:var(--ink-2);transition:.15s}
   .pill.on{background:var(--tinta);border-color:var(--tinta);color:var(--papel);font-weight:600}
   .pill.eq.on{background:var(--laton);border-color:var(--laton);color:var(--tinta)}
+  .pill.mas{border-style:dashed;color:var(--laton-osc);font-weight:600}
   .psearch{margin-bottom:18px}
   .psearch input{width:100%;border:1px solid var(--papel-linea);background:var(--papel-2);
     border-radius:4px;padding:12px 14px;outline:none;color:var(--ink)}
@@ -336,6 +526,9 @@
     <div class="brand">
       <span class="brand-mark">MASTERCUSINE</span>
       <h1 id="tituloCarta">Carta</h1>
+      <button class="libro" id="fichasBtn" aria-label="Fichas">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 4h7a2 2 0 012 2v14a2 2 0 00-2-2H4zM20 4h-7a2 2 0 00-2 2v14a2 2 0 012-2h7z"/></svg>
+      </button>
       <button class="lang" id="langBtn" aria-label="Idioma"></button>
     </div>
     <div class="search">
@@ -416,6 +609,7 @@ const trCat  = id => (DICC && DICC.cat  && DICC.cat[id])  || id;
 const trTec  = v  => (DICC && DICC.tec  && DICC.tec[v] !== undefined) ? DICC.tec[v] : v;
 const trPais = v  => (DICC && DICC.pais && DICC.pais[v])  || v;
 const trGrupo= v  => (DICC && DICC.grupos && DICC.grupos[v]) || v;
+const trFam  = f  => (DICC && DICC.fam && DICC.fam[f]) || FAMCOC[f];
 const trUni  = u  => (DICC && DICC.uni && DICC.uni[u] !== undefined) ? DICC.uni[u] : u;
 const DIF_K = {'Fácil':'facil','Media':'media','Difícil':'dificil'};
 const trDif  = v  => DIF_K[v] ? t(DIF_K[v]) : v;
@@ -634,7 +828,10 @@ function openDetail(id){
     <div class="detail">
       <div class="d-cat">${catName(r.cat)}</div>
       <h2>${r.name}</h2>
-      <div class="d-country">${trPais(r.pais)}</div>
+      <div class="d-country">${trPais(r.pais)}${pideCorte(r)?` · <span class="corte">${t(pideCorte(r)==='rapida'?'corteTierno':'corteLento')}</span>`:''}</div>
+      ${avisoPrevio(r)}
+      ${bloqueTemp(r)}
+      ${bloqueEspecias(r)}
       <div class="stats">
         <div class="stat"><div class="k">${t('tiempo')}</div><div class="v">${r.min} ${t('min')}</div></div>
         <div class="stat"><div class="k">${t('dificultad')}</div><div class="v">${trDif(r.dif)}</div></div>
@@ -890,85 +1087,428 @@ document.getElementById('q').addEventListener('input',e=>{
    MOTOR "¿QUÉ COCINO?"  ·  Base de insumos
    ============================================================ */
 const ING = {
-  /* Proteínas */
-  huevo:'Huevos', pollo:'Pollo (presas)', pechuga:'Pechuga de pollo',
-  carne_molida:'Carne molida', carne_res:'Carne de res', solomillo:'Solomillo / lomo fino',
-  cerdo:'Cerdo (lomo/chuleta)', tocino:'Tocino / panceta', chorizo:'Chorizo',
-  pescado:'Pescado blanco', atun:'Atún en lata', camaron:'Camarón', calamar:'Calamar',
-  /* Verduras y frutas */
-  ajo:'Ajo', cebolla:'Cebolla cabezona', cebollalarga:'Cebolla larga', tomate:'Tomate',
-  pimenton:'Pimentón', papa:'Papa', yuca:'Yuca', platanoverde:'Plátano verde',
-  platanomaduro:'Plátano maduro', zanahoria:'Zanahoria', calabacin:'Calabacín',
-  espinaca:'Espinaca', brocoli:'Brócoli', champinon:'Champiñones', maiz:'Maíz',
-  arveja:'Arvejas', aguacate:'Aguacate', lechuga:'Lechuga', pepino:'Pepino',
-  limon:'Limón', naranja:'Naranja', banano:'Banano', manzana:'Manzana',
-  /* Almidones */
-  arroz:'Arroz', pasta:'Pasta', harina:'Harina de trigo', harinamaiz:'Harina de maíz',
-  almidonyuca:'Almidón de yuca', pan:'Pan', lenteja:'Lentejas', frijol:'Fríjoles',
-  garbanzo:'Garbanzos', avena:'Avena',
-  /* Lácteos */
-  leche:'Leche', queso:'Queso', crema:'Crema de leche', mantequilla:'Mantequilla',
-  yogur:'Yogur', lechecoco:'Leche de coco',
-  /* Despensa */
-  agua:'Agua', hielo:'Hielo', aceite:'Aceite', sal:'Sal', pimienta:'Pimienta', vinagre:'Vinagre', azucar:'Azúcar',
-  panela:'Panela', soya:'Salsa de soya', caldo:'Caldo (cubo o casero)',
-  tomatelata:'Tomate enlatado', mostaza:'Mostaza', mayonesa:'Mayonesa', miel:'Miel',
-  vino:'Vino', chocolate:'Chocolate / cacao',
-  /* Especias y hierbas */
-  comino:'Comino', oregano:'Orégano', laurel:'Laurel', canela:'Canela', curry:'Curry',
-  paprika:'Paprika / color', ajipicante:'Ají picante', cilantro:'Cilantro',
-  perejil:'Perejil', albahaca:'Albahaca', guascas:'Guascas', vainilla:'Vainilla',
-  levadura:'Levadura', bicarbonato:'Polvo de hornear',
-  /* Proteínas adicionales */
-  pavo:'Pavo', cordero:'Cordero', conejo:'Conejo', higado:'Hígado',
-  costilla:'Costilla de res', jamon:'Jamón', salchicha:'Salchicha', morcilla:'Morcilla',
-  tilapia:'Tilapia', salmon:'Salmón', bacalao:'Bacalao', sardina:'Sardina',
-  mejillon:'Mejillones', almeja:'Almejas', pulpo:'Pulpo', cangrejo:'Cangrejo',
-  /* Verduras adicionales */
-  apio:'Apio', puerro:'Puerro', repollo:'Repollo', coliflor:'Coliflor',
-  acelga:'Acelga', berenjena:'Berenjena', habichuela:'Habichuela', remolacha:'Remolacha',
-  rabano:'Rábano', ahuyama:'Ahuyama / zapallo', arracacha:'Arracacha', name:'Ñame',
-  batata:'Batata', palmito:'Palmito', alcaparra:'Alcaparras', aceituna:'Aceitunas',
-  pepinillo:'Pepinillos', jengibre:'Jengibre',
-  /* Frutas adicionales */
-  fresa:'Fresas', mora:'Mora', maracuya:'Maracuyá', lulo:'Lulo', guayaba:'Guayaba',
-  mango:'Mango', pina:'Piña', papaya:'Papaya', melon:'Melón', sandia:'Sandía',
-  uva:'Uvas', pera:'Pera', durazno:'Durazno', coco:'Coco rallado', pasas:'Pasas',
-  ciruela:'Ciruelas pasas', dátil:'Dátiles', higo:'Higos',
-  /* Granos y almidones adicionales */
-  quinua:'Quinua', cuscus:'Cuscús', bulgur:'Bulgur', cebada:'Cebada',
-  tortillamaiz:'Tortillas de maíz', fideo:'Fideos', tapioca:'Tapioca',
-  panko:'Panko', galleta:'Galletas', maicena:'Maicena', arrozintegral:'Arroz integral',
-  haba:'Habas', arvejaseca:'Arvejas secas', soyagrano:'Soya en grano',
-  /* Lácteos adicionales */
-  quesocrema:'Queso crema', parmesano:'Parmesano', mozzarella:'Mozzarella',
-  requeson:'Requesón', lechecondensada:'Leche condensada', lecheevaporada:'Leche evaporada',
-  sueroleche:'Suero / buttermilk', gheemantequilla:'Mantequilla clarificada',
-  /* Despensa adicional */
-  vinoblanco:'Vino blanco', cerveza:'Cerveza', ron:'Ron', brandy:'Brandy',
-  almendra:'Almendras', nuez:'Nueces', mani:'Maní', ajonjoli:'Ajonjolí',
-  aceiteoliva:'Aceite de oliva', aceitesesamo:'Aceite de sésamo', salsainglesa:'Salsa inglesa',
-  pastatomate:'Pasta de tomate', tahini:'Tahini', mostazadijon:'Mostaza Dijon',
-  caldopollo:'Caldo de pollo', caldores:'Caldo de res', gelatina:'Gelatina',
-  cafe:'Café', te:'Té', cocoa:'Cocoa en polvo', hojaplatano:'Hoja de plátano',
-  /* Especias y hierbas adicionales */
-  tomillo:'Tomillo', romero:'Romero', salvia:'Salvia', eneldo:'Eneldo',
-  estragon:'Estragón', cardamomo:'Cardamomo', clavo:'Clavos de olor',
-  nuezmoscada:'Nuez moscada', curcuma:'Cúrcuma', azafran:'Azafrán', anis:'Anís',
-  hierbabuena:'Hierbabuena', achiote:'Achiote', pimentondulce:'Pimentón dulce',
-  ajidulce:'Ají dulce', mejorana:'Mejorana', semillacilantro:'Semilla de cilantro',
-  wasabi:'Wasabi', algasnori:'Alga nori', hinojo:'Hinojo',
+  huevo:"Huevos",
+  pollo:"Pollo (presas)",
+  pechuga:"Pechuga de pollo",
+  carne_molida:"Carne molida",
+  carne_res:"Carne de res",
+  solomillo:"Solomillo / lomo fino",
+  cerdo:"Cerdo (lomo/chuleta)",
+  tocino:"Tocino / panceta",
+  chorizo:"Chorizo",
+  pescado:"Pescado blanco",
+  atun:"Atún en lata",
+  camaron:"Camarón",
+  calamar:"Calamar",
+  ajo:"Ajo",
+  cebolla:"Cebolla cabezona",
+  cebollalarga:"Cebolla larga",
+  tomate:"Tomate",
+  pimenton:"Pimentón",
+  papa:"Papa",
+  yuca:"Yuca",
+  platanoverde:"Plátano verde",
+  platanomaduro:"Plátano maduro",
+  zanahoria:"Zanahoria",
+  calabacin:"Calabacín",
+  espinaca:"Espinaca",
+  brocoli:"Brócoli",
+  champinon:"Champiñones",
+  maiz:"Maíz",
+  arveja:"Arvejas",
+  aguacate:"Aguacate",
+  lechuga:"Lechuga",
+  pepino:"Pepino",
+  limon:"Limón",
+  naranja:"Naranja",
+  banano:"Banano",
+  manzana:"Manzana",
+  arroz:"Arroz",
+  pasta:"Pasta",
+  harina:"Harina de trigo",
+  harinamaiz:"Harina de maíz",
+  almidonyuca:"Almidón de yuca",
+  pan:"Pan",
+  lenteja:"Lentejas",
+  frijol:"Fríjoles",
+  garbanzo:"Garbanzos",
+  avena:"Avena",
+  leche:"Leche",
+  queso:"Queso",
+  crema:"Crema de leche",
+  mantequilla:"Mantequilla",
+  yogur:"Yogur",
+  lechecoco:"Leche de coco",
+  agua:"Agua",
+  hielo:"Hielo",
+  aceite:"Aceite",
+  sal:"Sal",
+  pimienta:"Pimienta",
+  vinagre:"Vinagre",
+  azucar:"Azúcar",
+  panela:"Panela",
+  soya:"Salsa de soya",
+  caldo:"Caldo (cubo o casero)",
+  tomatelata:"Tomate enlatado",
+  mostaza:"Mostaza",
+  mayonesa:"Mayonesa",
+  miel:"Miel",
+  vino:"Vino",
+  chocolate:"Chocolate / cacao",
+  comino:"Comino",
+  oregano:"Orégano",
+  laurel:"Laurel",
+  canela:"Canela",
+  curry:"Curry",
+  paprika:"Paprika / color",
+  ajipicante:"Ají picante",
+  cilantro:"Cilantro",
+  perejil:"Perejil",
+  albahaca:"Albahaca",
+  guascas:"Guascas",
+  vainilla:"Vainilla",
+  levadura:"Levadura",
+  bicarbonato:"Polvo de hornear",
+  pavo:"Pavo",
+  cordero:"Cordero",
+  conejo:"Conejo",
+  higado:"Hígado",
+  costilla:"Costilla de res",
+  jamon:"Jamón",
+  salchicha:"Salchicha",
+  morcilla:"Morcilla",
+  tilapia:"Tilapia",
+  salmon:"Salmón",
+  bacalao:"Bacalao",
+  sardina:"Sardina",
+  mejillon:"Mejillones",
+  almeja:"Almejas",
+  pulpo:"Pulpo",
+  cangrejo:"Cangrejo",
+  apio:"Apio",
+  puerro:"Puerro",
+  repollo:"Repollo",
+  coliflor:"Coliflor",
+  acelga:"Acelga",
+  berenjena:"Berenjena",
+  habichuela:"Habichuela",
+  remolacha:"Remolacha",
+  rabano:"Rábano",
+  ahuyama:"Ahuyama / zapallo",
+  arracacha:"Arracacha",
+  name:"Ñame",
+  batata:"Batata",
+  palmito:"Palmito",
+  alcaparra:"Alcaparras",
+  aceituna:"Aceitunas",
+  pepinillo:"Pepinillos",
+  jengibre:"Jengibre",
+  fresa:"Fresas",
+  mora:"Mora",
+  maracuya:"Maracuyá",
+  lulo:"Lulo",
+  guayaba:"Guayaba",
+  mango:"Mango",
+  pina:"Piña",
+  papaya:"Papaya",
+  melon:"Melón",
+  sandia:"Sandía",
+  uva:"Uvas",
+  pera:"Pera",
+  durazno:"Durazno",
+  coco:"Coco rallado",
+  pasas:"Pasas",
+  ciruela:"Ciruelas pasas",
+  "dátil":"Dátiles",
+  higo:"Higos",
+  quinua:"Quinua",
+  cuscus:"Cuscús",
+  bulgur:"Bulgur",
+  cebada:"Cebada",
+  tortillamaiz:"Tortillas de maíz",
+  fideo:"Fideos",
+  tapioca:"Tapioca",
+  panko:"Panko",
+  galleta:"Galletas",
+  maicena:"Maicena",
+  arrozintegral:"Arroz integral",
+  haba:"Habas",
+  arvejaseca:"Arvejas secas",
+  soyagrano:"Soya en grano",
+  quesocrema:"Queso crema",
+  parmesano:"Parmesano",
+  mozzarella:"Mozzarella",
+  requeson:"Requesón",
+  lechecondensada:"Leche condensada",
+  lecheevaporada:"Leche evaporada",
+  sueroleche:"Suero / buttermilk",
+  gheemantequilla:"Mantequilla clarificada",
+  vinoblanco:"Vino blanco",
+  cerveza:"Cerveza",
+  ron:"Ron",
+  brandy:"Brandy",
+  almendra:"Almendras",
+  nuez:"Nueces",
+  mani:"Maní",
+  ajonjoli:"Ajonjolí",
+  aceiteoliva:"Aceite de oliva",
+  aceitesesamo:"Aceite de sésamo",
+  salsainglesa:"Salsa inglesa",
+  pastatomate:"Pasta de tomate",
+  tahini:"Tahini",
+  mostazadijon:"Mostaza Dijon",
+  caldopollo:"Caldo de pollo",
+  caldores:"Caldo de res",
+  gelatina:"Gelatina",
+  cafe:"Café",
+  te:"Té",
+  cocoa:"Cocoa en polvo",
+  hojaplatano:"Hoja de plátano",
+  tomillo:"Tomillo",
+  romero:"Romero",
+  salvia:"Salvia",
+  eneldo:"Eneldo",
+  estragon:"Estragón",
+  cardamomo:"Cardamomo",
+  clavo:"Clavos de olor",
+  nuezmoscada:"Nuez moscada",
+  curcuma:"Cúrcuma",
+  azafran:"Azafrán",
+  anis:"Anís",
+  hierbabuena:"Hierbabuena",
+  achiote:"Achiote",
+  pimentondulce:"Pimentón dulce",
+  ajidulce:"Ají dulce",
+  mejorana:"Mejorana",
+  semillacilantro:"Semilla de cilantro",
+  wasabi:"Wasabi",
+  algasnori:"Alga nori",
+  hinojo:"Hinojo",
+  res_puntaanca:"Punta de anca",
+  res_sobrebarriga:"Sobrebarriga",
+  res_falda:"Falda",
+  res_muchacho:"Muchacho redondo",
+  res_bola:"Bola de pierna",
+  res_cadera:"Cadera",
+  res_centro:"Centro de pierna",
+  res_lomoancho:"Lomo ancho",
+  res_chatas:"Chata (lomo ancho)",
+  res_pecho:"Pecho",
+  res_morrillo:"Morrillo",
+  res_osobuco:"Osobuco",
+  res_rabo:"Rabo",
+  res_lengua:"Lengua",
+  res_entrana:"Entraña",
+  res_churrasco:"Churrasco",
+  res_mondongo:"Mondongo / callos",
+  res_ternera:"Ternera",
+  cerdo_costilla:"Costilla de cerdo",
+  cerdo_pernil:"Pernil",
+  cerdo_chuleta:"Chuleta de cerdo",
+  cerdo_cabezalomo:"Cabeza de lomo",
+  cerdo_solomillo:"Solomillo de cerdo",
+  cerdo_panceta:"Panceta",
+  cerdo_papada:"Papada",
+  cerdo_chicharron:"Chicharrón",
+  cerdo_lomoahum:"Lomo ahumado",
+  pollo_muslo:"Muslo de pollo",
+  pollo_contramuslo:"Contramuslo",
+  pollo_alas:"Alas de pollo",
+  pollo_entero:"Pollo entero",
+  pollo_menudencia:"Menudencias",
+  gallina:"Gallina",
+  pavo_pechuga:"Pechuga de pavo",
+  pato:"Pato",
+  codorniz:"Codorniz",
+  huevocodorniz:"Huevo de codorniz",
+  cordero_pierna:"Pierna de cordero",
+  cordero_chuleta:"Chuleta de cordero",
+  cordero_costillar:"Costillar de cordero",
+  cordero_paletilla:"Paletilla",
+  cabra:"Cabro / chivo",
+  salchichon:"Salchichón",
+  butifarra:"Butifarra",
+  longaniza:"Longaniza",
+  jamonserrano:"Jamón serrano",
+  pepperoni:"Pepperoni",
+  trucha:"Trucha",
+  robalo:"Róbalo",
+  pargo:"Pargo",
+  mojarra:"Mojarra",
+  bagre:"Bagre",
+  sierra:"Sierra",
+  mero:"Mero",
+  corvina:"Corvina",
+  anchoa:"Anchoas",
+  langostino:"Langostinos",
+  langosta:"Langosta",
+  jaiba:"Jaiba",
+  caracol:"Caracol de mar",
+  ostra:"Ostras",
+  cebollaroja:"Cebolla roja",
+  chalota:"Chalota",
+  cebollin:"Cebollín",
+  pimentonrojo:"Pimentón rojo",
+  pimentonamarillo:"Pimentón amarillo",
+  rocoto:"Rocoto",
+  jalapeno:"Jalapeño",
+  habanero:"Habanero",
+  nabo:"Nabo",
+  alcachofa:"Alcachofa",
+  esparrago:"Espárragos",
+  okra:"Okra",
+  brotessoya:"Brotes de soya",
+  kale:"Kale",
+  rucula:"Rúcula",
+  berro:"Berros",
+  endivia:"Endivia",
+  portobello:"Portobello",
+  shiitake:"Shiitake",
+  maiztierno:"Maíz tierno",
+  chayote:"Guatila / chayote",
+  malanga:"Malanga",
+  "platanohartón":"Plátano hartón",
+  cilantrocimarron:"Cilantro cimarrón",
+  lima:"Lima",
+  mandarina:"Mandarina",
+  pomelo:"Pomelo",
+  kiwi:"Kiwi",
+  granadilla:"Granadilla",
+  curuba:"Curuba",
+  tomatearbol:"Tomate de árbol",
+  feijoa:"Feijoa",
+  zapote:"Zapote",
+  chontaduro:"Chontaduro",
+  arandano:"Arándanos",
+  frambuesa:"Frambuesas",
+  cereza:"Cerezas",
+  tamarindo:"Tamarindo",
+  cocotierno:"Coco tierno",
+  harinaintegral:"Harina integral",
+  harinaleudante:"Harina leudante",
+  semola:"Sémola",
+  polenta:"Polenta",
+  arrozarborio:"Arroz arborio",
+  arrozjazmin:"Arroz jazmín",
+  arrozbasmati:"Arroz basmati",
+  lasana:"Láminas de lasaña",
+  spaghetti:"Espagueti",
+  penne:"Penne",
+  masafilo:"Masa filo",
+  hojaldre:"Hojaldre",
+  panbaguette:"Baguette",
+  panmolde:"Pan de molde",
+  arepacongelada:"Arepa",
+  frijolnegro:"Fríjol negro",
+  frijolrojo:"Fríjol rojo",
+  chia:"Chía",
+  linaza:"Linaza",
+  quesocosteno:"Queso costeño",
+  quesocampesino:"Queso campesino",
+  quesodoblecrema:"Queso doble crema",
+  cuajada:"Cuajada",
+  cheddar:"Cheddar",
+  quesoazul:"Queso azul",
+  gruyere:"Gruyère",
+  provolone:"Provolone",
+  feta:"Feta",
+  burrata:"Burrata",
+  kumis:"Kumis",
+  arequipe:"Arequipe",
+  cremaagria:"Crema agria",
+  caldoverduras:"Caldo de verduras",
+  salmarina:"Sal marina",
+  pimientablanca:"Pimienta blanca",
+  hojuelasaji:"Hojuelas de ají",
+  salsapescado:"Salsa de pescado",
+  hoisin:"Salsa hoisin",
+  sriracha:"Sriracha",
+  mirin:"Mirin",
+  balsamico:"Vinagre balsámico",
+  vinagremanzana:"Vinagre de manzana",
+  vinagrearroz:"Vinagre de arroz",
+  aceitecoco:"Aceite de coco",
+  aceitegirasol:"Aceite de girasol",
+  manteca:"Manteca",
+  pistacho:"Pistachos",
+  avellana:"Avellanas",
+  maranon:"Marañón",
+  azucarmorena:"Azúcar morena",
+  azucarpulverizada:"Azúcar pulverizada",
+  chocolateblanco:"Chocolate blanco",
+  champinonlata:"Champiñones en lata",
+  maizlata:"Maíz en lata",
+  arvejalata:"Arvejas en lata",
+  cayena:"Pimienta de cayena",
+  ajipanca:"Ají panca",
+  ajiamarillo:"Ají amarillo",
+  chipotle:"Chipotle",
+  guajillo:"Chile guajillo",
+  garammasala:"Garam masala",
+  cincoespecias:"Cinco especias",
+  zaatar:"Za'atar",
+  sumac:"Sumac",
+  harissa:"Harissa",
+  hierbasprovenza:"Hierbas provenzales",
+  mostazagrano:"Mostaza en grano",
+  semillahinojo:"Semilla de hinojo",
+  pimientajamaica:"Pimienta de Jamaica",
+  jengibrepolvo:"Jengibre en polvo",
+  ajopolvo:"Ajo en polvo",
+  cebollapolvo:"Cebolla en polvo",
+  cordero_cuello:"Cuello de cordero",
+  cordero_jarrete:"Jarrete de cordero",
+  cordero_lomo:"Lomo de cordero",
+  cordero_solomillo:"Solomillo de cordero",
+  cordero_pecho:"Pecho de cordero",
+  jurel:"Jurel",
+  bonito:"Bonito",
+  vieira:"Vieira",
+  berberecho:"Berberecho",
+  merluza:"Merluza",
+  lenguado:"Lenguado",
+  caballa:"Caballa",
+  pezespada:"Pez espada",
+  linguini:"Linguini",
+  spaghettoni:"Spaghettoni",
+  bucatini:"Bucatini",
+  vermicelli:"Vermicelli",
+  capellini:"Capellini",
+  fettuccine:"Fettuccine",
+  tagliatelle:"Tagliatelle",
+  pappardelle:"Pappardelle",
+  bavette:"Bavette",
+  mafaldine:"Mafaldine",
+  trenette:"Trenette",
+  ravioli:"Ravioli",
+  tortellini:"Tortellini",
+  tortelloni:"Tortelloni",
+  agnolotti:"Agnolotti",
+  cappelletti:"Cappelletti",
+  cappellacci:"Cappellacci",
+  culurgiones:"Culurgiones",
+  mezzelune:"Mezzelune",
+  cannelloni:"Cannelloni",
+  whisky:"Whisky",
+  maizpozolero:"Maíz pozolero / cacahuazintle",
+  pepitacalabaza:"Pepita de calabaza",
+  tomateverde:"Tomate verde / tomatillo",
+  pimientopadron:"Pimiento de Padrón",
+  salmonahumado:"Salmón ahumado",
+  brie:"Queso brie",
+  foiegras:"Foie gras",
+  rigatoni:"Rigatoni",
+  fusilli:"Fusilli",
+  farfalle:"Farfalle",
+  orecchiette:"Orecchiette",
+  conchiglie:"Conchiglie",
 };
-const GROUPS = [
-  {t:'Carnes y aves', em:'🥩', ids:['huevo','pollo','pechuga','pavo','carne_molida','carne_res','solomillo','costilla','cerdo','cordero','conejo','tocino','jamon','chorizo','salchicha','morcilla','higado']},
-  {t:'Pescados y mariscos', em:'🐟', ids:['pescado','tilapia','salmon','bacalao','atun','sardina','camaron','calamar','pulpo','mejillon','almeja','cangrejo']},
-  {t:'Verduras', em:'🥬', ids:['ajo','cebolla','cebollalarga','puerro','tomate','pimenton','ajidulce','papa','yuca','arracacha','name','batata','ahuyama','platanoverde','platanomaduro','zanahoria','remolacha','calabacin','berenjena','espinaca','acelga','lechuga','repollo','brocoli','coliflor','habichuela','champinon','maiz','arveja','haba','apio','pepino','rabano','palmito','aguacate','jengibre']},
-  {t:'Frutas', em:'🍋', ids:['limon','naranja','banano','manzana','pera','durazno','fresa','mora','maracuya','lulo','guayaba','mango','pina','papaya','melon','sandia','uva','coco','pasas','ciruela','higo','dátil']},
-  {t:'Granos y harinas', em:'🌾', ids:['arroz','arrozintegral','pasta','fideo','harina','harinamaiz','almidonyuca','maicena','pan','panko','galleta','tortillamaiz','avena','quinua','cuscus','bulgur','cebada','tapioca','lenteja','frijol','garbanzo','arvejaseca','soyagrano']},
-  {t:'Lácteos', em:'🥛', ids:['leche','lechecondensada','lecheevaporada','lechecoco','queso','quesocrema','parmesano','mozzarella','requeson','crema','mantequilla','gheemantequilla','yogur','sueroleche']},
-  {t:'Despensa', em:'🫙', ids:['agua','hielo','aceite','aceiteoliva','aceitesesamo','sal','pimienta','vinagre','azucar','panela','miel','soya','salsainglesa','caldo','caldopollo','caldores','tomatelata','pastatomate','mostaza','mostazadijon','mayonesa','tahini','aceituna','alcaparra','pepinillo','vino','vinoblanco','cerveza','ron','brandy','chocolate','cocoa','cafe','te','gelatina','almendra','nuez','mani','ajonjoli','algasnori','hojaplatano']},
-  {t:'Especias y hierbas', em:'🌿', ids:['comino','oregano','tomillo','romero','salvia','laurel','albahaca','perejil','cilantro','semillacilantro','eneldo','estragon','mejorana','hinojo','hierbabuena','guascas','canela','clavo','nuezmoscada','cardamomo','anis','curry','curcuma','azafran','achiote','paprika','pimentondulce','ajipicante','wasabi','vainilla','levadura','bicarbonato']},
-];
+
+/* Cada corte pertenece a una familia: marcarlo sirve para
+   cualquier receta que pida la familia. */
+const FAMILIA = {"res_puntaanca":"carne_res","res_sobrebarriga":"carne_res","res_falda":"carne_res","res_muchacho":"carne_res","res_bola":"carne_res","res_cadera":"carne_res","res_centro":"carne_res","res_lomoancho":"carne_res","res_chatas":"carne_res","res_pecho":"carne_res","res_morrillo":"carne_res","res_osobuco":"carne_res","res_rabo":"carne_res","res_lengua":"carne_res","res_entrana":"carne_res","res_churrasco":"carne_res","res_mondongo":"carne_res","res_ternera":"carne_res","cerdo_costilla":"cerdo","cerdo_pernil":"cerdo","cerdo_chuleta":"cerdo","cerdo_cabezalomo":"cerdo","cerdo_solomillo":"cerdo","cerdo_panceta":"cerdo","cerdo_papada":"cerdo","cerdo_chicharron":"cerdo","cerdo_lomoahum":"cerdo","pollo_muslo":"pollo","pollo_contramuslo":"pollo","pollo_alas":"pollo","pollo_entero":"pollo","pollo_menudencia":"pollo","gallina":"pollo","pavo_pechuga":"pavo","huevocodorniz":"huevo","cordero_pierna":"cordero","cordero_chuleta":"cordero","cordero_costillar":"cordero","cordero_paletilla":"cordero","salchichon":"chorizo","butifarra":"chorizo","longaniza":"chorizo","jamonserrano":"jamon","pepperoni":"chorizo","trucha":"pescado","robalo":"pescado","pargo":"pescado","mojarra":"pescado","bagre":"pescado","sierra":"pescado","mero":"pescado","corvina":"pescado","anchoa":"pescado","langostino":"camaron","jaiba":"cangrejo","cebollaroja":"cebolla","chalota":"cebolla","cebollin":"cebollalarga","pimentonrojo":"pimenton","pimentonamarillo":"pimenton","rocoto":"ajipicante","jalapeno":"ajipicante","habanero":"ajipicante","kale":"espinaca","rucula":"lechuga","berro":"lechuga","endivia":"lechuga","portobello":"champinon","shiitake":"champinon","maiztierno":"maiz","malanga":"name","platanohartón":"platanoverde","cilantrocimarron":"cilantro","lima":"limon","mandarina":"naranja","pomelo":"naranja","granadilla":"maracuya","curuba":"maracuya","arandano":"mora","frambuesa":"mora","cocotierno":"coco","harinaintegral":"harina","harinaleudante":"harina","semola":"harina","polenta":"harinamaiz","arrozarborio":"arroz","arrozjazmin":"arroz","arrozbasmati":"arroz","lasana":"pasta","spaghetti":"pasta","penne":"pasta","panbaguette":"pan","panmolde":"pan","arepacongelada":"harinamaiz","frijolnegro":"frijol","frijolrojo":"frijol","quesocosteno":"queso","quesocampesino":"queso","quesodoblecrema":"queso","cuajada":"queso","cheddar":"queso","quesoazul":"queso","gruyere":"queso","provolone":"queso","feta":"queso","burrata":"mozzarella","kumis":"yogur","cremaagria":"crema","caldoverduras":"caldo","salmarina":"sal","pimientablanca":"pimienta","hojuelasaji":"ajipicante","sriracha":"ajipicante","balsamico":"vinagre","vinagremanzana":"vinagre","vinagrearroz":"vinagre","aceitecoco":"aceite","aceitegirasol":"aceite","manteca":"aceite","pistacho":"nuez","avellana":"nuez","maranon":"nuez","azucarmorena":"azucar","azucarpulverizada":"azucar","chocolateblanco":"chocolate","champinonlata":"champinon","maizlata":"maiz","arvejalata":"arveja","cayena":"ajipicante","ajipanca":"ajipicante","ajiamarillo":"ajipicante","chipotle":"ajipicante","guajillo":"ajipicante","garammasala":"curry","harissa":"ajipicante","hierbasprovenza":"tomillo","mostazagrano":"mostaza","semillahinojo":"hinojo","pimientajamaica":"pimienta","jengibrepolvo":"jengibre","ajopolvo":"ajo","cebollapolvo":"cebolla","cordero_cuello":"cordero","cordero_jarrete":"cordero","cordero_lomo":"cordero","cordero_solomillo":"cordero","cordero_pecho":"cordero","jurel":"pescado","bonito":"pescado","berberecho":"almeja","merluza":"pescado","lenguado":"pescado","caballa":"pescado","pezespada":"pescado","linguini":"pasta","spaghettoni":"pasta","bucatini":"pasta","vermicelli":"pasta","capellini":"pasta","fettuccine":"pasta","tagliatelle":"pasta","pappardelle":"pasta","bavette":"pasta","mafaldine":"pasta","trenette":"pasta","ravioli":"pasta","tortellini":"pasta","tortelloni":"pasta","agnolotti":"pasta","cappelletti":"pasta","cappellacci":"pasta","culurgiones":"pasta","mezzelune":"pasta","cannelloni":"pasta","pepitacalabaza":"nuez","pimientopadron":"pimenton","salmonahumado":"pescado","brie":"queso","rigatoni":"pasta","fusilli":"pasta","farfalle":"pasta","orecchiette":"pasta","conchiglie":"pasta"};
+
+const GROUPS = [{"t":"Res y ternera","ids":["carne_res","carne_molida","solomillo","costilla"],"mas":["res_puntaanca","res_sobrebarriga","res_falda","res_muchacho","res_bola","res_cadera","res_centro","res_lomoancho","res_chatas","res_pecho","res_morrillo","res_osobuco","res_rabo","res_lengua","res_entrana","res_churrasco","res_mondongo","res_ternera","higado"]},{"t":"Cerdo","ids":["cerdo","tocino","cerdo_costilla","cerdo_chuleta"],"mas":["cerdo_pernil","cerdo_cabezalomo","cerdo_solomillo","cerdo_panceta","cerdo_papada","cerdo_chicharron","cerdo_lomoahum"]},{"t":"Aves y huevos","ids":["huevo","pollo","pechuga","pollo_muslo","pollo_alas"],"mas":["pollo_contramuslo","pollo_entero","pollo_menudencia","gallina","pavo","pavo_pechuga","pato","codorniz","huevocodorniz"]},{"t":"Cordero y otras carnes","ids":["cordero"],"mas":["cordero_pierna","cordero_chuleta","cordero_costillar","cordero_paletilla","conejo","cabra","cordero_cuello","cordero_jarrete","cordero_lomo","cordero_solomillo","cordero_pecho"]},{"t":"Embutidos y curados","ids":["chorizo","jamon","salchicha","morcilla"],"mas":["salchichon","butifarra","longaniza","jamonserrano","pepperoni"]},{"t":"Pescados","ids":["pescado","tilapia","salmon","atun","bacalao"],"mas":["trucha","robalo","pargo","mojarra","bagre","sierra","mero","corvina","sardina","anchoa","jurel","bonito","merluza","lenguado","caballa","pezespada","salmonahumado"]},{"t":"Mariscos","ids":["camaron","calamar","mejillon"],"mas":["langostino","langosta","pulpo","almeja","cangrejo","jaiba","caracol","ostra","vieira","berberecho"]},{"t":"Verduras","ids":["ajo","cebolla","cebollalarga","tomate","pimenton","papa","zanahoria","yuca","platanoverde","platanomaduro","calabacin","espinaca","brocoli","champinon","maiz","arveja","aguacate","lechuga","pepino"],"mas":["cebollaroja","chalota","cebollin","puerro","ajidulce","pimentonrojo","pimentonamarillo","ajipicante","rocoto","jalapeno","habanero","repollo","coliflor","acelga","kale","rucula","berro","endivia","berenjena","habichuela","remolacha","rabano","nabo","alcachofa","esparrago","okra","brotessoya","portobello","shiitake","maiztierno","ahuyama","chayote","arracacha","name","malanga","batata","platanohartón","palmito","apio","haba","jengibre","alcaparra","aceituna","pepinillo","tomateverde","pimientopadron"]},{"t":"Frutas","ids":["limon","naranja","banano","manzana","fresa","mango","pina"],"mas":["lima","mandarina","pomelo","pera","durazno","uva","mora","arandano","frambuesa","cereza","maracuya","granadilla","curuba","lulo","guayaba","tomatearbol","feijoa","zapote","chontaduro","papaya","melon","sandia","kiwi","coco","cocotierno","pasas","ciruela","dátil","higo","tamarindo"]},{"t":"Granos, harinas y pastas","ids":["arroz","pasta","harina","harinamaiz","pan","lenteja","frijol","garbanzo","avena"],"mas":["arrozintegral","arrozarborio","arrozjazmin","arrozbasmati","spaghetti","penne","fideo","lasana","harinaintegral","harinaleudante","semola","polenta","almidonyuca","maicena","tapioca","panko","galleta","tortillamaiz","arepacongelada","panbaguette","panmolde","masafilo","hojaldre","quinua","cuscus","bulgur","cebada","haba","arvejaseca","soyagrano","frijolnegro","frijolrojo","chia","linaza","linguini","spaghettoni","bucatini","vermicelli","capellini","fettuccine","tagliatelle","pappardelle","bavette","mafaldine","trenette","ravioli","tortellini","tortelloni","agnolotti","cappelletti","cappellacci","culurgiones","mezzelune","cannelloni","maizpozolero","rigatoni","fusilli","farfalle","orecchiette","conchiglie"]},{"t":"Lácteos y quesos","ids":["leche","queso","crema","mantequilla","yogur","mozzarella","parmesano"],"mas":["quesocosteno","quesocampesino","quesodoblecrema","cuajada","quesocrema","cheddar","quesoazul","gruyere","provolone","feta","burrata","requeson","cremaagria","kumis","lechecondensada","lecheevaporada","lechecoco","sueroleche","gheemantequilla","arequipe","brie"]},{"t":"Despensa","ids":["agua","hielo","aceite","aceiteoliva","sal","pimienta","azucar","panela","vinagre","soya","caldo"],"mas":["aceitesesamo","aceitecoco","aceitegirasol","manteca","salmarina","pimientablanca","azucarmorena","azucarpulverizada","miel","balsamico","vinagremanzana","vinagrearroz","mostaza","mostazadijon","mayonesa","salsainglesa","salsapescado","hoisin","sriracha","mirin","tahini","pastatomate","tomatelata","caldopollo","caldores","caldoverduras","vino","vinoblanco","cerveza","ron","brandy","chocolate","chocolateblanco","cocoa","cafe","te","gelatina","almendra","nuez","mani","pistacho","avellana","maranon","ajonjoli","algasnori","hojaplatano","champinonlata","maizlata","arvejalata","whisky","pepitacalabaza","foiegras"]},{"t":"Especias y hierbas","ids":["comino","oregano","laurel","canela","cilantro","perejil","albahaca","paprika"],"mas":["tomillo","romero","salvia","eneldo","estragon","mejorana","hinojo","hierbabuena","guascas","cilantrocimarron","clavo","nuezmoscada","cardamomo","anis","curcuma","azafran","achiote","pimentondulce","semillacilantro","semillahinojo","pimientajamaica","jengibrepolvo","ajopolvo","cebollapolvo","cayena","ajipanca","ajiamarillo","chipotle","guajillo","garammasala","cincoespecias","zaatar","sumac","harissa","hierbasprovenza","mostazagrano","curry","wasabi","vainilla","levadura","bicarbonato","hojuelasaji"]}];
 const BASICOS = ['agua','hielo','aceite','sal','pimienta','azucar'];  // preseleccionados
 
 const EQUIPOS = {
@@ -990,16 +1530,125 @@ const SUSTITUTOS = {
 };
 
 
+/* Cada corte pide su cocción: un osobuco no sirve para un salteado
+   de 20 minutos, ni un solomillo para un guiso de dos horas.
+   rapida = tierno y fuego alto · lenta = duro, tiempo y humedad */
+const COCCION = {"solomillo":"rapida","res_puntaanca":"rapida","res_lomoancho":"rapida","res_chatas":"rapida","res_entrana":"rapida","res_churrasco":"rapida","res_cadera":"rapida","higado":"rapida","res_osobuco":"lenta","res_rabo":"lenta","res_morrillo":"lenta","res_pecho":"lenta","res_sobrebarriga":"lenta","res_lengua":"lenta","res_mondongo":"lenta","res_muchacho":"lenta","costilla":"lenta","res_falda":"ambos","res_centro":"ambos","res_bola":"ambos","res_ternera":"ambos","carne_res":"ambos","carne_molida":"ambos","cerdo_solomillo":"rapida","cerdo_chuleta":"rapida","cerdo_lomoahum":"rapida","tocino":"rapida","cerdo_costilla":"lenta","cerdo_pernil":"lenta","cerdo_cabezalomo":"lenta","cerdo_papada":"lenta","cerdo_panceta":"lenta","cerdo":"ambos","cerdo_chicharron":"ambos","pechuga":"rapida","pavo_pechuga":"rapida","pollo_menudencia":"rapida","codorniz":"rapida","gallina":"lenta","pollo":"ambos","pollo_muslo":"ambos","pollo_contramuslo":"ambos","pollo_alas":"ambos","pollo_entero":"ambos","pavo":"ambos","pato":"ambos","cordero_chuleta":"rapida","cordero_costillar":"rapida","cordero_paletilla":"lenta","cabra":"lenta","cordero":"ambos","cordero_pierna":"ambos","conejo":"ambos","cordero_lomo":"rapida","cordero_solomillo":"rapida","cordero_cuello":"lenta","cordero_jarrete":"lenta","cordero_pecho":"lenta"};
+/* Nombres del mismo corte en otros países: [CO, AR, ES, MX, inglés, firmeza] */
+const EQUIV = {"solomillo":["Lomo fino","Lomo / filete","Solomillo","Filete","Tenderloin / filet mignon",1],"res_lomoancho":["Lomo ancho","Bife ancho / ojo de bife","Entrecot / lomo alto","Rib eye","Ribeye",1],"res_chatas":["Chata","Bife de chorizo / bife angosto","Lomo bajo","New York","Striploin / NY strip",1],"res_puntaanca":["Punta de anca","Tapa de cuadril / picaña","Tapilla / rabillo de cadera","Tapa de aguayón","Picanha / rump cap",1],"res_cadera":["Cadera","Cuadril","Cadera","Aguayón","Top sirloin",1],"res_centro":["Centro de pierna","Cuadrada","Tapa","Pulpa negra","Top round",0],"res_bola":["Bola de pierna","Bola de lomo","Babilla","Bola","Knuckle / sirloin tip",0],"res_muchacho":["Muchacho redondo","Peceto","Redondo / contra","Cuete","Eye of round",1],"res_entrana":["Entraña","Entraña","Entraña","Diafragma","Hanger / skirt steak",1],"res_churrasco":["Churrasco","Bife","Filete de lomo","Churrasco","Churrasco steak",0],"res_falda":["Falda","Vacío","Falda","Suadero","Flank / skirt",0],"res_sobrebarriga":["Sobrebarriga","Tapa de asado / matambre","Tapa de costillar","Falda gruesa","Flank with cap",0],"res_pecho":["Pecho","Pecho","Pecho / aleta","Pecho","Brisket",1],"res_morrillo":["Morrillo","Aguja / marucha","Aguja / espaldilla","Diezmillo","Chuck",1],"res_osobuco":["Osobuco","Osobuco / garrón","Morcillo / jarrete","Chambarete","Shank / osso buco",1],"res_rabo":["Rabo","Cola / rabo","Rabo de toro","Cola de res","Oxtail",1],"res_lengua":["Lengua","Lengua","Lengua","Lengua","Beef tongue",1],"res_mondongo":["Mondongo","Mondongo","Callos","Pancita / menudo","Tripe",1],"costilla":["Costilla de res","Asado de tira","Costillar","Short rib","Short ribs",1],"res_ternera":["Ternera","Ternera","Ternera","Ternera","Veal",1],"higado":["Hígado","Hígado","Hígado","Hígado","Liver",1],"cerdo_cabezalomo":["Cabeza de lomo","Bondiola","Cabecero de lomo / aguja","Espaldilla","Pork shoulder / Boston butt",1],"cerdo_panceta":["Panceta","Panceta","Panceta","Panza de cerdo","Pork belly",1],"cerdo_pernil":["Pernil","Pernil","Pierna / jamón fresco","Pierna","Fresh ham / pork leg",1],"cerdo_solomillo":["Solomillo de cerdo","Lomito","Solomillo","Filete de cerdo","Pork tenderloin",1],"cerdo_chuleta":["Chuleta de cerdo","Costeleta / chuleta","Chuleta de lomo","Chuleta","Pork chop",1],"cerdo_papada":["Papada","Papada","Papada","Cachete","Jowl",1],"cerdo_chicharron":["Chicharrón","Chicharrón","Torreznos / cortezas","Chicharrón","Pork crackling",1],"cerdo_costilla":["Costilla de cerdo","Costillar de cerdo","Costillas","Costillas","Pork ribs",1],"cerdo_lomoahum":["Lomo ahumado","Lomo ahumado","Lomo ahumado","Lomo ahumado","Smoked pork loin",1],"tocino":["Tocineta","Panceta / bacon","Bacon","Tocino","Bacon",1],"cordero_paletilla":["Paletilla","Paleta","Paletilla","Espaldilla","Lamb shoulder",1],"cordero_pierna":["Pierna de cordero","Pierna","Pierna","Pierna","Leg of lamb",1],"cordero_chuleta":["Chuleta de cordero","Chuleta","Chuleta","Chuleta","Lamb chop",1],"cordero_costillar":["Costillar de cordero","Costillar","Costillar","Costillar","Rack of lamb",1],"pechuga":["Pechuga","Pechuga","Pechuga","Pechuga","Chicken breast",1],"pollo_muslo":["Muslo","Muslo","Jamoncito / muslo","Pierna","Drumstick",0],"pollo_contramuslo":["Contramuslo","Pata muslo","Contramuslo","Muslo","Chicken thigh",0],"pollo_alas":["Alas","Alitas","Alitas","Alitas","Chicken wings",1],"pollo_menudencia":["Menudencias","Menudos","Menudillos","Menudencias","Giblets",1],"gallina":["Gallina","Gallina","Gallina","Gallina","Stewing hen",1],"cordero_cuello":["Cuello de cordero","Cogote","Pescuezo","Pescuezo","Lamb neck",1],"cordero_jarrete":["Jarrete de cordero","Garrón","Jarrete / morcillo","Chambarete","Lamb shank",1],"cordero_lomo":["Lomo de cordero","Lomo","Lomo / silla","Lomo","Lamb loin / saddle",1],"cordero_solomillo":["Solomillo de cordero","Lomito","Solomillo","Filete","Lamb tenderloin",1],"cordero_pecho":["Pecho de cordero","Pecho / falda","Pecho / falda","Falda","Lamb breast",1],"vieira":["Vieira","Vieira","Vieira / concha de peregrino","Callo de hacha","Scallop",1],"berberecho":["Berberecho","Berberecho","Berberecho","Almeja pata de mula","Cockle",0],"jurel":["Jurel","Jurel","Jurel","Charrito","Jack mackerel",1],"bonito":["Bonito","Bonito","Bonito del norte","Bonito","Bonito / skipjack",1]};
+const PAISES_CORTE = ["Colombia","Argentina","España","México","EN"];
+const TEMP_C = {"pollo":{"t":74},"pavo":{"t":74},"carne_molida":{"t":71},"carne_res":{"t":63,"reposo":3,"grados":["52–55 °C","57–60 °C","63–66 °C","68–71 °C","74 °C"]},"cordero":{"t":63,"reposo":3},"cerdo":{"t":63,"reposo":3},"pescado":{"t":63},"camaron":{"t":63},"huevo":{"t":71}};
+const ESPECIAS = {"carne_res":["romero","pimienta","ajo","tomillo","paprika","comino"],"cordero":["hierbabuena","romero","ajo","oregano","cilantro"],"pollo":["estragon","tomillo","albahaca","oregano","paprika"],"pavo":["salvia","cebolla","perejil","mostaza","pimientajamaica"],"pescado":["eneldo","perejil","limon","paprika","estragon"],"cerdo":["salvia","pimienta","tomillo","mostaza","ajo"]};
+const CUCHILLO_MM = [[2,5.5,10,18],[2,3,6,null],[null,null,null],[null,null,null]];
+const MAS_PAISES = {"res_lomoancho":{"Chile":"Lomo vetado","Perú":"Bife ancho","Brasil":"Filé de costela","Uruguay":"Bife ancho","Francia":"Entrecôte","Reino Unido":"Scotch fillet"},"res_puntaanca":{"Brasil":"Picanha","Francia":"Coulotte","Reino Unido":"Sirloin cap","Estados Unidos":"Rump cap / picanha"},"res_chatas":{"Chile":"Lomo liso","Estados Unidos":"Striploin / New York"},"res_morrillo":{"España":"Aguja","Estados Unidos":"Chuck","Latam":"Espaldilla"},"res_pecho":{"Brasil":"Peito","Estados Unidos":"Brisket"},"costilla":{"Argentina":"Asado de tira","Uruguay":"Asado de tira","Estados Unidos":"Short rib"},"res_falda":{"Argentina":"Vacío","Uruguay":"Vacío","Estados Unidos":"Flank"},"res_osobuco":{"Italia":"Osso buco","Estados Unidos":"Shank"},"res_bola":{"Latam":"Bola de lomo","Estados Unidos":"Round"}};
+const FICHAS_TABS = ["bases","maridaje","temp","seguridad","rendimiento","pescados","pastas","cuchillo","despiece","salsas","anatomia","especias"];
+/* Qué va con qué, y por qué. La razón es lo que lo vuelve criterio y no lista. */
+const PAREJAS = {"ajo":[["aceiteoliva","puente",1],["perejil","tradicion",1],["limon","corte",1],["camaron","tradicion",1],["tomate","puente",1],["ajipicante","refuerzo",1],["romero","tradicion",1],["jengibre","refuerzo",1],["miel","contraste",2],["cebolla","refuerzo",1],["champinon","refuerzo",1],["calabacin","refuerzo",1],["espinaca","refuerzo",1],["brocoli","refuerzo",1],["yuca","tradicion",1],["carne_res","refuerzo",1],["pollo","refuerzo",1],["cordero","refuerzo",1],["bacalao","tradicion",1],["albahaca","refuerzo",1],["mantequilla","refuerzo",1],["calamar","tradicion",1],["mejillon","refuerzo",1],["anchoa","refuerzo",1],["pimenton","refuerzo",1],["habichuela","refuerzo",1],["platanoverde","tradicion",1],["name","refuerzo",1],["mayonesa","refuerzo",1],["pan","tradicion",1],["pasta","refuerzo",1],["tomatelata","puente",1],["fideo","refuerzo",1],["tilapia","refuerzo",1],["pimentondulce","refuerzo",1],["ajipanca","casa",1],["vinagre","casa",1],["oregano","casa",1],["comino","casa",1],["mostaza","casa",1],["aceitesesamo","casa",1],["soya","casa",1]],"cebolla":[["ajo","refuerzo",1],["tomillo","tradicion",1],["vinagre","corte",1],["quesoazul","contraste",2],["tocino","refuerzo",1],["manzana","contraste",2],["laurel","tradicion",1],["carne_molida","refuerzo",1],["higado","contraste",1],["apio","tradicion",1],["gruyere","tradicion",1],["caldo","tradicion",1],["pastatomate","refuerzo",1],["tomateverde","tradicion",1],["morcilla","refuerzo",1]],"cebollalarga":[["cilantro","puente",1],["jengibre","puente",1],["soya","tradicion",1],["huevo","tradicion",1],["papa","tradicion",1]],"jengibre":[["ajo","refuerzo",1],["soya","tradicion",1],["limon","puente",1],["lechecoco","tradicion",1],["panela","contraste",1],["zanahoria","puente",1],["chocolate","contraste",2],["cebollalarga","puente",1],["ahuyama","puente",1],["atun","corte",1],["curcuma","refuerzo",1],["ajonjoli","tradicion",1],["aceitesesamo","tradicion",1],["cangrejo","corte",1],["soyagrano","tradicion",1],["te","puente",1],["pimenton","casa",1],["vinagre","casa",1],["maracuya","puente",2],["melon","puente",2]],"ajipicante":[["lima","corte",1],["lechecoco","corte",1],["chocolate","contraste",2],["mango","contraste",1],["ajo","refuerzo",1],["queso","corte",1],["brocoli","contraste",1],["aguacate","contraste",1],["maiz","contraste",1],["camaron","contraste",1],["coco","contraste",1],["cilantro","tradicion",1],["mani","contraste",1],["huevo","contraste",1],["calamar","contraste",1],["batata","contraste",1],["pina","contraste",1],["papaya","contraste",2],["sandia","contraste",2],["tamarindo","contraste",1],["tomatearbol","contraste",1],["cocoa","contraste",1],["tortillamaiz","contraste",1],["quinua","contraste",1],["soyagrano","contraste",1],["costilla","contraste",1],["guayaba","contraste",2]],"tomate":[["albahaca","puente",1],["mozzarella","contraste",1],["aceiteoliva","puente",1],["ajo","puente",1],["anchoa","refuerzo",1],["oregano","tradicion",1],["sandia","puente",2],["fresa","puente",2],["berenjena","tradicion",1],["aguacate","contraste",1],["atun","tradicion",1],["queso","contraste",1],["parmesano","refuerzo",1],["carne_molida","tradicion",1],["jamonserrano","tradicion",1],["calamar","tradicion",1],["habichuela","tradicion",1],["aceituna","contraste",1],["alcaparra","contraste",1],["feta","contraste",1],["laurel","tradicion",1],["balsamico","corte",1],["salsainglesa","refuerzo",1],["pan","tradicion",1],["pasta","tradicion",1],["bulgur","tradicion",1],["fideo","tradicion",1],["durazno","puente",2],["panela","contraste",2],["canela","puente",2]],"papa":[["mantequilla","refuerzo",1],["romero","tradicion",1],["tocino","refuerzo",1],["cebollalarga","tradicion",1],["queso","refuerzo",1],["trucha","tradicion",1],["guascas","tradicion",1],["chorizo","refuerzo",1],["bacalao","tradicion",1],["pulpo","tradicion",1],["eneldo","tradicion",1],["puerro","tradicion",1],["gruyere","refuerzo",1],["paprika","tradicion",1],["perejil","tradicion",1],["cebollin","tradicion",1],["nuezmoscada","tradicion",1],["mayonesa","refuerzo",1],["morcilla","refuerzo",1],["pimentondulce","tradicion",1],["chocolate","contraste",2]],"zanahoria":[["comino","puente",1],["jengibre","puente",1],["naranja","puente",1],["mantequilla","refuerzo",1],["hierbabuena","contraste",1],["cordero","tradicion",1],["apio","tradicion",1],["lenteja","puente",1],["caldo","tradicion",1],["cafe","puente",2],["vainilla","puente",2]],"champinon":[["ajo","refuerzo",1],["tomillo","puente",1],["crema","refuerzo",1],["soya","refuerzo",1],["perejil","corte",1],["vinoblanco","corte",1],["parmesano","refuerzo",1],["carne_res","refuerzo",1],["huevo","refuerzo",2],["vino","refuerzo",1],["brandy","puente",1],["solomillo","refuerzo",1],["chalota","refuerzo",1],["salsainglesa","refuerzo",1],["cebada","refuerzo",1],["caldores","refuerzo",1],["cafe","refuerzo",2]],"calabacin":[["hierbabuena","puente",1],["limon","corte",1],["parmesano","refuerzo",1],["albahaca","puente",1],["ajo","refuerzo",1]],"berenjena":[["tahini","tradicion",1],["tomate","tradicion",1],["ajonjoli","puente",1],["soya","refuerzo",2],["oregano","tradicion",1],["yogur","corte",1],["cordero","tradicion",1]],"espinaca":[["nuezmoscada","tradicion",1],["crema","refuerzo",1],["ajo","refuerzo",1],["requeson","contraste",1],["limon","corte",1],["pasas","contraste",2],["ajonjoli","tradicion",1],["garbanzo","tradicion",1]],"brocoli":[["anchoa","tradicion",1],["ajo","refuerzo",1],["ajipicante","contraste",1],["almendra","contraste",1],["limon","corte",1],["cheddar","refuerzo",1],["miel","contraste",2]],"ahuyama":[["salvia","tradicion",1],["canela","puente",1],["panela","refuerzo",1],["quesoazul","contraste",2],["jengibre","puente",1],["coco","puente",1],["nuezmoscada","puente",1],["curry","puente",1]],"yuca":[["ajo","tradicion",1],["queso","tradicion",1],["cerdo_chicharron","tradicion",1],["limon","corte",1],["cilantro","tradicion",1]],"platanomaduro":[["queso","contraste",1],["canela","puente",1],["frijol","tradicion",1],["tocino","contraste",1],["chocolate","puente",2],["quesoazul","contraste",2]],"aguacate":[["limon","corte",1],["cilantro","tradicion",1],["camaron","contraste",1],["tomate","contraste",1],["ajipicante","contraste",1],["chontaduro","refuerzo",2],["atun","contraste",1],["cangrejo","refuerzo",1],["lechuga","refuerzo",1],["platanoverde","refuerzo",1],["tomateverde","refuerzo",1],["tortillamaiz","refuerzo",1],["quinua","refuerzo",1],["rabano","corte",1],["wasabi","corte",1],["chocolate","refuerzo",2],["cafe","contraste",2]],"maiz":[["mantequilla","refuerzo",1],["queso","refuerzo",1],["ajipicante","contraste",1],["frijol","tradicion",1],["lima","corte",1],["albahaca","puente",2],["langosta","puente",1]],"frijol":[["tocino","refuerzo",1],["cilantro","corte",1],["comino","puente",1],["maiz","tradicion",1],["platanomaduro","tradicion",1],["limon","corte",1],["chorizo","tradicion",1],["vinagre","corte",1],["arroz","tradicion",1],["laurel","tradicion",1],["tortillamaiz","tradicion",1],["cocoa","refuerzo",2]],"carne_res":[["romero","tradicion",1],["pimienta","refuerzo",1],["champinon","refuerzo",1],["vino","corte",1],["mostazadijon","corte",1],["ajo","refuerzo",1],["cafe","refuerzo",2],["chocolate","refuerzo",2],["laurel","tradicion",1],["salsainglesa","refuerzo",1],["cocoa","refuerzo",2],["pastatomate","refuerzo",1],["caldores","refuerzo",1],["whisky","refuerzo",1],["canela","tradicion",1],["clavo","tradicion",1]],"cerdo":[["manzana","contraste",1],["salvia","tradicion",1],["mostaza","corte",1],["panela","contraste",1],["naranja","corte",1],["hinojo","puente",1],["tamarindo","corte",2],["mostazadijon","corte",1],["vinagre","corte",1],["cerveza","corte",1],["repollo","tradicion",1],["name","tradicion",1],["pina","corte",1],["clavo","tradicion",1],["achiote","tradicion",1],["maizpozolero","tradicion",1],["rabano","corte",1],["hojaplatano","tradicion",1],["maracuya","corte",2],["cafe","refuerzo",2]],"pollo":[["estragon","tradicion",1],["limon","corte",1],["ajo","refuerzo",1],["tomillo","tradicion",1],["lechecoco","tradicion",1],["curry","tradicion",1],["paprika","refuerzo",1],["azafran","tradicion",1],["mostazadijon","corte",1],["mani","tradicion",1],["arracacha","tradicion",1],["achiote","tradicion",1],["guascas","tradicion",1],["sueroleche","tradicion",1],["pimentondulce","refuerzo",1]],"cordero":[["hierbabuena","corte",1],["romero","tradicion",1],["ajo","refuerzo",1],["yogur","corte",1],["berenjena","tradicion",1],["comino","puente",1],["granadilla","corte",2],["zanahoria","tradicion",1],["canela","tradicion",1],["vino","corte",1],["oregano","tradicion",1],["pasas","contraste",1],["cebada","tradicion",1],["mora","contraste",2],["chocolate","refuerzo",2],["anchoa","refuerzo",2],["nuezmoscada","contraste",2]],"tocino":[["huevo","tradicion",1],["frijol","refuerzo",1],["panela","contraste",1],["repollo","corte",1],["arveja","contraste",1],["chocolate","contraste",2],["cebolla","refuerzo",1],["papa","refuerzo",1],["platanomaduro","contraste",1],["camaron","refuerzo",2],["banano","contraste",2],["pechuga","refuerzo",1],["higado","refuerzo",1],["habichuela","contraste",1],["lenteja","refuerzo",1],["batata","contraste",1],["cheddar","refuerzo",1],["arvejaseca","refuerzo",1],["pavo","refuerzo",1]],"chorizo":[["papa","refuerzo",1],["frijol","tradicion",1],["vino","corte",1],["almeja","tradicion",1],["pimenton","puente",1],["pulpo","refuerzo",2],["mejillon","contraste",2],["garbanzo","refuerzo",1],["lenteja","refuerzo",1],["paprika","puente",1],["pimentondulce","puente",1]],"pescado":[["limon","corte",1],["eneldo","tradicion",1],["perejil","tradicion",1],["mantequilla","refuerzo",1],["alcaparra","corte",1],["hinojo","puente",1],["maracuya","corte",2],["lechecoco","tradicion",1],["vinoblanco","corte",1],["cerveza","tradicion",1],["hojaplatano","tradicion",1],["mango","contraste",2],["uva","contraste",2],["miel","contraste",2],["vainilla","puente",2]],"salmon":[["eneldo","tradicion",1],["limon","corte",1],["soya","refuerzo",1],["miel","contraste",1],["pepino","corte",1],["mostaza","corte",1],["cafe","refuerzo",2],["cebollin","corte",1]],"atun":[["soya","refuerzo",1],["ajonjoli","puente",1],["aguacate","contraste",1],["jengibre","corte",1],["wasabi","contraste",1],["tomate","tradicion",1],["aceitesesamo","tradicion",1],["algasnori","tradicion",1],["fresa","contraste",2]],"camaron":[["ajo","tradicion",1],["lima","corte",1],["lechecoco","tradicion",1],["mantequilla","refuerzo",1],["ajipicante","contraste",1],["tocino","refuerzo",2],["aguacate","contraste",1],["mango","contraste",1],["coco","tradicion",1],["cilantro","tradicion",1],["azafran","tradicion",1],["arroz","tradicion",1],["brandy","tradicion",1],["tamarindo","corte",1],["curry","tradicion",1],["mayonesa","refuerzo",1],["panko","tradicion",1],["maracuya","corte",2],["lulo","corte",2],["chocolate","contraste",2],["vainilla","puente",2]],"bacalao":[["aceiteoliva","refuerzo",1],["ajo","tradicion",1],["papa","tradicion",1],["pimenton","tradicion",1],["garbanzo","tradicion",1],["pasas","contraste",2]],"pulpo":[["paprika","tradicion",1],["aceiteoliva","refuerzo",1],["papa","tradicion",1],["limon","corte",1],["chorizo","refuerzo",2]],"queso":[["guayaba","contraste",1],["miel","contraste",1],["pera","contraste",1],["platanomaduro","contraste",1],["tomate","contraste",1],["uva","contraste",1],["ajipicante","corte",1],["papa","refuerzo",1],["yuca","tradicion",1],["maiz","refuerzo",1],["carne_molida","refuerzo",1],["jamon","refuerzo",1],["coliflor","refuerzo",1],["platanoverde","refuerzo",1],["arracacha","refuerzo",1],["aceituna","refuerzo",1],["pimienta","refuerzo",1],["nuezmoscada","tradicion",1],["pan","refuerzo",1],["harinamaiz","tradicion",1],["tortillamaiz","refuerzo",1],["fideo","refuerzo",1],["haba","contraste",1],["fresa","contraste",2],["sandia","contraste",2],["pina","contraste",2],["chocolate","contraste",2]],"quesoazul":[["pera","contraste",1],["miel","contraste",1],["nuez","refuerzo",1],["ahuyama","contraste",2],["apio","corte",1],["higo","contraste",1],["cebolla","contraste",2],["solomillo","contraste",1],["remolacha","contraste",1],["uva","contraste",1],["soya","casa",1],["maracuya","casa",1],["panela","casa",1],["platanomaduro","contraste",2]],"parmesano":[["tomate","refuerzo",1],["albahaca","puente",1],["champinon","refuerzo",1],["pera","contraste",1],["balsamico","corte",1],["huevo","refuerzo",1],["calabacin","refuerzo",1],["lechuga","contraste",1],["pasta","refuerzo",1],["panko","refuerzo",1],["sandia","contraste",2]],"mozzarella":[["tomate","contraste",1],["albahaca","puente",1],["aceiteoliva","refuerzo",1],["balsamico","corte",1],["durazno","contraste",2]],"crema":[["champinon","refuerzo",1],["estragon","puente",1],["limon","corte",1],["nuezmoscada","tradicion",1],["maracuya","corte",2],["espinaca","refuerzo",1],["fresa","refuerzo",1],["mostazadijon","corte",1],["vinoblanco","corte",1],["brandy","refuerzo",1],["mejillon","refuerzo",1],["puerro","refuerzo",1],["mora","corte",1],["cebollin","corte",1],["vainilla","refuerzo",1],["guascas","contraste",1]],"yogur":[["pepino","tradicion",1],["hierbabuena","puente",1],["cordero","corte",1],["comino","tradicion",1],["miel","contraste",1],["curcuma","tradicion",1],["berenjena","corte",1],["eneldo","puente",1],["remolacha","corte",1],["papaya","corte",1]],"limon":[["pescado","corte",1],["aceiteoliva","puente",1],["perejil","puente",1],["mantequilla","corte",1],["miel","contraste",1],["tomillo","puente",1],["ajo","corte",1],["jengibre","puente",1],["calabacin","corte",1],["espinaca","corte",1],["brocoli","corte",1],["yuca","corte",1],["aguacate","corte",1],["frijol","corte",1],["pollo","corte",1],["salmon","corte",1],["pulpo","corte",1],["crema","corte",1],["guayaba","corte",1],["comino","corte",1],["albahaca","puente",1],["romero","corte",1],["eneldo","puente",1],["panela","contraste",1],["pechuga","corte",1],["langosta","corte",1],["calamar","corte",1],["cangrejo","corte",1],["lechuga","refuerzo",1],["habichuela","corte",1],["garbanzo","corte",1],["platanoverde","corte",1],["alcaparra","refuerzo",1],["tomatearbol","refuerzo",1],["quesocrema","corte",1],["requeson","corte",1],["pimienta","puente",1],["oregano","corte",1],["tahini","corte",1],["mayonesa","corte",1],["quinua","corte",1],["cuscus","corte",1],["bulgur","corte",1],["haba","corte",1],["caldopollo","corte",1],["lechecondensada","contraste",1],["tilapia","corte",1],["sardina","corte",1],["te","corte",1],["soya","casa",1],["papaya","corte",1]],"naranja":[["cerdo","corte",1],["chocolate","puente",1],["canela","puente",1],["hinojo","puente",1],["pato","tradicion",1],["aceituna","contraste",2],["zanahoria","puente",1],["azafran","puente",1],["remolacha","corte",1],["clavo","tradicion",1],["cardamomo","puente",1],["achiote","tradicion",1],["almendra","puente",1],["whisky","corte",1],["romero","puente",2]],"mango":[["lima","corte",1],["ajipicante","contraste",1],["lechecoco","puente",1],["camaron","contraste",1],["hierbabuena","puente",1],["cardamomo","puente",1],["maracuya","refuerzo",1],["pescado","contraste",2]],"maracuya":[["chocolateblanco","contraste",1],["lechecondensada","contraste",1],["crema","corte",1],["ron","puente",1],["pescado","corte",2],["soya","casa",1],["panela","casa",1],["quesoazul","casa",1],["coco","puente",2],["chocolate","contraste",2],["hinojo","puente",2],["mango","refuerzo",1],["jengibre","puente",2],["camaron","corte",2],["cerdo","corte",2],["albahaca","puente",2],["vainilla","contraste",2],["salsainglesa","refuerzo",2],["estragon","puente",2]],"fresa":[["albahaca","puente",1],["balsamico","contraste",1],["crema","refuerzo",1],["pimienta","contraste",2],["tomate","puente",2],["chocolate","puente",1],["vinagre","contraste",2],["queso","contraste",2],["soya","contraste",2],["atun","contraste",2]],"banano":[["chocolate","puente",1],["canela","puente",1],["mani","refuerzo",1],["ron","puente",1],["tocino","contraste",2],["avena","refuerzo",1],["curry","contraste",2]],"manzana":[["cerdo","corte",1],["canela","puente",1],["cheddar","contraste",1],["nuez","refuerzo",1],["mantequilla","refuerzo",1],["hinojo","puente",2],["cebolla","contraste",2],["higado","contraste",1],["apio","puente",1],["repollo","puente",1],["brie","contraste",1],["curry","contraste",1],["avena","contraste",1],["morcilla","contraste",1],["curcuma","puente",2]],"coco":[["lima","corte",1],["ajipicante","contraste",1],["camaron","tradicion",1],["chocolate","puente",1],["curry","tradicion",1],["panela","refuerzo",1],["ahuyama","puente",1],["cilantro","tradicion",1],["name","puente",1],["pina","puente",1],["lechecondensada","refuerzo",1],["maracuya","puente",2],["curcuma","tradicion",1]],"guayaba":[["queso","contraste",1],["panela","refuerzo",1],["limon","corte",1],["quesocosteno","contraste",1],["quesocrema","contraste",1],["ajipicante","contraste",2]],"chocolate":[["naranja","puente",1],["cafe","refuerzo",1],["ajipicante","contraste",1],["salmarina","contraste",1],["banano","puente",1],["carne_res","refuerzo",2],["jengibre","contraste",2],["platanomaduro","puente",2],["tocino","contraste",2],["fresa","puente",1],["coco","puente",1],["canela","puente",1],["hierbabuena","contraste",1],["mani","refuerzo",1],["vino","refuerzo",2],["remolacha","refuerzo",2],["mora","contraste",1],["pera","contraste",1],["cardamomo","puente",2],["vainilla","refuerzo",1],["almendra","refuerzo",1],["lechecondensada","refuerzo",1],["whisky","refuerzo",1],["maracuya","contraste",2],["tamarindo","contraste",2],["cordero","refuerzo",2],["camaron","contraste",2],["queso","contraste",2],["soya","refuerzo",2],["anchoa","refuerzo",2],["romero","puente",2],["comino","refuerzo",2],["coliflor","contraste",2],["papa","contraste",2],["aguacate","refuerzo",2],["aceiteoliva","refuerzo",2]],"cafe":[["chocolate","refuerzo",1],["canela","puente",1],["carne_res","refuerzo",2],["cardamomo","puente",1],["panela","contraste",1],["salmon","refuerzo",2],["nuez","puente",2],["leche","contraste",1],["vainilla","refuerzo",1],["cocoa","refuerzo",1],["lechecondensada","contraste",1],["whisky","refuerzo",1],["higo","puente",2],["cerdo","refuerzo",2],["zanahoria","puente",2],["champinon","refuerzo",2],["aguacate","contraste",2]],"miel":[["quesoazul","contraste",1],["limon","contraste",1],["tomillo","puente",1],["mostaza","contraste",1],["yogur","contraste",1],["nuez","refuerzo",1],["ajo","contraste",2],["salmon","contraste",1],["queso","contraste",1],["soya","contraste",1],["ajonjoli","contraste",1],["mostazadijon","contraste",1],["papaya","refuerzo",1],["higo","refuerzo",1],["chontaduro","contraste",1],["requeson","contraste",1],["brie","contraste",1],["tahini","contraste",1],["te","contraste",1],["pescado","contraste",2],["brocoli","contraste",2]],"soya":[["jengibre","tradicion",1],["ajonjoli","puente",1],["champinon","refuerzo",1],["miel","contraste",1],["atun","refuerzo",1],["mantequilla","contraste",2],["cebollalarga","tradicion",1],["berenjena","refuerzo",2],["salmon","refuerzo",1],["mani","refuerzo",1],["huevo","refuerzo",1],["aceitesesamo","puente",1],["tamarindo","refuerzo",1],["soyagrano","tradicion",1],["costilla","refuerzo",1],["wasabi","tradicion",1],["algasnori","refuerzo",1],["maracuya","casa",1],["panela","casa",1],["quesoazul","casa",1],["pimenton","casa",1],["ajo","casa",1],["vinagre","casa",1],["quesocrema","casa",1],["limon","casa",1],["fresa","contraste",2],["chocolate","refuerzo",2]],"canela":[["manzana","puente",1],["chocolate","puente",1],["naranja","puente",1],["cordero","tradicion",1],["cafe","puente",1],["ahuyama","puente",1],["platanomaduro","puente",1],["banano","puente",1],["panela","puente",1],["leche","tradicion",1],["carne_molida","tradicion",2],["batata","puente",1],["pera","puente",1],["clavo","refuerzo",1],["pasas","puente",1],["cocoa","puente",1],["avena","puente",1],["carne_res","tradicion",1],["tomate","puente",2]],"comino":[["cilantro","tradicion",1],["frijol","puente",1],["cordero","puente",1],["zanahoria","puente",1],["curcuma","refuerzo",1],["limon","corte",1],["yogur","tradicion",1],["carne_molida","puente",1],["repollo","puente",1],["garbanzo","tradicion",1],["lenteja","puente",1],["cuscus","tradicion",1],["arvejaseca","puente",1],["ajipanca","casa",1],["vinagre","casa",1],["oregano","casa",1],["ajo","casa",1],["chocolate","refuerzo",2]],"albahaca":[["tomate","puente",1],["ajo","refuerzo",1],["parmesano","puente",1],["fresa","puente",2],["mozzarella","puente",1],["limon","puente",1],["calabacin","puente",1],["maiz","puente",2],["pechuga","puente",1],["requeson","puente",1],["pasta","puente",1],["tomatelata","puente",1],["maracuya","puente",2],["durazno","puente",2],["sandia","puente",2]],"cilantro":[["lima","puente",1],["ajipicante","tradicion",1],["aguacate","tradicion",1],["comino","tradicion",1],["camaron","tradicion",1],["coco","tradicion",1],["cebollalarga","puente",1],["yuca","tradicion",1],["frijol","corte",1],["lechecoco","tradicion",1],["tomatearbol","puente",1],["tomateverde","tradicion",1],["quinua","puente",1],["tilapia","puente",1]],"romero":[["cordero","tradicion",1],["papa","tradicion",1],["ajo","refuerzo",1],["limon","corte",1],["durazno","contraste",2],["carne_res","tradicion",1],["aceiteoliva","puente",1],["aceituna","puente",1],["mora","puente",2],["uva","puente",2],["pina","puente",2],["chocolate","puente",2],["naranja","puente",2]],"tomillo":[["champinon","puente",1],["pollo","tradicion",1],["limon","puente",1],["cebolla","tradicion",1],["miel","puente",1],["puerro","puente",1],["caldo","tradicion",1],["cebada","puente",1],["caldores","tradicion",1]],"hierbabuena":[["cordero","corte",1],["yogur","puente",1],["arveja","puente",1],["chocolate","contraste",1],["sandia","puente",1],["lima","puente",1],["zanahoria","contraste",1],["calabacin","puente",1],["mango","puente",1],["pepino","puente",1],["pina","puente",1],["lulo","puente",1],["melon","puente",1],["feta","puente",1],["cuscus","puente",1],["bulgur","tradicion",1],["arvejaseca","puente",1],["haba","puente",1],["sueroleche","corte",1]],"eneldo":[["salmon","tradicion",1],["pepino","puente",1],["yogur","puente",1],["papa","tradicion",1],["limon","puente",1],["pescado","tradicion",1],["remolacha","puente",1],["quesocrema","puente",1]],"curcuma":[["jengibre","refuerzo",1],["lechecoco","tradicion",1],["comino","refuerzo",1],["yogur","tradicion",1],["pimienta","refuerzo",1],["coliflor","puente",1],["garbanzo","puente",1],["quinua","puente",1],["manzana","puente",2],["coco","tradicion",1]],"azafran":[["arroz","tradicion",1],["camaron","tradicion",1],["pollo","tradicion",1],["naranja","puente",1],["vainilla","puente",2],["mejillon","tradicion",1],["caldopollo","tradicion",1]],"ajonjoli":[["soya","puente",1],["atun","tradicion",1],["jengibre","tradicion",1],["miel","contraste",1],["espinaca","tradicion",1],["berenjena","puente",1],["aceitesesamo","refuerzo",1],["soyagrano","refuerzo",1],["algasnori","tradicion",1]],"mostazadijon":[["cerdo","corte",1],["miel","contraste",1],["crema","corte",1],["pollo","corte",1],["estragon","tradicion",1],["carne_res","corte",1],["pechuga","corte",1],["solomillo","corte",1],["puerro","corte",1]],"vinagre":[["aceiteoliva","contraste",1],["cebolla","corte",1],["frijol","corte",1],["fresa","contraste",2],["cerdo","corte",1],["higado","corte",1],["chalota","corte",1],["repollo","corte",1],["pepino","refuerzo",1],["lenteja","corte",1],["morcilla","corte",1],["sardina","corte",1],["ajipanca","casa",1],["oregano","casa",1],["ajo","casa",1],["comino","casa",1],["aceitesesamo","casa",1],["jengibre","casa",1],["pimenton","casa",1],["soya","casa",1]],"panela":[["limon","contraste",1],["cerdo","contraste",1],["canela","puente",1],["cafe","contraste",1],["jengibre","contraste",1],["ahuyama","refuerzo",1],["tocino","contraste",1],["coco","refuerzo",1],["guayaba","refuerzo",1],["mantequilla","contraste",1],["leche","contraste",1],["cerveza","contraste",1],["batata","refuerzo",1],["lulo","contraste",1],["mora","contraste",1],["durazno","refuerzo",1],["tamarindo","contraste",1],["tomatearbol","contraste",1],["clavo","puente",1],["cocoa","contraste",1],["tomatelata","contraste",1],["harinamaiz","contraste",1],["avena","refuerzo",1],["sueroleche","contraste",1],["costilla","contraste",1],["whisky","puente",1],["soya","casa",1],["maracuya","casa",1],["quesoazul","casa",1],["mostaza","casa",1],["caldores","casa",1],["tomate","contraste",2]],"nuez":[["quesoazul","refuerzo",1],["manzana","refuerzo",1],["miel","refuerzo",1],["apio","contraste",1],["cafe","puente",2],["remolacha","refuerzo",1],["uva","refuerzo",1],["higo","refuerzo",1],["pera","refuerzo",1],["brie","refuerzo",1]],"mani":[["ajipicante","contraste",1],["lima","corte",1],["soya","refuerzo",1],["banano","refuerzo",1],["chocolate","refuerzo",1],["pollo","tradicion",1]],"arroz":[["azafran","tradicion",1],["lechecoco","tradicion",1],["mantequilla","refuerzo",1],["camaron","tradicion",1],["frijol","tradicion",1],["cardamomo","tradicion",1],["achiote","tradicion",1],["pasas","contraste",1],["caldopollo","refuerzo",1],["algasnori","tradicion",1]],"huevo":[["tocino","tradicion",1],["parmesano","refuerzo",1],["cebollalarga","tradicion",1],["ajipicante","contraste",1],["champinon","refuerzo",2],["soya","refuerzo",1],["pimenton","tradicion",1],["gruyere","refuerzo",1],["paprika","refuerzo",1],["estragon","tradicion",1],["cebollin","tradicion",1],["salsainglesa","refuerzo",1],["pimentondulce","refuerzo",1]],"mantequilla":[["salvia","tradicion",1],["limon","corte",1],["ajo","refuerzo",1],["camaron","refuerzo",1],["panela","contraste",1],["alcaparra","corte",1],["papa","refuerzo",1],["zanahoria","refuerzo",1],["maiz","refuerzo",1],["pescado","refuerzo",1],["manzana","refuerzo",1],["soya","contraste",2],["arroz","refuerzo",1],["vinoblanco","corte",1],["solomillo","refuerzo",1],["langosta","refuerzo",1],["anchoa","contraste",1],["puerro","refuerzo",1],["chalota","refuerzo",1],["arveja","refuerzo",1],["arracacha","refuerzo",1],["perejil","corte",1],["pan","refuerzo",1],["pasta","refuerzo",1],["harinamaiz","refuerzo",1],["pavo","refuerzo",1],["rabano","contraste",1]],"aceiteoliva":[["tomate","puente",1],["ajo","refuerzo",1],["limon","contraste",1],["pan","tradicion",1],["aceituna","refuerzo",1],["romero","puente",1],["bacalao","refuerzo",1],["pulpo","refuerzo",1],["mozzarella","refuerzo",1],["vinagre","contraste",1],["jamonserrano","refuerzo",1],["pimenton","refuerzo",1],["lechuga","contraste",1],["bulgur","refuerzo",1],["haba","refuerzo",1],["sardina","refuerzo",1],["chocolate","refuerzo",2],["vainilla","puente",2]],"leche":[["canela","tradicion",1],["vainilla","puente",1],["nuezmoscada","tradicion",1],["panela","contraste",1],["cafe","contraste",1],["avena","refuerzo",1],["te","refuerzo",1],["laurel","tradicion",2]],"lechecoco":[["ajipicante","corte",1],["curry","tradicion",1],["camaron","tradicion",1],["lima","corte",1],["jengibre","tradicion",1],["cilantro","tradicion",1],["pescado","tradicion",1],["pollo","tradicion",1],["mango","puente",1],["curcuma","tradicion",1],["arroz","tradicion",1],["tilapia","tradicion",1]],"aceitesesamo":[["soya","puente",1],["jengibre","tradicion",1],["ajonjoli","refuerzo",1],["atun","tradicion",1],["brotessoya","tradicion",1],["pimenton","casa",1],["ajo","casa",1],["vinagre","casa",1]],"vinoblanco":[["champinon","corte",1],["mejillon","tradicion",1],["crema","corte",1],["chalota","tradicion",1],["pescado","corte",1],["mantequilla","corte",1],["gruyere","corte",1]],"vino":[["carne_res","corte",1],["chorizo","corte",1],["champinon","refuerzo",1],["chocolate","refuerzo",2],["cordero","corte",1],["pastatomate","corte",1],["caldores","corte",1]],"cerveza":[["cerdo","corte",1],["cheddar","refuerzo",1],["mostaza","puente",1],["pescado","tradicion",1],["panela","contraste",1],["costilla","corte",1],["caldores","casa",1]],"brandy":[["champinon","puente",1],["crema","refuerzo",1],["camaron","tradicion",1],["pimienta","tradicion",1],["durazno","puente",1],["langosta","tradicion",1],["foiegras","corte",1]],"pechuga":[["limon","corte",1],["estragon","tradicion",1],["mostazadijon","corte",1],["tocino","refuerzo",1],["albahaca","puente",1],["durazno","contraste",2],["arveja","contraste",1],["panko","tradicion",1]],"carne_molida":[["comino","puente",1],["tomate","tradicion",1],["cebolla","refuerzo",1],["oregano","tradicion",1],["queso","refuerzo",1],["canela","tradicion",2]],"solomillo":[["mantequilla","refuerzo",1],["pimienta","contraste",1],["champinon","refuerzo",1],["quesoazul","contraste",1],["mostazadijon","corte",1]],"jamon":[["melon","contraste",1],["higo","contraste",1],["arveja","contraste",1],["queso","refuerzo",1],["pan","tradicion",1],["arvejaseca","refuerzo",1]],"jamonserrano":[["melon","contraste",1],["higo","contraste",1],["tomate","tradicion",1],["aceiteoliva","refuerzo",1],["uva","contraste",1],["haba","contraste",1]],"higado":[["cebolla","contraste",1],["vinagre","corte",1],["manzana","contraste",1],["salvia","tradicion",1],["tocino","refuerzo",1]],"langosta":[["mantequilla","refuerzo",1],["estragon","tradicion",1],["vainilla","puente",2],["limon","corte",1],["brandy","tradicion",1],["maiz","puente",1]],"calamar":[["ajo","tradicion",1],["limon","corte",1],["ajipicante","contraste",1],["perejil","tradicion",1],["tomate","tradicion",1]],"mejillon":[["vinoblanco","tradicion",1],["ajo","refuerzo",1],["perejil","tradicion",1],["crema","refuerzo",1],["chorizo","contraste",2],["azafran","tradicion",1]],"cangrejo":[["mayonesa","refuerzo",1],["limon","corte",1],["cebollin","corte",1],["aguacate","refuerzo",1],["jengibre","corte",1]],"anchoa":[["ajo","refuerzo",1],["tomate","refuerzo",1],["brocoli","tradicion",1],["mantequilla","contraste",1],["aceituna","refuerzo",1],["pimenton","contraste",1],["lechuga","contraste",1],["pasta","refuerzo",1],["tomatelata","refuerzo",1],["cordero","refuerzo",2],["chocolate","refuerzo",2]],"pimenton":[["ajo","refuerzo",1],["aceiteoliva","refuerzo",1],["anchoa","contraste",1],["huevo","tradicion",1],["chorizo","puente",1],["almendra","tradicion",1],["bacalao","tradicion",1],["sardina","tradicion",1],["aceitesesamo","casa",1],["jengibre","casa",1],["soya","casa",1],["vinagre","casa",1]],"apio":[["zanahoria","tradicion",1],["cebolla","tradicion",1],["nuez","contraste",1],["quesoazul","contraste",1],["manzana","puente",1],["caldo","tradicion",1],["caldopollo","tradicion",1]],"puerro":[["papa","tradicion",1],["mantequilla","refuerzo",1],["crema","refuerzo",1],["tomillo","puente",1],["mostazadijon","corte",1]],"chalota":[["vinoblanco","tradicion",1],["mantequilla","refuerzo",1],["estragon","tradicion",1],["vinagre","corte",1],["champinon","refuerzo",1]],"repollo":[["tocino","refuerzo",1],["vinagre","corte",1],["comino","puente",1],["manzana","puente",1],["cerdo","tradicion",1],["mostaza","corte",1]],"coliflor":[["curcuma","puente",1],["tahini","refuerzo",1],["queso","refuerzo",1],["almendra","refuerzo",1],["alcaparra","corte",1],["granadilla","contraste",2],["chocolate","contraste",2]],"remolacha":[["quesoazul","contraste",1],["naranja","corte",1],["eneldo","puente",1],["nuez","refuerzo",1],["yogur","corte",1],["chocolate","refuerzo",2]],"pepino":[["yogur","tradicion",1],["eneldo","puente",1],["hierbabuena","puente",1],["salmon","corte",1],["vinagre","refuerzo",1],["sandia","puente",1]],"lechuga":[["limon","refuerzo",1],["aceiteoliva","contraste",1],["parmesano","contraste",1],["anchoa","contraste",1],["aguacate","refuerzo",1]],"arveja":[["hierbabuena","puente",1],["tocino","contraste",1],["jamon","contraste",1],["mantequilla","refuerzo",1],["pechuga","contraste",1]],"habichuela":[["almendra","tradicion",1],["ajo","refuerzo",1],["tomate","tradicion",1],["tocino","contraste",1],["limon","corte",1]],"garbanzo":[["comino","tradicion",1],["tahini","tradicion",1],["limon","corte",1],["espinaca","tradicion",1],["chorizo","refuerzo",1],["curcuma","puente",1],["bacalao","tradicion",1],["cuscus","tradicion",1]],"lenteja":[["tocino","refuerzo",1],["vinagre","corte",1],["comino","puente",1],["zanahoria","puente",1],["chorizo","refuerzo",1]],"platanoverde":[["ajo","tradicion",1],["cerdo_chicharron","tradicion",1],["limon","corte",1],["queso","refuerzo",1],["aguacate","refuerzo",1]],"name":[["cilantrocimarron","tradicion",1],["cerdo","tradicion",1],["coco","puente",1],["ajo","refuerzo",1]],"batata":[["canela","puente",1],["panela","refuerzo",1],["tocino","contraste",1],["ajipicante","contraste",1],["lima","corte",1]],"arracacha":[["mantequilla","refuerzo",1],["guascas","tradicion",1],["pollo","tradicion",1],["queso","refuerzo",1]],"aceituna":[["tomate","contraste",1],["naranja","contraste",2],["anchoa","refuerzo",1],["queso","refuerzo",1],["romero","puente",1],["aceiteoliva","refuerzo",1],["feta","refuerzo",1],["oregano","puente",1]],"alcaparra":[["pescado","corte",1],["mantequilla","corte",1],["limon","refuerzo",1],["tomate","contraste",1],["coliflor","corte",1],["quesocrema","corte",1],["guascas","corte",1]],"pina":[["cerdo","corte",1],["ajipicante","contraste",1],["ron","puente",1],["coco","puente",1],["hierbabuena","puente",1],["tahini","casa",1],["balsamico","casa",1],["romero","puente",2],["queso","contraste",2],["oregano","contraste",2]],"lulo":[["panela","contraste",1],["hierbabuena","puente",1],["ron","puente",1],["lima","refuerzo",1],["camaron","corte",2]],"mora":[["chocolate","contraste",1],["crema","corte",1],["panela","contraste",1],["foiegras","contraste",1],["romero","puente",2],["cordero","contraste",2]],"papaya":[["lima","corte",1],["ajipicante","contraste",2],["yogur","corte",1],["miel","refuerzo",1],["limon","corte",1]],"sandia":[["hierbabuena","puente",1],["feta","contraste",1],["lima","corte",1],["tomate","puente",2],["ajipicante","contraste",2],["pepino","puente",1],["queso","contraste",2],["parmesano","contraste",2],["albahaca","puente",2],["salmarina","contraste",2]],"uva":[["quesoazul","contraste",1],["brie","contraste",1],["nuez","refuerzo",1],["jamonserrano","contraste",1],["romero","puente",2],["queso","contraste",1],["pescado","contraste",2]],"higo":[["jamonserrano","contraste",1],["quesoazul","contraste",1],["balsamico","corte",1],["nuez","refuerzo",1],["miel","refuerzo",1],["jamon","contraste",1],["foiegras","contraste",1],["cafe","puente",2]],"melon":[["jamonserrano","contraste",1],["jamon","contraste",1],["hierbabuena","puente",1],["lima","corte",1],["feta","contraste",2],["jengibre","puente",2]],"pera":[["quesoazul","contraste",1],["nuez","refuerzo",1],["chocolate","contraste",1],["canela","puente",1],["parmesano","contraste",1],["queso","contraste",1],["brie","contraste",1]],"durazno":[["romero","puente",2],["mozzarella","contraste",2],["panela","refuerzo",1],["brandy","puente",1],["pechuga","contraste",2],["vainilla","puente",1],["tomate","puente",2],["albahaca","puente",2]],"tamarindo":[["cerdo","corte",1],["panela","contraste",1],["ajipicante","contraste",1],["camaron","corte",1],["soya","refuerzo",1],["chocolate","contraste",2]],"chontaduro":[["miel","contraste",1],["salmarina","contraste",1],["aguacate","refuerzo",1]],"tomatearbol":[["panela","contraste",1],["ajipicante","contraste",1],["cilantro","puente",1],["limon","refuerzo",1]],"quesocrema":[["salmonahumado","tradicion",1],["eneldo","puente",1],["guayaba","contraste",1],["alcaparra","corte",1],["limon","corte",1],["soya","casa",1]],"requeson":[["espinaca","tradicion",1],["nuezmoscada","tradicion",1],["miel","contraste",1],["limon","corte",1],["albahaca","puente",1]],"gruyere":[["cebolla","tradicion",1],["vinoblanco","corte",1],["papa","refuerzo",1],["huevo","refuerzo",1],["nuezmoscada","tradicion",1]],"brie":[["uva","contraste",1],["miel","contraste",1],["pera","contraste",1],["nuez","refuerzo",1],["manzana","contraste",1]],"feta":[["sandia","contraste",1],["hierbabuena","puente",1],["tomate","contraste",1],["aceituna","refuerzo",1],["melon","contraste",2]],"cheddar":[["manzana","contraste",1],["cerveza","refuerzo",1],["brocoli","refuerzo",1],["mostaza","corte",1],["tocino","refuerzo",1]],"pimienta":[["carne_res","refuerzo",1],["fresa","contraste",2],["queso","refuerzo",1],["brandy","tradicion",1],["limon","puente",1],["curcuma","refuerzo",1],["solomillo","contraste",1],["caldores","refuerzo",1]],"paprika":[["pulpo","tradicion",1],["papa","tradicion",1],["pollo","refuerzo",1],["chorizo","puente",1],["huevo","refuerzo",1],["pastatomate","puente",1],["tilapia","refuerzo",1]],"oregano":[["tomate","tradicion",1],["carne_molida","tradicion",1],["aceituna","puente",1],["limon","corte",1],["cordero","tradicion",1],["berenjena","tradicion",1],["tomatelata","tradicion",1],["maizpozolero","tradicion",1],["ajipanca","casa",1],["vinagre","casa",1],["ajo","casa",1],["comino","casa",1],["pina","contraste",2]],"perejil":[["ajo","tradicion",1],["limon","puente",1],["mantequilla","corte",1],["pescado","tradicion",1],["papa","tradicion",1],["champinon","corte",1],["calamar","tradicion",1],["mejillon","tradicion",1],["bulgur","tradicion",1]],"estragon":[["pollo","tradicion",1],["crema","puente",1],["mostazadijon","tradicion",1],["huevo","tradicion",1],["langosta","tradicion",1],["pechuga","tradicion",1],["chalota","tradicion",1],["caldopollo","tradicion",1],["maracuya","puente",2]],"cebollin":[["huevo","tradicion",1],["papa","tradicion",1],["crema","corte",1],["salmon","corte",1],["cangrejo","corte",1]],"laurel":[["frijol","tradicion",1],["caldo","tradicion",1],["tomate","tradicion",1],["carne_res","tradicion",1],["cebolla","tradicion",1],["tomatelata","tradicion",1],["pastatomate","tradicion",1],["costilla","tradicion",1],["leche","tradicion",2]],"nuezmoscada":[["espinaca","tradicion",1],["leche","tradicion",1],["papa","tradicion",1],["queso","tradicion",1],["ahuyama","puente",1],["crema","tradicion",1],["requeson","tradicion",1],["gruyere","tradicion",1],["cordero","contraste",2]],"clavo":[["naranja","tradicion",1],["cerdo","tradicion",1],["canela","refuerzo",1],["panela","puente",1],["carne_res","tradicion",1]],"cardamomo":[["cafe","tradicion",1],["naranja","puente",1],["arroz","tradicion",1],["chocolate","puente",2],["mango","puente",1],["te","puente",1]],"vainilla":[["chocolate","refuerzo",1],["crema","refuerzo",1],["durazno","puente",1],["cafe","refuerzo",1],["langosta","puente",2],["azafran","puente",2],["leche","puente",1],["maracuya","contraste",2],["zanahoria","puente",2],["pescado","puente",2],["camaron","puente",2],["aceiteoliva","puente",2]],"curry":[["lechecoco","tradicion",1],["pollo","tradicion",1],["manzana","contraste",1],["camaron","tradicion",1],["ahuyama","puente",1],["coco","tradicion",1],["banano","contraste",2]],"achiote":[["cerdo","tradicion",1],["pollo","tradicion",1],["naranja","tradicion",1],["arroz","tradicion",1],["hojaplatano","tradicion",1]],"guascas":[["papa","tradicion",1],["pollo","tradicion",1],["crema","contraste",1],["alcaparra","corte",1],["arracacha","tradicion",1]],"tahini":[["limon","corte",1],["garbanzo","tradicion",1],["berenjena","tradicion",1],["miel","contraste",1],["coliflor","refuerzo",1],["balsamico","casa",1],["pina","casa",1]],"balsamico":[["fresa","contraste",1],["tomate","corte",1],["mozzarella","corte",1],["parmesano","contraste",1],["higo","corte",1],["tahini","casa",1],["pina","casa",1]],"mayonesa":[["camaron","refuerzo",1],["papa","refuerzo",1],["limon","corte",1],["ajo","refuerzo",1],["cangrejo","refuerzo",1],["wasabi","refuerzo",1],["panko","refuerzo",1],["mostaza","casa",1]],"mostaza":[["cerdo","corte",1],["miel","contraste",1],["cheddar","corte",1],["salchicha","tradicion",1],["repollo","corte",1],["salmon","corte",1],["cerveza","puente",1],["ajo","casa",1],["mayonesa","casa",1],["panela","casa",1],["caldores","casa",1]],"salsainglesa":[["carne_res","refuerzo",1],["tomate","refuerzo",1],["champinon","refuerzo",1],["huevo","refuerzo",1],["maracuya","refuerzo",2]],"pasas":[["espinaca","contraste",1],["almendra","refuerzo",1],["arroz","contraste",1],["canela","puente",1],["cordero","contraste",1],["cuscus","contraste",1],["bacalao","contraste",2]],"almendra":[["brocoli","tradicion",1],["habichuela","tradicion",1],["naranja","puente",1],["chocolate","refuerzo",1],["coliflor","refuerzo",1],["pimenton","tradicion",1],["pasas","refuerzo",1]],"cocoa":[["panela","contraste",1],["canela","puente",1],["ajipicante","contraste",1],["cafe","refuerzo",1],["carne_res","refuerzo",2],["frijol","refuerzo",2]],"pan":[["tomate","tradicion",1],["aceiteoliva","tradicion",1],["ajo","tradicion",1],["mantequilla","refuerzo",1],["queso","refuerzo",1],["jamon","tradicion",1],["sardina","tradicion",1],["foiegras","refuerzo",1]],"pasta":[["parmesano","refuerzo",1],["albahaca","puente",1],["tomate","tradicion",1],["ajo","refuerzo",1],["anchoa","refuerzo",1],["mantequilla","refuerzo",1]],"caldo":[["laurel","tradicion",1],["apio","tradicion",1],["zanahoria","tradicion",1],["cebolla","tradicion",1],["tomillo","tradicion",1],["cebada","refuerzo",1]],"tomatelata":[["albahaca","puente",1],["ajo","puente",1],["oregano","tradicion",1],["anchoa","refuerzo",1],["panela","contraste",1],["laurel","tradicion",1]],"pastatomate":[["carne_res","refuerzo",1],["cebolla","refuerzo",1],["paprika","puente",1],["vino","corte",1],["laurel","tradicion",1]],"tomateverde":[["cilantro","tradicion",1],["jalapeno","tradicion",1],["cebolla","tradicion",1],["pepitacalabaza","tradicion",1],["aguacate","refuerzo",1]],"harinamaiz":[["queso","tradicion",1],["mantequilla","refuerzo",1],["panela","contraste",1],["hojaplatano","tradicion",1]],"maizpozolero":[["oregano","tradicion",1],["guajillo","tradicion",1],["cerdo","tradicion",1],["lima","corte",1],["rabano","corte",1]],"tortillamaiz":[["aguacate","refuerzo",1],["lima","corte",1],["ajipicante","contraste",1],["frijol","tradicion",1],["queso","refuerzo",1]],"avena":[["canela","puente",1],["banano","refuerzo",1],["panela","refuerzo",1],["manzana","contraste",1],["leche","refuerzo",1]],"quinua":[["limon","corte",1],["aguacate","refuerzo",1],["cilantro","puente",1],["ajipicante","contraste",1],["curcuma","puente",1]],"cuscus":[["hierbabuena","puente",1],["pasas","contraste",1],["comino","tradicion",1],["garbanzo","tradicion",1],["limon","corte",1]],"bulgur":[["perejil","tradicion",1],["hierbabuena","tradicion",1],["limon","corte",1],["tomate","tradicion",1],["aceiteoliva","refuerzo",1]],"cebada":[["champinon","refuerzo",1],["caldo","refuerzo",1],["tomillo","puente",1],["cordero","tradicion",1]],"fideo":[["tomate","tradicion",1],["caldopollo","refuerzo",1],["ajo","refuerzo",1],["queso","refuerzo",1]],"arvejaseca":[["tocino","refuerzo",1],["hierbabuena","puente",1],["jamon","refuerzo",1],["comino","puente",1]],"haba":[["hierbabuena","puente",1],["jamonserrano","contraste",1],["limon","corte",1],["queso","contraste",1],["aceiteoliva","refuerzo",1]],"soyagrano":[["soya","tradicion",1],["jengibre","tradicion",1],["ajonjoli","refuerzo",1],["ajipicante","contraste",1]],"caldopollo":[["estragon","tradicion",1],["limon","corte",1],["apio","tradicion",1],["arroz","refuerzo",1],["azafran","tradicion",1],["fideo","refuerzo",1]],"caldores":[["vino","corte",1],["champinon","refuerzo",1],["tomillo","tradicion",1],["carne_res","refuerzo",1],["pimienta","refuerzo",1],["panela","casa",1],["cerveza","casa",1],["mostaza","casa",1]],"lechecondensada":[["limon","contraste",1],["maracuya","contraste",1],["cafe","contraste",1],["coco","refuerzo",1],["chocolate","refuerzo",1]],"sueroleche":[["pollo","tradicion",1],["harina","tradicion",1],["panela","contraste",1],["hierbabuena","corte",1]],"costilla":[["panela","contraste",1],["soya","refuerzo",1],["ajipicante","contraste",1],["laurel","tradicion",1],["cerveza","corte",1],["chipotle","refuerzo",1]],"morcilla":[["manzana","contraste",1],["cebolla","refuerzo",1],["papa","refuerzo",1],["vinagre","corte",1]],"pavo":[["salvia","tradicion",1],["tocino","refuerzo",1],["arandano","contraste",1],["mantequilla","refuerzo",1],["pimientajamaica","tradicion",1]],"tilapia":[["limon","corte",1],["ajo","refuerzo",1],["cilantro","puente",1],["lechecoco","tradicion",1],["paprika","refuerzo",1]],"sardina":[["limon","corte",1],["aceiteoliva","refuerzo",1],["pimenton","tradicion",1],["pan","tradicion",1],["vinagre","corte",1]],"rabano":[["mantequilla","contraste",1],["salmarina","refuerzo",1],["lima","puente",1],["cerdo","corte",1],["aguacate","corte",1],["maizpozolero","corte",1]],"pimentondulce":[["chorizo","puente",1],["papa","tradicion",1],["pollo","refuerzo",1],["huevo","refuerzo",1],["ajo","refuerzo",1]],"hojaplatano":[["harinamaiz","tradicion",1],["cerdo","tradicion",1],["pescado","tradicion",1],["achiote","tradicion",1]],"wasabi":[["atun","tradicion",1],["soya","tradicion",1],["aguacate","corte",1],["mayonesa","refuerzo",1]],"foiegras":[["mora","contraste",1],["higo","contraste",1],["brandy","corte",1],["pan","refuerzo",1],["salmarina","contraste",1]],"whisky":[["carne_res","refuerzo",1],["panela","puente",1],["chocolate","refuerzo",1],["naranja","corte",1],["cafe","refuerzo",1]],"algasnori":[["arroz","tradicion",1],["atun","tradicion",1],["ajonjoli","tradicion",1],["soya","refuerzo",1]],"panko":[["camaron","tradicion",1],["pechuga","tradicion",1],["mayonesa","refuerzo",1],["parmesano","refuerzo",1]],"te":[["limon","corte",1],["jengibre","puente",1],["miel","contraste",1],["leche","refuerzo",1],["cardamomo","puente",1]]};
+const TIPOS_MAR = ["puente","refuerzo","corte","contraste","tradicion","casa"];
+/* Las bases de la casa: lo que de verdad se cocina en Siete Sabores. */
+const BASES = [{"id":"ca1","ing":["soya","maracuya","panela"]},{"id":"ca2","ing":["soya","maracuya","panela","quesoazul"]},{"id":"ca3","ing":["ajipanca","vinagre","oregano","ajo","comino"]},{"id":"ca4","ing":["ajo","mayonesa","mostaza"]},{"id":"ca5","ing":["aceiteoliva","ajo","limon"]},{"id":"ca6","ing":["panela","cerveza","mostaza","caldores"]},{"id":"ca7","ing":["aceitesesamo","jengibre","pimenton","ajo","soya","vinagre"]},{"id":"ca8","ing":["quesocrema","limon","soya"]},{"id":"ca9","ing":["tahini","balsamico","pina"]}];
+const PASTA_IDS = [["capellini","vermicelli","spaghetti","spaghettoni","bucatini","linguini","trenette","bavette","fettuccine","tagliatelle","pappardelle","mafaldine","lasana"],["penne","rigatoni","fusilli","farfalle","orecchiette","conchiglie"],["ravioli","tortellini","tortelloni","agnolotti","cappelletti","cappellacci","culurgiones","mezzelune","cannelloni"]];
+const ANAT_IDS = [["arroz","pollo","conejo","habichuela","haba","tomate","azafran","romero","aceiteoliva"]];
+const REND = {"pollo_entero":70,"pescado":55,"solomillo":85,"camaron":60,"lechuga":80};
+const CFG_FRIO = ["alerta","bien","frio","frio"];
+const PESC_TIPO = {"merluza":"magro","corvina":"magro","lenguado":"magro","bacalao":"magro","tilapia":"magro","robalo":"magro","mero":"magro","pargo":"magro","mojarra":"magro","salmon":"graso","atun":"graso","caballa":"graso","sardina":"graso","trucha":"graso","pezespada":"graso","jurel":"graso","bonito":"graso","bagre":"graso","sierra":"graso"};
+/* Verduras, granos y legumbres: su cocción es un paso, no un impedimento */
+const COCFAM = {"papa":"raiz_dura","yuca":"raiz_dura","name":"raiz_dura","malanga":"raiz_dura","arracacha":"raiz_dura","batata":"raiz_dura","remolacha":"raiz_dura","nabo":"raiz_dura","zanahoria":"raiz_dura","platanoverde":"raiz_dura","platanohartón":"raiz_dura","platanomaduro":"raiz_dura","ahuyama":"raiz_dura","chayote":"raiz_dura","brocoli":"cruciferas","coliflor":"cruciferas","repollo":"cruciferas","kale":"cruciferas","rabano":"cruciferas","esparrago":"cruciferas","espinaca":"hoja_tierna","acelga":"hoja_tierna","lechuga":"hoja_tierna","rucula":"hoja_tierna","berro":"hoja_tierna","endivia":"hoja_tierna","cebolla":"aromatica_base","cebollaroja":"aromatica_base","chalota":"aromatica_base","cebollalarga":"aromatica_base","cebollin":"aromatica_base","puerro":"aromatica_base","ajo":"aromatica_base","ajidulce":"aromatica_base","pimenton":"aromatica_base","pimentonrojo":"aromatica_base","pimentonamarillo":"aromatica_base","ajipicante":"aromatica_base","rocoto":"aromatica_base","jalapeno":"aromatica_base","habanero":"aromatica_base","jengibre":"aromatica_base","apio":"aromatica_base","tomate":"acuosa_tierna","calabacin":"acuosa_tierna","berenjena":"acuosa_tierna","pepino":"acuosa_tierna","okra":"acuosa_tierna","habichuela":"acuosa_tierna","maiz":"acuosa_tierna","maiztierno":"acuosa_tierna","arveja":"acuosa_tierna","palmito":"acuosa_tierna","brotessoya":"acuosa_tierna","aguacate":"acuosa_tierna","alcaparra":"acuosa_tierna","aceituna":"acuosa_tierna","pepinillo":"acuosa_tierna","champinon":"hongos","portobello":"hongos","shiitake":"hongos","champinonlata":"hongos","alcachofa":"flor_fibrosa","frijol":"legumbre_seca","frijolnegro":"legumbre_seca","frijolrojo":"legumbre_seca","garbanzo":"legumbre_seca","lenteja":"legumbre_seca","arvejaseca":"legumbre_seca","soyagrano":"legumbre_seca","haba":"legumbre_seca","arroz":"grano_cereal","arrozintegral":"grano_cereal","arrozarborio":"grano_cereal","arrozjazmin":"grano_cereal","arrozbasmati":"grano_cereal","quinua":"grano_cereal","cuscus":"grano_cereal","bulgur":"grano_cereal","cebada":"grano_cereal","avena":"grano_cereal","polenta":"grano_cereal","manzana":"fruta_cocina","pera":"fruta_cocina","durazno":"fruta_cocina","pina":"fruta_cocina","mango":"fruta_cocina","banano":"fruta_cocina","guayaba":"fruta_cocina","coco":"fruta_cocina"};
+const FAMCOC = {"raiz_dura":{"t":"Raíces y tubérculos densos","como":"Hervido 20–40 min, horno 40–60 min, o frito en dos tiempos. Crudos solo rallados o en lámina fina.","ojo":"La yuca y el ñame no se salvan con fuego alto y corto: necesitan agua y tiempo o se quedan crudos por dentro."},"cruciferas":{"t":"Crucíferas y flores","como":"Vapor 4–6 min, salteado fuerte 5–7 min, horno 18–25 min.","ojo":"Pasadas de punto sueltan azufre y amargan. Mejor cortas y con color vivo."},"hoja_tierna":{"t":"Hojas tiernas","como":"Segundos. Crudas, o calor alto y corto hasta que caen.","ojo":"En guisos van al final, con el fuego apagado: el calor residual las cocina."},"aromatica_base":{"t":"Aromáticos de base","como":"Sofrito 5–10 min a fuego medio hasta transparentar; nunca dorar el ajo antes de la cebolla.","ojo":"Es la base de casi todo el recetario. Si se quema, el plato entero sabe amargo."},"acuosa_tierna":{"t":"Verduras acuosas","como":"3–8 min a fuego alto en sartén amplia, o asadas 15–20 min.","ojo":"Sueltan agua. Si la sartén está llena o tibia, se cuecen en su jugo en vez de dorarse."},"hongos":{"t":"Hongos","como":"Sartén caliente y seca, sin encimar, 5–8 min. La sal al final.","ojo":"La sal temprana les saca el agua y los hierve. Deben chirriar, no borbotear."},"flor_fibrosa":{"t":"Alcachofa y fibras largas","como":"Hervido 30–45 min o braseado. La alcachofa entera pide tiempo.","ojo":"Se oxidan al cortarlas: agua con limón mientras esperan."},"legumbre_seca":{"t":"Legumbres secas","como":"Remojo de 8 h y luego 45–90 min de hervor suave. La lenteja no necesita remojo: 25–30 min.","ojo":"La sal y el ácido al final. Puestos al principio, el grano nunca ablanda."},"grano_cereal":{"t":"Granos y cereales","como":"Arroz 15–18 min, quinua 15 min, cuscús 5 min de reposo, cebada 40 min.","ojo":"Cada grano tiene su proporción de agua. Medir vale más que improvisar."},"fruta_cocina":{"t":"Frutas que entran al fuego","como":"Plátano maduro 10–15 min; manzana y pera 15–20 min; cítricos solo al final.","ojo":"El azúcar de la fruta se quema rápido: fuego medio y no la dejes sola."}};
+const PRECOCCION = ["yuca","name","malanga","arracacha","alcachofa","remolacha","frijol","frijolnegro","frijolrojo","garbanzo","lenteja","arvejaseca","soyagrano","haba","cebada"];
+const TEC_RAPIDA = ["Salteado","Plancha","Parrilla","Fritura","Revuelto","Glaseado","Airfryer","Asado","Microondas","Crudo","Marinado"];
+const TEC_LENTA  = ["Guiso","Hervido","Confitado","Vapor"];
+
+/* Qué cocción exige una preparación */
+function exigeCoccion(p){
+  if(TEC_RAPIDA.includes(p.tec)) return 'rapida';
+  if(TEC_LENTA.includes(p.tec) && p.min >= 60) return 'lenta';
+  return 'ambos';
+}
+/* Familias de carne: solo para ellas tiene sentido hablar de corte */
+const FAM_CARNE = ['carne_res','cerdo','pollo','cordero','pavo'];
+/* ¿Cuál es la proteína que manda en el plato? De ella salen la temperatura y las especias. */
+const ORDEN_PROT = ['carne_res','cordero','cerdo','pollo','pavo','pescado','camaron','carne_molida','huevo'];
+/* A qué proteína pertenece cada insumo. El pechuga no tiene familia declarada,
+   así que sin este mapa un pollo apanado se leía como un plato de huevo. */
+const PROT = {"carne_res":"carne_res","solomillo":"carne_res","costilla":"carne_res","res_puntaanca":"carne_res","res_sobrebarriga":"carne_res","res_falda":"carne_res","res_muchacho":"carne_res","res_bola":"carne_res","res_cadera":"carne_res","res_centro":"carne_res","res_lomoancho":"carne_res","res_chatas":"carne_res","res_pecho":"carne_res","res_morrillo":"carne_res","res_osobuco":"carne_res","res_rabo":"carne_res","res_lengua":"carne_res","res_entrana":"carne_res","res_churrasco":"carne_res","res_mondongo":"carne_res","res_ternera":"carne_res","higado":"carne_res","carne_molida":"carne_molida","cerdo":"cerdo","tocino":"cerdo","cerdo_costilla":"cerdo","cerdo_chuleta":"cerdo","cerdo_pernil":"cerdo","cerdo_cabezalomo":"cerdo","cerdo_solomillo":"cerdo","cerdo_panceta":"cerdo","cerdo_papada":"cerdo","cerdo_chicharron":"cerdo","cerdo_lomoahum":"cerdo","cordero":"cordero","cordero_pierna":"cordero","cordero_chuleta":"cordero","cordero_costillar":"cordero","cordero_paletilla":"cordero","conejo":"pollo","cabra":"cordero","cordero_cuello":"cordero","cordero_jarrete":"cordero","cordero_lomo":"cordero","cordero_solomillo":"cordero","cordero_pecho":"cordero","pescado":"pescado","tilapia":"pescado","salmon":"pescado","atun":"pescado","bacalao":"pescado","trucha":"pescado","robalo":"pescado","pargo":"pescado","mojarra":"pescado","bagre":"pescado","sierra":"pescado","mero":"pescado","corvina":"pescado","sardina":"pescado","anchoa":"pescado","jurel":"pescado","bonito":"pescado","camaron":"camaron","calamar":"camaron","mejillon":"camaron","langostino":"camaron","langosta":"camaron","pulpo":"camaron","almeja":"camaron","cangrejo":"camaron","jaiba":"camaron","caracol":"camaron","ostra":"camaron","vieira":"camaron","berberecho":"camaron","pollo":"pollo","pechuga":"pollo","pollo_muslo":"pollo","pollo_alas":"pollo","pollo_contramuslo":"pollo","pollo_entero":"pollo","pollo_menudencia":"pollo","gallina":"pollo","pato":"pollo","codorniz":"pollo","pavo":"pavo","pavo_pechuga":"pavo","huevo":"huevo","huevocodorniz":"huevo","merluza":"pescado","lenguado":"pescado","caballa":"pescado","pezespada":"pescado","salmonahumado":"pescado"};
+const CAT_TERMOMETRO = ['carne','ave','pescado'];
+function proteinaDe(p, soloPlato){
+  // Un flan lleva huevo pero nadie lo pincha con termómetro: en la ficha del
+  // plato solo cuenta donde la proteína es el plato.
+  if(soloPlato && !CAT_TERMOMETRO.includes(p.cat)) return null;
+  const prots = (p.ing||[]).map(i => PROT[i[2]] || PROT[FAMILIA[i[2]]]).filter(Boolean);
+  for(const k of ORDEN_PROT){ if(prots.includes(k)) return k; }
+  return null;
+}
+function bloqueTemp(p){
+  const k = proteinaDe(p, true); const T = k && TEMP_C[k];
+  if(!T) return '';
+  const nota = (DICC && DICC.temp && DICC.temp[k]) || '';
+  const grados = T.grados || [];
+  const nombres = (DICC && DICC.terminos) || [];
+  return '<div class="tempcard">' +
+    '<div class="tc-k">' + t('tempPlato') + '</div>' +
+    '<div class="tc-n">' + T.t + ' °C' +
+      (T.reposo ? '<em>' + t('tempReposo').replace('{n}', T.reposo) + '</em>' : '') + '</div>' +
+    (nota ? '<p>' + nota + '</p>' : '') +
+    (grados.length ? '<div class="tc-g">' + grados.map((g,i) =>
+       '<span><em>' + (nombres[i]||'') + '</em>' + g + '</span>').join('') + '</div>' : '') +
+    '</div>';
+}
+function bloqueEspecias(p){
+  const k = proteinaDe(p, true); const l = k && ESPECIAS[k];
+  if(!l) return '';
+  return '<div class="realza"><div class="tc-k">' + t('realzaCon') + '</div><div class="rz">' +
+    l.map(s => '<span class="' + (pantry.has(s) ? 'si' : '') + '">' + trIng(s) + '</span>').join('') +
+    '</div></div>';
+}
+
+/* La yuca entra a una fritura, pero cocida de antes. Avisar, no bloquear. */
+function previos(p){
+  return (p.ing||[]).map(i=>i[2]).filter(id => PRECOCCION.includes(id));
+}
+function avisoPrevio(p){
+  if(!TEC_RAPIDA.includes(p.tec)) return '';
+  const l = previos(p);
+  if(!l.length) return '';
+  return '<div class="previo">' + t('vanCocidos').replace('{x}', l.map(trIng).join(', ')) + '</div>';
+}
+function pideCorte(p){
+  const llevaCarne = p.ing.some(i => FAM_CARNE.includes(i[2]) || FAM_CARNE.includes(FAMILIA[i[2]]));
+  if(!llevaCarne) return '';
+  const e = exigeCoccion(p);
+  return e === 'ambos' ? '' : e;
+}
+
+/* ¿Este corte sirve para esta preparación? */
+function cocionCompatible(ingId, p){
+  const c = COCCION[ingId];
+  if(!c || c === 'ambos') return true;
+  const e = exigeCoccion(p);
+  return e === 'ambos' || e === c;
+}
+
 /* ============================================================
    MOTOR DE COINCIDENCIAS
    ============================================================ */
+let gruposAbiertos = new Set();
 let pantry = new Set(store.get('rec_pantry', BASICOS));
 let equipo = new Set(store.get('rec_equipo', ['estufa','sarten','olla']));
 
-function tengo(id){
-  if(pantry.has(id)) return {ok:true, sust:null};
+function tengo(id, p){
+  if(pantry.has(id) && (!p || cocionCompatible(id, p))) return {ok:true, sust:null};
+  // Un corte cubre a su familia, pero solo si su cocción encaja con el plato:
+  // tener osobuco no habilita un salteado de 20 minutos.
+  for(const x of pantry){
+    if(FAMILIA[x] === id && (!p || cocionCompatible(x, p))) return {ok:true, sust:x};
+  }
+  // Y al revés: la receta pide un corte y tienes la familia genérica
+  if(FAMILIA[id] && pantry.has(FAMILIA[id])) return {ok:true, sust:FAMILIA[id]};
   const subs = SUSTITUTOS[id]||[];
-  for(const s of subs) if(pantry.has(s)) return {ok:true, sust:s};
+  for(const s of subs){
+    if(pantry.has(s) && (!p || cocionCompatible(s, p))) return {ok:true, sust:s};
+  }
   return {ok:false, sust:null};
 }
 
@@ -1015,7 +1664,7 @@ function evaluar(p){
   const req = p.ing.map(i=>i[2]);
   const falta=[], opcionalFalta=[], sustituciones=[], usa=[];
   req.forEach(id=>{
-    const t=tengo(id);
+    const t=tengo(id, p);
     if(t.ok){ usa.push(id); if(t.sust) sustituciones.push([id,t.sust]); }
     else if(PRESCINDIBLES.has(id)) opcionalFalta.push(id);
     else falta.push(id);
@@ -1035,6 +1684,350 @@ function buscarPreparaciones(){
   return {listas, cerca:cerca.slice(0,12)};
 }
 
+/* ============ Fichas de cocina: referencia del oficio ============ */
+let fichaTab = null;   // la primera pestaña manda, para que no se desincronice con la lista
+function openFichas(tab){
+  fichaTab = tab || fichaTab || FICHAS_TABS[0];
+  const tabs = FICHAS_TABS.map(k =>
+    '<button class="ftab ' + (k===fichaTab?'on':'') + '" data-ftab="' + k + '">' +
+    t('tab' + k.charAt(0).toUpperCase() + k.slice(1)) + '</button>').join('');
+
+  document.getElementById('sheetInner').innerHTML =
+    '<div class="ficha">' +
+      '<button class="back fx" id="fBack"><svg viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6"/></svg></button>' +
+      '<div class="f-cat">' + t('fichasTitulo') + '</div>' +
+      '<h2>' + t(fichaTab + 'Titulo') + '</h2>' +
+      '<div class="ftabs">' + tabs + '</div>' +
+      '<div id="fcuerpo">' + cuerpoFicha(fichaTab) + '</div>' +
+    '</div>';
+  document.getElementById('sheet').classList.add('open');
+  document.getElementById('sheet').scrollTop = 0;
+  document.getElementById('fBack').onclick = closeDetail;
+  document.querySelectorAll('[data-ftab]').forEach(b => b.onclick = () => openFichas(b.dataset.ftab));
+  const sa = document.getElementById('soloAudaces');
+  if(sa) sa.onclick = () => { soloAudaces = !soloAudaces; openFichas('maridaje'); };
+  const qm = document.getElementById('qMar');
+  if(qm) qm.addEventListener('input', e => {
+    filtroMar = e.target.value.toLowerCase();
+    // solo la lista: tocar el input lo haría perder el foco a media palabra
+    document.getElementById('marLista').innerHTML = listaMaridaje();
+  });
+  const pb = document.getElementById('pesoBruto');
+  if(pb){ pb.addEventListener('input', calcularRendimiento); calcularRendimiento(); }
+}
+
+function cuerpoFicha(k){
+  if(k === 'temp')        return cuerpoTemp();
+  if(k === 'seguridad')   return cuerpoSeguridad();
+  if(k === 'rendimiento') return cuerpoRendimiento();
+  if(k === 'pescados')    return cuerpoPescados();
+  if(k === 'cuchillo')    return cuerpoCuchillo();
+  if(k === 'despiece')    return cuerpoDespiece();
+  if(k === 'pastas')      return cuerpoPastas();
+  if(k === 'anatomia')    return cuerpoAnatomia();
+  if(k === 'maridaje')    return cuerpoMaridaje();
+  if(k === 'bases')       return cuerpoBases();
+  if(k === 'salsas')      return cuerpoSalsas();
+  return cuerpoEspecias();
+}
+
+function cuerpoSeguridad(){
+  const L = (DICC && DICC.seguridad) || [];
+  const frio = (DICC && DICC.frio) || [];
+  const zonas = (CFG_FRIO || []);
+  return '<p class="h2sub">' + t('seguridadSub') + '</p>' +
+    L.map(s => '<div class="f-sec">' + s.t + '</div>' +
+      '<ol class="pasos">' + s.pasos.map(p =>
+        '<li><b>' + p[0] + '</b><span>' + p[1] + '</span></li>').join('') + '</ol>').join('') +
+    '<div class="alerta"><div class="tc-k">' + t('cruzadaTitulo') + '</div>' +
+      '<p>' + ((DICC && DICC.cruzada) || '') + '</p></div>' +
+    '<div class="f-sec">' + t('frioTitulo') + '</div>' +
+    '<p class="h2sub">' + t('frioSub') + '</p>' +
+    frio.map((z, i) => '<div class="zona ' + (zonas[i] || '') + '">' +
+      '<div class="fila"><span class="nombre">' + z[0] + '</span>' +
+      '<span class="grados">' + z[1] + '</span></div>' +
+      '<p class="como">' + z[2] + '</p></div>').join('') +
+    '<ul class="claves">' + ((DICC && DICC.frioClaves) || []).map(c => '<li>' + c + '</li>').join('') + '</ul>';
+}
+
+function cuerpoRendimiento(){
+  const notas = (DICC && DICC.rendimiento) || {};
+  const porque = (DICC && DICC.rendPorque) || [];
+  return '<p class="h2sub">' + t('rendimientoSub') + '</p>' +
+    '<div class="formula">' + t('rendFormula') + '</div>' +
+    '<div class="calc">' +
+      '<label for="pesoBruto">' + t('rendCalcula') + '</label>' +
+      '<div class="calc-in"><input id="pesoBruto" type="number" inputmode="decimal" min="0" step="0.1" value="1"><span>kg</span></div>' +
+    '</div>' +
+    Object.keys(REND).map(id => {
+      const pct = REND[id];
+      return '<div class="item rend" data-rend="' + id + '">' +
+        '<div class="fila"><span class="nombre">' + trIng(id) + '</span>' +
+        '<span class="grados">' + pct + ' %</span></div>' +
+        '<div class="met">' +
+          '<span><em>' + t('rendUtil') + '</em><b class="util">—</b></span>' +
+          '<span><em>' + t('rendMerma') + '</em><b class="merma">—</b></span>' +
+        '</div>' +
+        '<p class="como">' + (notas[id] || '') + '</p></div>';
+    }).join('') +
+    '<div class="f-sec">' + t('rendPorqueTitulo') + '</div>' +
+    porque.map(p => '<div class="der"><b>' + p[0] + '</b><span>' + p[1] + '</span></div>').join('');
+}
+
+function calcularRendimiento(){
+  const el = document.getElementById('pesoBruto');
+  if(!el) return;
+  const bruto = parseFloat(el.value);
+  document.querySelectorAll('[data-rend]').forEach(fila => {
+    const pct = REND[fila.dataset.rend];
+    const u = fila.querySelector('.util'), m = fila.querySelector('.merma');
+    if(!(bruto > 0)){ u.textContent = '—'; m.textContent = '—'; return; }
+    const util = bruto * pct / 100;
+    u.textContent = kg(util);
+    m.textContent = kg(bruto - util);
+  });
+}
+const kg = n => (n >= 1 ? (+n.toFixed(2)) + ' kg' : Math.round(n * 1000) + ' g');
+
+function cuerpoPescados(){
+  const P = (DICC && DICC.pescados) || {};
+  const claves = (DICC && DICC.pescadoClaves) || [];
+  const bloque = tipo => Object.keys(PESC_TIPO).filter(id => PESC_TIPO[id] === tipo)
+    .map(id => { const p = P[id] || [];
+      return '<div class="item"><div class="fila">' +
+        '<span class="nombre">' + trIng(id) + '</span>' +
+        '<span class="medida">' + (p[1] || '') + '</span></div>' +
+        '<p class="como">' + (p[2] || '') + '</p>' +
+        '<p class="ojo">' + (p[3] || '') + '</p></div>'; }).join('');
+  return '<p class="h2sub">' + t('pescadosSub') + '</p>' +
+    '<div class="f-sec">' + t('pescadoMagro') + '</div>' + bloque('magro') +
+    '<div class="f-sec">' + t('pescadoGraso') + '</div>' + bloque('graso') +
+    '<div class="f-sec">' + t('pescadoClaves') + '</div>' +
+    '<ul class="claves">' + claves.map(c => '<li>' + c + '</li>').join('') + '</ul>';
+}
+
+/* Un insumo sin ficha propia usa la de su familia: la cebolla roja
+   combina como la cebolla, y el jalapeño como el ají. */
+function parejasDe(id){
+  if(PAREJAS[id]) return { ids: PAREJAS[id], via: null };
+  const f = FAMILIA[id];
+  if(f && PAREJAS[f]) return { ids: PAREJAS[f], via: f };
+  return null;
+}
+
+function cuerpoBases(){
+  const D = (DICC && DICC.bases) || {};
+  return '<p class="h2sub">' + t('basesSub') + '</p>' +
+    '<div class="firma">' + t('basesFirma') + '</div>' +
+    BASES.map(x => {
+      const d = D[x.id] || {};
+      return '<div class="item base">' +
+        '<div class="fila"><span class="nombre">' + (d.n || '') + '</span></div>' +
+        '<div class="pars">' + x.ing.map(i =>
+          '<span class="par casa' + (pantry.has(i) ? ' si' : '') + '">' + trIng(i) + '</span>').join('') +
+        '</div>' +
+        '<p class="para"><em>' + t('basesPara') + '</em> ' + (d.para || '') + '</p>' +
+        '<p class="como">' + (d.porque || '') + '</p></div>';
+    }).join('');
+}
+
+function cuerpoMaridaje(){
+  return '<p class="h2sub">' + t('maridajeSub') + '</p>' +
+    '<div class="calc"><div class="calc-in"><input id="qMar" type="search" ' +
+      'placeholder="' + t('buscarIng') + '" value="' + (filtroMar || '') + '"></div></div>' +
+    '<div class="leyenda">' + TIPOS_MAR.map(x =>
+      '<span class="par ' + x + '">' + t('mar_' + x) + '</span>').join('') + '</div>' +
+    '<button class="ftab solo' + (soloAudaces ? ' on' : '') + '" id="soloAudaces">' +
+      t('soloAudaces') + '</button>' +
+    '<div id="marLista">' + listaMaridaje() + '</div>';
+}
+function listaMaridaje(){
+  const car = (DICC && DICC.maridaje) || {};
+  // con filtro se busca en todo el catálogo, para que caiga también lo heredado
+  const universo = filtroMar
+    ? Object.keys(ING).filter(id => trIng(id).toLowerCase().includes(filtroMar) && parejasDe(id))
+    : Object.keys(PAREJAS);
+  // con el filtro puesto, un insumo sin ninguna pareja audaz no tiene nada que mostrar
+  const ids = soloAudaces
+    ? universo.filter(id => parejasDe(id).ids.some(c => c[2] === 2))
+    : universo;
+  if(!ids.length) return '<p class="como">' + t('sinResultados') + '</p>';
+  const chip = ([p, tipo, fuerza]) =>
+    '<span class="par ' + tipo + (pantry.has(p) ? ' si' : '') + (fuerza === 2 ? ' audaz' : '') + '">' +
+      trIng(p) + '</span>';
+  return ids.map(id => {
+    const d = parejasDe(id);
+    return '<div class="item mar"><div class="fila">' +
+      '<span class="nombre">' + trIng(id) + '</span>' +
+      (pantry.has(id) ? '<span class="coc rapida">' + t('especiasTengo') + '</span>' : '') +
+      '</div>' +
+      (car[d.via || id] ? '<p class="como">' + car[d.via || id] + '</p>' : '') +
+      (d.via ? '<p class="heredado">' + t('comoLa').replace('{x}', trIng(d.via)) + '</p>' : '') +
+      '<div class="pars">' +
+        (soloAudaces ? d.ids.filter(c => c[2] === 2) : d.ids).map(chip).join('') +
+      '</div></div>';
+  }).join('');
+}
+let filtroMar = '';
+let soloAudaces = false;
+
+function cuerpoPastas(){
+  const L = (DICC && DICC.pastas) || [];
+  const claves = (DICC && DICC.pastaClaves) || [];
+  return '<p class="h2sub">' + t('pastasSub') + '</p>' +
+    L.map((sec, si) => '<div class="f-sec">' + sec.t + '</div>' +
+      sec.items.map((it, ii) => {
+        const id = PASTA_IDS[si] && PASTA_IDS[si][ii];
+        return '<div class="item"><div class="fila">' +
+          '<span class="nombre">' + (id ? trIng(id) : '') + '</span>' +
+          (id && pantry.has(id) ? '<span class="coc rapida">' + t('especiasTengo') + '</span>' : '') +
+          '</div>' +
+          '<p class="como">' + it[0] + '</p>' +
+          '<p class="ojo"><em>' + t('pastaConQue') + '</em> ' + it[1] + '</p></div>';
+      }).join('')).join('') +
+    '<div class="f-sec">' + t('pastaClavesTitulo') + '</div>' +
+    '<ul class="claves">' + claves.map(c => '<li>' + c + '</li>').join('') + '</ul>';
+}
+
+function cuerpoAnatomia(){
+  const L = (DICC && DICC.anatomia) || [];
+  return '<p class="h2sub">' + t('anatomiaSub') + '</p>' +
+    L.map((a, ai) => '<div class="plato">' +
+      '<div class="f-sec">' + a.pais + '</div>' +
+      '<h3>' + a.n + '</h3>' +
+      '<p class="como">' + a.q + '</p>' +
+      a.partes.map((porque, pi) => {
+        const id = ANAT_IDS[ai] && ANAT_IDS[ai][pi];
+        return '<div class="parte"><b>' + (id ? trIng(id) : '') +
+          (id && pantry.has(id) ? '<i>·</i>' : '') + '</b><span>' + porque + '</span></div>';
+      }).join('') + '</div>').join('');
+}
+
+function cuerpoDespiece(){
+  const L = (DICC && DICC.despiece) || [];
+  return '<p class="h2sub">' + t('despieceSub') + '</p>' + L.map(s =>
+    '<div class="f-sec">' + s.t + '</div>' + s.items.map(i =>
+      '<div class="item"><div class="fila"><span class="nombre">' + i[0] + '</span></div>' +
+      '<p class="como">' + i[1] + '</p>' +
+      '<p class="ojo"><em>' + t('usoPara') + '</em> ' + i[2] + '</p></div>').join('')).join('');
+}
+
+function cuerpoTemp(){
+  const nombres = (DICC && DICC.terminos) || [];
+  const filas = Object.keys(TEMP_C).map(id => {
+    const T = TEMP_C[id];
+    const nota = (DICC && DICC.temp && DICC.temp[id]) || '';
+    return '<div class="item"><div class="fila">' +
+      '<span class="nombre">' + trIng(id) + '</span>' +
+      '<span class="grados">' + T.t + ' °C' +
+        (T.reposo ? ' <em>' + t('tempReposo').replace('{n}', T.reposo) + '</em>' : '') + '</span></div>' +
+      (nota ? '<p class="como">' + nota + '</p>' : '') +
+      (T.grados ? '<div class="f-sec mini">' + t('tempTerminos') + '</div><div class="tc-g">' +
+        T.grados.map((g,i) => '<span><em>' + (nombres[i]||'') + '</em>' + g + '</span>').join('') +
+        '</div>' : '') +
+      '</div>';
+  }).join('');
+  return '<p class="h2sub">' + t('tempSub') + '</p>' + filas;
+}
+
+function cuerpoCuchillo(){
+  const L = (DICC && DICC.cuchillo) || [];
+  return '<p class="h2sub">' + t('cuchilloSub') + '</p>' + L.map((sec, si) =>
+    '<div class="f-sec">' + sec.t + '</div>' + sec.items.map((it, ii) => {
+      const mm = CUCHILLO_MM[si] && CUCHILLO_MM[si][ii];
+      return '<div class="item"><div class="fila">' +
+        '<span class="nombre">' + it[0] + '</span>' +
+        (it[1] ? '<span class="medida">' + it[1] + '</span>' : '') + '</div>' +
+        (mm ? '<div class="escala"><i style="width:' + mm + 'mm;height:' + mm + 'mm"></i></div>' : '') +
+        '<p class="como">' + it[2] + '</p></div>';
+    }).join('')).join('');
+}
+
+function cuerpoSalsas(){
+  const L = (DICC && DICC.salsas) || [];
+  return '<p class="h2sub">' + t('salsasSub') + '</p>' + L.map(s =>
+    '<div class="item salsa"><div class="fila"><span class="nombre">' + s.n + '</span></div>' +
+    '<p class="base">' + s.base + '</p>' +
+    '<p class="como">' + s.q + '</p>' +
+    '<div class="f-sec mini">' + t('salsasDer') + '</div>' +
+    s.der.map(dd => '<div class="der"><b>' + dd[0] + '</b><span>' + dd[1] + '</span></div>').join('') +
+    '</div>').join('');
+}
+
+function cuerpoEspecias(){
+  return '<p class="h2sub">' + t('especiasSub') + '</p>' +
+    Object.entries(ESPECIAS).map(([k, l]) =>
+      '<div class="item"><div class="fila"><span class="nombre">' + trIng(k) + '</span></div>' +
+      '<div class="rz">' + l.map(s =>
+        '<span class="' + (pantry.has(s) ? 'si' : '') + '">' + trIng(s) +
+        (pantry.has(s) ? '<i>· ' + t('especiasTengo') + '</i>' : '') + '</span>').join('') +
+      '</div></div>').join('');
+}
+
+/* ============ Ficha: cómo se cocina cada cosa ============ */
+function idsDe(g){ return [...g.ids, ...(g.mas||[])]; }
+function fichaTiene(g){ return idsDe(g).some(id => COCCION[id] || COCFAM[id]); }
+const COC_ETIQ = { rapida:'cocFuego', lenta:'cocTiempo', ambos:'cocAmbas' };
+
+function openFicha(gi){
+  const g = GROUPS[gi];
+  const ids = idsDe(g);
+
+  // Cortes: cocción y cómo se llaman en otra parte
+  const cortes = ids.filter(id => COCCION[id]);
+  const orden = { rapida:0, ambos:1, lenta:2 };
+  cortes.sort((a,b) => (orden[COCCION[a]] - orden[COCCION[b]]) || trIng(a).localeCompare(trIng(b)));
+
+  const filaCorte = id => {
+    const e = EQUIV[id];
+    return `<div class="fc">
+      <div class="fc-top">
+        <b>${trIng(id)}</b>
+        <span class="coc ${COCCION[id]}">${t(COC_ETIQ[COCCION[id]])}</span>
+      </div>
+      ${e ? '<div class="fc-eq">' + e.slice(0,5).map((n,i) =>
+          '<span><em>' + PAISES_CORTE[i] + '</em>' + n + '</span>').join('') +
+          (e[5] === 0 ? '<span class="dudoso">' + t('variaDesposte') + '</span>' : '') + '</div>' : ''}
+      ${MAS_PAISES[id] ? '<div class="mp">' + Object.entries(MAS_PAISES[id]).map(([p,n]) =>
+          '<span><em>' + p + '</em>' + n + '</span>').join('') + '</div>' : ''}
+    </div>`;
+  };
+
+  // Familias de cocción (verduras, granos, legumbres, frutas)
+  // El mismo insumo a cuatro fuegos
+  const conMetodo = ids.filter(id => DICC && DICC.metodos && DICC.metodos[id]);
+  const bloqueMetodo = id => '<div class="ff"><h4>' + trIng(id) + '</h4><div class="met">' +
+    DICC.metodos[id].map(m => '<span><em>' + m[0] + '</em>' + m[1] + '</span>').join('') +
+    '</div></div>';
+
+  const fams = [];
+  ids.forEach(id => { const f = COCFAM[id]; if (f && !fams.includes(f)) fams.push(f); });
+  const bloqueFam = f => {
+    const info = trFam(f);
+    const suyos = ids.filter(id => COCFAM[id] === f).map(trIng).join(' · ');
+    return `<div class="ff">
+      <h4>${info.t}</h4>
+      <p class="como">${info.como}</p>
+      <p class="ojo">${info.ojo}</p>
+      <p class="quienes">${suyos}</p>
+    </div>`;
+  };
+
+  document.getElementById('sheetInner').innerHTML = `
+    <div class="ficha">
+      <button class="back fx" id="fBack"><svg viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="f-cat">${t('comoSeCocina')}</div>
+      <h2>${trGrupo(g.t)}</h2>
+      ${cortes.length ? '<div class="f-sec">' + t('porCorte') + '</div>' + cortes.map(filaCorte).join('') : ''}
+      ${conMetodo.length ? '<div class="f-sec">' + t('comoSeCocinaIng') + '</div>' + conMetodo.map(bloqueMetodo).join('') : ''}
+      ${fams.length   ? '<div class="f-sec">' + t('porFamilia') + '</div>' + fams.map(bloqueFam).join('') : ''}
+      <p class="f-pie">${t('fichaPie')}</p>
+    </div>`;
+  document.getElementById('sheet').classList.add('open');
+  document.getElementById('fBack').onclick = closeDetail;
+  document.getElementById('sheet').scrollTop = 0;
+}
+
 /* ============================================================
    VISTA "¿QUÉ COCINO?"
    ============================================================ */
@@ -1045,7 +2038,12 @@ function renderPantry(){
   document.querySelector('.wrap').innerHTML=`
    <div class="pantry">
      <div class="pantry-head">
-       <h2>${t('queCocino')}</h2>
+       <div class="ph-top">
+         <h2>${t('queCocino')}</h2>
+         <button class="libro oscuro" id="fichasBtn2" aria-label="${t('fichasTitulo')}">
+           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 4h7a2 2 0 012 2v14a2 2 0 00-2-2H4zM20 4h-7a2 2 0 00-2 2v14a2 2 0 012-2h7z"/></svg>
+         </button>
+       </div>
        <p>${t('queCocinoSub')}</p>
      </div>
      <div class="psearch"><input id="pq" placeholder="${t('buscarIng')}" autocomplete="off"></div>
@@ -1054,6 +2052,8 @@ function renderPantry(){
        <div class="gt">${t('conQue')} <span class="n" id="nEq">${equipo.size}</span></div>
        <div class="pills" id="eqPills"></div>
      </div>
+
+     <div class="pgroup" id="sugiere"></div>
 
      <div id="groups"></div>
 
@@ -1065,6 +2065,7 @@ function renderPantry(){
      <div id="resultados"></div>
    </div>`;
   renderPills();
+  document.getElementById('fichasBtn2').onclick = () => openFichas();
   document.getElementById('pq').addEventListener('input',e=>renderPills(e.target.value.toLowerCase()));
   document.getElementById('goBtn').onclick=mostrarResultados;
   document.getElementById('clearSel').onclick=()=>{
@@ -1087,16 +2088,35 @@ function renderPills(filtro){
   });
   document.getElementById('nEq').textContent=equipo.size;
 
-  document.getElementById('groups').innerHTML=GROUPS.map(g=>{
-    const ids=g.ids.filter(id=>!filtro || trIng(id).toLowerCase().includes(filtro));
-    if(!ids.length) return '';
-    const n=g.ids.filter(id=>pantry.has(id)).length;
+  // Un argentino escribe "bife de chorizo" y debe encontrar la chata.
+  const alias = id => { const e = EQUIV[id]; return e ? e.slice(0,5) : []; };
+  const aliasQueCalza = id => alias(id).find(n => n.toLowerCase().includes(filtro));
+  const pasa = id => !filtro || trIng(id).toLowerCase().includes(filtro) || !!aliasQueCalza(id);
+  document.getElementById('groups').innerHTML=GROUPS.map((g,gi)=>{
+    const abierto = filtro || gruposAbiertos.has(gi);
+    // lo marcado siempre se ve, aunque esté en la parte larga
+    const extraVisible = (g.mas||[]).filter(id => abierto || pantry.has(id));
+    const ids = [...g.ids, ...extraVisible].filter(pasa);
+    const ocultos = (g.mas||[]).filter(id => !abierto && !pantry.has(id) && pasa(id)).length;
+    if(!ids.length && !ocultos) return '';
+    const n = [...g.ids, ...(g.mas||[])].filter(id=>pantry.has(id)).length;
     return `<div class="pgroup">
-      <div class="gt">${trGrupo(g.t)} ${n?`<span class="n">${n}</span>`:''}</div>
+      <div class="gt">${trGrupo(g.t)} ${n?`<span class="n">${n}</span>`:''}${fichaTiene(g)?`<button class="gi" data-ficha="${gi}" aria-label="${t('comoSeCocina')}">i</button>`:''}</div>
       <div class="pills">${ids.map(id=>
-        `<button class="pill ${pantry.has(id)?'on':''}" data-ing="${id}">${trIng(id)}</button>`).join('')}</div>
+        `<button class="pill ${pantry.has(id)?'on':''}" data-ing="${id}">${trIng(id)}${
+           (filtro && !trIng(id).toLowerCase().includes(filtro) && aliasQueCalza(id))
+             ? `<i class="aka">${aliasQueCalza(id)}</i>` : ''}</button>`).join('')}
+        ${ocultos?`<button class="pill mas" data-mas="${gi}">+ ${ocultos} ${t('masOpciones')}</button>`:''}
+        ${(abierto && !filtro && (g.mas||[]).length)?`<button class="pill mas" data-mas="${gi}">${t('verMenos')}</button>`:''}
+      </div>
     </div>`;
   }).join('');
+  document.querySelectorAll('[data-ficha]').forEach(b=>b.onclick=()=>openFicha(+b.dataset.ficha));
+  document.querySelectorAll('[data-mas]').forEach(b=>b.onclick=()=>{
+    const gi=+b.dataset.mas;
+    gruposAbiertos.has(gi) ? gruposAbiertos.delete(gi) : gruposAbiertos.add(gi);
+    renderPills(filtro);
+  });
   document.querySelectorAll('[data-ing]').forEach(b=>b.onclick=()=>{
     const k=b.dataset.ing; pantry.has(k)?pantry.delete(k):pantry.add(k);
     savePantry(); b.classList.toggle('on');
@@ -1105,6 +2125,7 @@ function renderPills(filtro){
     renderPills(filtro);
   });
   actualizarBoton();
+  pintarSugerencias();
 }
 function actualizarBoton(){
   const b=document.getElementById('goBtn'); if(!b) return;
@@ -1112,6 +2133,33 @@ function actualizarBoton(){
   b.className='go'+(n<3?' dim':'');
   b.innerHTML = n<3 ? t('marcaMin')
     : `${t('verCarta')} · ${n} ${t('insumos')}`;
+}
+
+/* Con lo que marcó, qué tres cosas le abrirían más puertas.
+   No es lo que más combina en abstracto: es lo que más combina con SU despensa. */
+function sugerencias(){
+  const puntos = {};
+  pantry.forEach(id => {
+    const d = parejasDe(id);
+    (d ? d.ids : []).forEach(([p, , fuerza]) => {
+      if (pantry.has(p)) return;
+      puntos[p] = (puntos[p] || 0) + (fuerza === 1 ? 2 : 1);
+    });
+  });
+  return Object.entries(puntos).sort((a, b) => b[1] - a[1]).slice(0, 5).map(x => x[0]);
+}
+function pintarSugerencias(){
+  const el = document.getElementById('sugiere');
+  if(!el) return;
+  const l = sugerencias();
+  if(!l.length){ el.innerHTML = ''; return; }
+  el.innerHTML = '<div class="gt">' + t('sugiereTitulo') + '</div>' +
+    '<p class="sug-sub">' + t('sugiereSub') + '</p>' +
+    '<div class="pills">' + l.map(id =>
+      '<button class="pill sug" data-ing="' + id + '">+ ' + trIng(id) + '</button>').join('') + '</div>';
+  el.querySelectorAll('[data-ing]').forEach(b => b.onclick = () => {
+    pantry.add(b.dataset.ing); savePantry(); renderPills(); toast(trIng(b.dataset.ing));
+  });
 }
 
 function mostrarResultados(){
@@ -1242,6 +2290,7 @@ Promise.all([cargarIdioma(IDIOMA), cargarBiblioteca()]).then(() => {
   renderChips();
   renderTabs();
   document.getElementById('langBtn').onclick = menuIdioma;
+  document.getElementById('fichasBtn').onclick = () => openFichas();
   if (bibliotecaLista) {
     renderGrid();
   } else {
