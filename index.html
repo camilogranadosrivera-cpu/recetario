@@ -6,7 +6,12 @@
 <meta name="theme-color" content="#15181A">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Recetario · Cocina del mundo</title>
+<title>Master Cusine · Cocina del mundo</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Master Cusine">
+<meta name="mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600;6..96,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -2408,6 +2413,13 @@ function menuIdioma(){
 /* ============ Init ============ */
 document.getElementById('count').innerHTML =
   '<div class="empty" style="padding:50px">…</div>';
+
+/* El recetario tiene que abrir aunque la cocina no tenga senal. */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
 
 Promise.all([cargarIdioma(IDIOMA), cargarBiblioteca()]).then(() => {
   aplicarIdiomaRecetas();   // ambos ya llegaron: recién aquí se puede traducir
