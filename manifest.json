@@ -1,7 +1,7 @@
 {
-  "name": "Master Cusine · Cocina del mundo",
-  "short_name": "Master Cusine",
-  "description": "597 preparaciones del mundo, buscador por despensa, maridaje y fichas de cocina.",
+  "name": "Siete Sabores · Cocina",
+  "short_name": "SS Cocina",
+  "description": "La cocina de Siete Sabores: 672 preparaciones, buscador por despensa, maridaje, salsas madre y fichas de oficio.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -9,10 +9,28 @@
   "background_color": "#15181A",
   "theme_color": "#15181A",
   "lang": "es",
-  "categories": ["food", "lifestyle"],
+  "categories": [
+    "food",
+    "lifestyle"
+  ],
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }
