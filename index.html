@@ -2775,6 +2775,11 @@ const pesoBonito = g => g >= 1000 ? (Math.round(g / 100) / 10).toString().replac
                       : Math.round(g) + ' g';
 
 function cuerpoLonchera(){
+  // Las "semanas armadas" salieron: la lonchera es solo la semana que arma cada usuario
+  loModo = 'mia'; planAbierto = null;
+  return cuerpoMia();
+}
+function cuerpoLoncheraListas(){
   const P = LONCHERA.PLANES;
   if(planAbierto){
     const pl = P.find(x => x.id === planAbierto);
