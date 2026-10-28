@@ -1,7 +1,7 @@
 {
   "name": "Siete Sabores · Cocina",
   "short_name": "SS Cocina",
-  "description": "La cocina de Siete Sabores: 672 preparaciones, buscador por despensa, maridaje, salsas madre y fichas de oficio.",
+  "description": "La cocina de Siete Sabores: más de 1.100 recetas del mundo, buscador por despensa y el Cuaderno del chef: comida saludable, lonchera de la semana, manipulación, rendimiento y maridaje.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
