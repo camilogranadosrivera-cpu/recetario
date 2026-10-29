@@ -1,7 +1,7 @@
 // Service worker del recetario.
 // Siempre va primero a la red: nunca te deja con una version vieja.
 // La cache es solo el paracaidas para cuando no hay senal en la cocina.
-const CACHE = "mastercusine-v1";
+const CACHE = "sietesabores-v2";
 
 self.addEventListener("install", (e) => {
   self.skipWaiting();
