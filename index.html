@@ -794,6 +794,48 @@
     box-shadow:var(--sh-alta)}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+  .f-cab{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .pro-pill{display:inline-flex;align-items:center;height:26px;padding:0 11px;border-radius:13px;flex:none;
+    border:1px solid rgba(63,224,200,.45);background:rgba(63,224,200,.07);color:var(--marca);
+    font-size:10.5px;letter-spacing:.1em;font-weight:600;white-space:nowrap}
+  .pro-pill.on{background:rgba(63,224,200,.13)}
+  .ftab .pro-tag{font-size:8.5px;letter-spacing:.1em;color:var(--marca);margin-left:5px;font-weight:700}
+  .pro-muro{margin:18px 0 8px;padding:24px 20px;border:1px solid rgba(63,224,200,.3);border-radius:var(--r);
+    background:linear-gradient(180deg,rgba(63,224,200,.08),rgba(63,224,200,0))}
+  .pro-sello{display:inline-block;font-size:10.5px;letter-spacing:.24em;padding:3px 9px;border-radius:3px;
+    background:var(--marca);color:var(--tinta);font-weight:700}
+  .pro-muro h3,.pro-hoja h3{font-family:var(--disp);font-weight:500;color:var(--papel);line-height:1.15}
+  .pro-muro h3{font-size:22px;margin:12px 0 6px}
+  .pro-muro p,.pro-hoja p{font-size:14px;line-height:1.55;color:rgba(242,237,228,.75)}
+  .pro-lista{list-style:none;margin:14px 0 18px;display:grid;gap:8px;padding:0}
+  .pro-lista li{font-size:13.5px;line-height:1.45;color:var(--papel);padding-left:20px;position:relative}
+  .pro-lista li::before{content:'';position:absolute;left:2px;top:6px;width:8px;height:8px;border-radius:50%;background:var(--marca)}
+  .pro-btn{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 20px;border-radius:22px;
+    background:var(--marca);color:var(--tinta);font-weight:700;font-size:14px;letter-spacing:.02em}
+  .pro-btn:disabled{opacity:.6}
+  .pro-btn.chico{height:34px;font-size:12.5px;padding:0 14px;margin-top:10px}
+  .pro-muro .pro-como,.pro-hoja .pro-como{font-size:12.5px;margin-top:14px;color:rgba(242,237,228,.55)}
+  .chef-nota{font-size:12.5px;margin-top:8px;color:var(--marca)}
+  .pro-ig{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .pro-ig a{font-size:12.5px;padding:5px 11px;border-radius:14px;border:1px solid rgba(63,224,200,.35);color:var(--marca);text-decoration:none}
+  #proModal{position:fixed;inset:0;z-index:75;display:none;align-items:flex-end;justify-content:center;
+    background:rgba(10,11,12,.62);backdrop-filter:blur(6px)}
+  #proModal.open{display:flex}
+  .pro-hoja{width:100%;max-width:520px;max-height:92vh;overflow-y:auto;background:var(--tinta-2);color:var(--papel);
+    border-top:1px solid rgba(63,224,200,.4);border-radius:22px 22px 0 0;padding:22px 22px max(24px,env(safe-area-inset-bottom))}
+  .pro-cab{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .pro-hoja h3{font-size:26px;margin-top:10px}
+  .pro-estado{font-size:13.5px;color:var(--marca);margin:8px 0 0}
+  .pro-form{display:flex;gap:8px;margin:16px 0 8px}
+  .pro-form input{flex:1;min-width:0;height:46px;border:1px solid var(--linea-osc);background:var(--tinta);color:var(--papel);
+    border-radius:6px;padding:0 14px;font-size:17px;letter-spacing:.12em;text-transform:uppercase}
+  .pro-form input::placeholder{letter-spacing:.02em;text-transform:none;font-size:14px}
+  .pro-form input:focus{outline:none;border-color:var(--marca)}
+  .pro-msg{min-height:20px;font-size:13.5px;line-height:1.45;color:rgba(242,237,228,.8)}
+  .pro-msg.mal{color:#E0A27E}
+  .pro-msg.bien{color:var(--marca)}
+  .pro-x{width:36px;height:36px;border-radius:50%;border:1px solid var(--linea-osc);display:grid;place-items:center;flex:none}
+  .pro-x svg{width:16px;height:16px;stroke:var(--papel);stroke-width:2}
   #arranque{position:fixed;inset:0;z-index:100;background:var(--tinta);display:flex;flex-direction:column;
     align-items:center;justify-content:center;gap:20px;transition:opacity .35s ease}
   #arranque.fuera{opacity:0;pointer-events:none}
@@ -834,6 +876,7 @@
 </div>
 
 <!-- Detail sheet -->
+<div id="proModal" role="dialog" aria-modal="true" aria-labelledby="proTit"><div class="pro-hoja" id="proHoja"></div></div>
 <div class="sheet" id="sheet"><div class="sheet-inner" id="sheetInner"></div></div>
 
 <!-- Cook mode -->
@@ -1324,7 +1367,7 @@ function switchTab(tab){
   // Mi semana se abre encima, como las fichas: no cambia la vista de abajo
   if(tab==='semana'){ loModo='mia'; store.set('loModo','mia'); planAbierto=null; openFichas('lonchera'); return; }
   // El cuaderno se abre encima, en la última pestaña que se usó (la primera vez, la lonchera)
-  if(tab==='cuaderno'){ planAbierto=null; openFichas(fichaTab || 'lonchera'); return; }
+  if(tab==='cuaderno'){ planAbierto=null; openFichas(fichaTab || (esPro() ? 'lonchera' : 'seguridad')); return; }
   state.tab=tab; state.cat='all'; state.q='';
   renderTabs();
   if(tab==='pantry'){ renderPantry(); return; }
@@ -2431,19 +2474,20 @@ function buscarPreparaciones(){
 /* ============ Fichas de cocina: referencia del oficio ============ */
 let fichaTab = null;   // la primera pestaña manda, para que no se desincronice con la lista
 function openFichas(tab){
-  fichaTab = tab || fichaTab || FICHAS_TABS[0];
+  fichaTab = tab || fichaTab || (esPro() ? 'lonchera' : 'seguridad');
   if(!FICHAS_TABS.includes(fichaTab) && !['salsas', 'fondos', 'pastas'].includes(fichaTab)) fichaTab = FICHAS_TABS[0];
   const tabs = FICHAS_TABS.map(k =>
     '<button class="ftab ' + (k===fichaTab?'on':'') + '" data-ftab="' + k + '">' +
-    t('tab' + k.charAt(0).toUpperCase() + k.slice(1)) + '</button>').join('');
+    t('tab' + k.charAt(0).toUpperCase() + k.slice(1)) +
+    (PRO_TABS.includes(k) && !esPro() ? '<span class="pro-tag">PRO</span>' : '') + '</button>').join('');
 
   document.getElementById('sheetInner').innerHTML =
     '<div class="ficha">' +
       '<button class="back fx" id="fBack"><svg viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6"/></svg></button>' +
-      '<div class="f-cat">' + t('fichasTitulo') + '</div>' +
+      '<div class="f-cab"><div class="f-cat">' + t('fichasTitulo') + '</div>' + pildoraPro() + '</div>' +
       '<h2>' + t(fichaTab + 'Titulo') + '</h2>' +
       '<div class="ftabs">' + tabs + '</div>' +
-      '<div id="fcuerpo">' + cuerpoFicha(fichaTab) + '</div>' +
+      '<div id="fcuerpo">' + (PRO_TABS.includes(fichaTab) && !esPro() ? muroPro(fichaTab) : cuerpoFicha(fichaTab)) + '</div>' +
     '</div>';
   document.getElementById('sheet').classList.add('open');
   document.getElementById('sheet').scrollTop = 0;
@@ -4721,6 +4765,106 @@ function cardHTML(r,esCerca){
   </button>`;
 }
 
+/* ═══ Siete Sabores Pro ═══
+   Gratis: la carta entera, ¿Qué cocino?, Manipulación y Rendimiento, y el chef
+   con IA 3 veces al día. Pro: Saludable, Lonchera, Maridaje y el chef 25 veces.
+   El pase lo firma el servidor; aquí solo se guarda y se envía. */
+const PRO_ENDPOINT = '/.netlify/functions/pro';
+const PRO_TABS = ['saludable', 'lonchera', 'maridaje'];
+const PRO_IG = ['sietesabores_brahman', 'ayapel7sabores', 'masa_taza'];   // los tres negocios
+// Reseñas en Google Maps: se invitan aparte y SIN premio (las políticas de Google prohíben premiarlas)
+const PRO_MAPS = [['Siete Sabores & Brahman', 'ChIJjSSCdeBuW44RLhhHfZ9l82o'], ['7 Sabores Ayapel', 'ChIJsQGryqGFW44RDvKZbuLK9D8']];
+function cuentasIG(){
+  return '<div class="pro-ig">' + PRO_IG.map(u => '<a href="https://www.instagram.com/' + u + '/" target="_blank" rel="noopener">@' + u + '</a>').join('') + '</div>' +
+    '<p class="pro-como">' + t('proResena') + '</p><div class="pro-ig">' +
+    PRO_MAPS.map(([n, id]) => '<a href="https://search.google.com/local/writereview?placeid=' + id + '" target="_blank" rel="noopener">' + n + '</a>').join('') + '</div>';
+}
+function dispositivo(){
+  let d = store.get('ssDisp', '');
+  if(!/^[A-Za-z0-9_-]{8,40}$/.test(d)){
+    const a = new Uint8Array(12);
+    try{ crypto.getRandomValues(a); }catch(e){ for(let i = 0; i < a.length; i++) a[i] = Math.random() * 256 | 0; }
+    d = 'd' + Array.from(a, x => (x % 36).toString(36)).join('');
+    store.set('ssDisp', d);
+  }
+  return d;
+}
+function proPase(){ const p = store.get('ssPro', null); return p && p.pase && p.hasta ? p : null; }
+function esPro(){ if(window.__SS_PRO_PRUEBA) return true; const p = proPase(); return !!(p && p.hasta > Date.now()); }
+function credencialesChef(){ const p = proPase(); return { dispositivo: dispositivo(), pase: p && p.hasta > Date.now() ? p.pase : '' }; }
+function fechaPro(ms){ return new Date(ms).toLocaleDateString(IDIOMA === 'en' ? 'en-US' : 'es-CO', { day: 'numeric', month: 'long' }); }
+function proIncluye(){
+  return '<ul class="pro-lista">' + ['proI1', 'proI2', 'proI3', 'proI4'].map(k => '<li>' + t(k) + '</li>').join('') + '</ul>';
+}
+function pildoraPro(){
+  const p = proPase();
+  return esPro() && p
+    ? '<button class="pro-pill on" data-pro-abrir>' + t('proPill').replace('{f}', fechaPro(p.hasta)) + '</button>'
+    : esPro() ? '' : '<button class="pro-pill" data-pro-abrir>' + t('proActivar') + '</button>';
+}
+function muroPro(tab){
+  return '<div class="pro-muro"><span class="pro-sello">PRO</span>' +
+    '<h3>' + t('proMuroTit') + '</h3><p>' + t('proMuro_' + tab) + '</p>' + proIncluye() +
+    '<button class="pro-btn" data-pro-abrir>' + t('proTengo') + '</button>' +
+    '<p class="pro-como">' + t('proComo') + '</p>' + cuentasIG() + '</div>';
+}
+function abrirPro(codigo){
+  const p = proPase();
+  const estado = p && p.hasta > Date.now() ? t('proActivo').replace('{f}', fechaPro(p.hasta)) + ' ' + t('proOtro')
+    : p ? t('proVencio').replace('{f}', fechaPro(p.hasta)) : '';
+  document.getElementById('proHoja').innerHTML =
+    '<div class="pro-cab"><div><span class="pro-sello">PRO</span><h3 id="proTit">' + t('proTitulo') + '</h3></div>' +
+      '<button class="pro-x" id="proX" aria-label="' + t('loCerrar') + '"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>' +
+    (estado ? '<p class="pro-estado">' + estado + '</p>' : '') +
+    proIncluye() +
+    '<div class="pro-form"><input id="proCod" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="24" placeholder="' + t('proCodigoPh') + '">' +
+      '<button class="pro-btn" id="proAct">' + t('proActivar') + '</button></div>' +
+    '<div class="pro-msg" id="proMsg" role="status"></div>' +
+    '<p class="pro-como">' + t('proComo') + '</p>' + cuentasIG();
+  const m = document.getElementById('proModal');
+  m.classList.add('open');
+  m.onclick = e => { if(e.target === m) cerrarPro(); };
+  document.getElementById('proX').onclick = cerrarPro;
+  document.getElementById('proAct').onclick = activarPro;
+  const inp = document.getElementById('proCod');
+  inp.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); activarPro(); } });
+  if(codigo){ inp.value = String(codigo).toUpperCase(); activarPro(); }
+}
+function cerrarPro(){ document.getElementById('proModal').classList.remove('open'); }
+async function activarPro(){
+  const inp = document.getElementById('proCod'), msg = document.getElementById('proMsg'), btn = document.getElementById('proAct');
+  const codigo = inp.value.trim();
+  if(!codigo){ inp.focus(); return; }
+  btn.disabled = true; btn.textContent = t('proActivando'); msg.className = 'pro-msg'; msg.textContent = '';
+  try{
+    const res = await fetch(PRO_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(Object.assign({ accion: 'activar', codigo, idioma: IDIOMA }, credencialesChef())) });
+    const data = await res.json().catch(() => ({}));
+    if(res.ok && data.pase){
+      store.set('ssPro', { pase: data.pase, hasta: data.hasta });
+      msg.className = 'pro-msg bien'; msg.textContent = t('proListo').replace('{f}', fechaPro(data.hasta));
+      inp.value = '';
+      btn.disabled = false; btn.textContent = t('proEmpezar');
+      btn.onclick = () => { cerrarPro(); openFichas(PRO_TABS.includes(fichaTab) ? fichaTab : 'lonchera'); };
+      if(document.getElementById('fcuerpo')) openFichas(fichaTab);
+      return;
+    }
+    msg.className = 'pro-msg mal'; msg.textContent = data.error || t('proSinRed');
+  }catch(e){ msg.className = 'pro-msg mal'; msg.textContent = t('proSinRed'); }
+  btn.disabled = false; btn.textContent = t('proActivar');
+}
+function abrirProDesdeEnlace(){
+  let c = '';
+  try{ c = new URLSearchParams(location.search).get('pro') || ''; }catch(e){}
+  if(!c) return;
+  try{ history.replaceState(null, '', location.pathname + location.hash); }catch(e){}
+  abrirPro(c);
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-pro-abrir]');
+  if(b){ e.preventDefault(); abrirPro(); }
+});
+
 /* ═══ Pregúntale al chef ═══
    El cocinero cuenta qué le pasa en la olla y el chef (Claude, desde la
    función de Netlify) le dice cómo rescatarlo con lo que tiene. Si la
@@ -4826,7 +4970,9 @@ function pintarChef(){
     ? chefHist.map(m => m.role === 'user'
         ? '<div class="chef-msg yo">' + m.content.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</div>'
         : '<div class="chef-msg el' + (m.local ? ' local' : '') + '">' +
-            (m.local ? '<div class="chef-aviso">' + t('chefSinRed') + '</div>' : '') + mdChef(m.content) + '</div>').join('')
+            (m.local ? '<div class="chef-aviso">' + t('chefSinRed') + '</div>' : '') + mdChef(m.content) +
+            (m.nota ? '<p class="chef-nota">' + m.nota + '</p>' : '') +
+            (m.pro && !esPro() ? '<button class="pro-btn chico" data-pro-abrir>' + t('proActivar') + '</button>' : '') + '</div>').join('')
     : '<p class="chef-intro">' + t('chefIntro') + '</p>' +
       '<div class="chef-ejs">' + ejemplos.map(k => '<button class="chef-ej" data-ej="' + k + '">' + t(k) + '</button>').join('') + '</div>';
   el.innerHTML =
@@ -4856,25 +5002,32 @@ async function preguntarChef(){
   const q = document.getElementById('chefQ');
   const pregunta = (q.value || '').trim();
   if(!pregunta || chefOcupado) return;
-  const historial = chefHist.filter(m => !m.local).map(({ role, content }) => ({ role, content }));
+  const historial = chefHist.filter(m => !m.local && !m.aviso).map(({ role, content }) => ({ role, content }));
   chefHist.push({ role: 'user', content: pregunta });
   chefOcupado = true; pintarChef();
   const eqs = typeof equipo !== 'undefined' ? [...equipo].map(e => trEq(e)).join(', ') : '';
-  let respuesta = null, local = false, error = '';
+  let respuesta = null, local = false, error = '', limite = null, ultima = false;
   try{
     const res = await fetch(CHEF_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(Object.assign({ pregunta, historial, equipos: eqs, idioma: IDIOMA }, chefContexto())) });
+      body: JSON.stringify(Object.assign({ pregunta, historial, equipos: eqs, idioma: IDIOMA }, chefContexto(), credencialesChef())) });
     const data = await res.json().catch(() => ({}));
-    if(res.ok && data.texto) respuesta = data.texto;
+    if(res.ok && data.texto){ respuesta = data.texto; ultima = data.quedan === 0 && !data.pro; }
+    else if(data.limite) limite = data;
     else error = data.error || (t('chefError') + ' (' + res.status + ')');
   }catch(e){ error = t('chefError'); }
+  if(limite){
+    // Sin cupo hoy: el aviso y, si la guía de la app conoce el problema, su respuesta
+    const guia = chefLocal(pregunta + ' ' + ((chefContexto().receta || '').slice(0, 80)));
+    chefHist.push({ role: 'assistant', content: limite.error + (guia ? '\n\n' + guia : ''), aviso: true, pro: !limite.pro });
+    chefOcupado = false; pintarChef(); return;
+  }
   if(!respuesta){
     // Sin el chef en línea, la guía de la app responde lo que conoce
     const guia = chefLocal(pregunta + ' ' + ((chefContexto().receta || '').slice(0, 80)));
     respuesta = guia || t('chefNoSe') + (error ? '\n\n' + error : '');
     local = true;
   }
-  chefHist.push({ role: 'assistant', content: respuesta, local });
+  chefHist.push({ role: 'assistant', content: respuesta, local, pro: ultima, nota: ultima ? t('proUltima') : '' });
   chefOcupado = false; pintarChef();
 }
 
@@ -4958,10 +5111,11 @@ async function pedirIA(){
   try{
     const res=await fetch(AI_ENDPOINT,{method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(Object.assign({ingredientes:lista,equipos:eqs}, contextoIA()))});
+      body:JSON.stringify(Object.assign({ingredientes:lista,equipos:eqs}, contextoIA(), credencialesChef()))});
     const data=await res.json().catch(()=>({}));
     if(!res.ok || data.error){
       out.textContent = data.error || `El servidor respondió ${res.status}.`;
+      if(data.limite && !data.pro) out.insertAdjacentHTML('beforeend', '<div><button class="pro-btn chico" data-pro-abrir>' + t('proActivar') + '</button></div>');
     } else if(data.texto){
       out.innerHTML = md(data.texto);
     } else {
@@ -5031,6 +5185,7 @@ Promise.all([cargarIdioma(IDIOMA), cargarBiblioteca(), cargarCocina()]).then(() 
   document.getElementById('fichasBtn').onclick = () => openFichas();
   if (bibliotecaLista) {
     renderGrid();
+    abrirProDesdeEnlace();
   } else {
     document.getElementById('count').innerHTML =
       '<div class="empty" style="padding:40px">' + t('errorCarga') + '<br>' + t('errorCargaSub') + '</div>';

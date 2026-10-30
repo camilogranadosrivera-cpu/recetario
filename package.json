@@ -1,0 +1,8 @@
+{
+  "name": "siete-sabores-cocina",
+  "private": true,
+  "description": "Siete Sabores · Cocina. Dependencias de las funciones de Netlify.",
+  "dependencies": {
+    "@netlify/blobs": "8.2.0"
+  }
+}
