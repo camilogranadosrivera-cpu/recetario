@@ -424,6 +424,7 @@
   .sa-reparto span{font-size:11px;color:rgba(242,237,228,.6);border:1px solid rgba(242,237,228,.14);
     border-radius:11px;padding:3px 9px}
   .sa-reparto b{color:var(--papel);font-weight:500}
+  .sa-sem{display:inline-block;font-size:12px;padding:2px 8px;border-radius:10px;margin:4px 0}.sa-verde{background:#DCEFD9;color:#1E5E2A}.sa-amarillo{background:#F7E9B8;color:#6B5200}.sa-rojo{background:#F4D0CB;color:#8A1F12}.sa-acc{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}.sa-busca input{width:100%;margin:8px 0;padding:8px}.sa-pick{display:block;width:100%;text-align:left;padding:8px;border:0;border-bottom:1px solid rgba(0,0,0,.1);background:none;cursor:pointer;font:inherit}
   .sa-btn{display:block;width:100%;margin:12px 0 4px;padding:12px;border-radius:3px;cursor:pointer;
     background:var(--laton);border:0;color:var(--tinta);font-size:12px;letter-spacing:.1em;
     text-transform:uppercase;font-weight:600}
@@ -1494,6 +1495,52 @@ document.getElementById('q').addEventListener('input',e=>{
    MOTOR "¿QUÉ COCINO?"  ·  Base de insumos
    ============================================================ */
 const ING = {
+  /* Biblioteca de cocinas tradicionales (lote) */
+  mangoverde:"Mango verde (biche)",
+  pectina:"Pectina",
+  pulpa:"Pulpa de fruta amazónica",
+  uvacaimarona:"Uva caimarona",
+  /* Biblioteca de cocinas tradicionales (lote) */
+  huito:"Huito (jagua)",
+  /* Biblioteca de cocinas tradicionales (lote) */
+  pielcerdo:"Piel de cerdo",
+  yucabrava:"Yuca brava (requiere proceso para quitar el ácido cianhídrico)",
+  /* Biblioteca de cocinas tradicionales (lote) */
+  mojojoy:"Mojojoy (larva de palma)",
+  pirarucu:"Pirarucú",
+  /* Biblioteca de cocinas tradicionales (lote) */
+  casabe:"Casabe",
+  /* Biblioteca de cocinas tradicionales (lote) */
+  carurú:"Carurú (hojas)",
+  cuchas:"Cuchas (carachamas)",
+  fariña:"Fariña (harina de yuca)",
+  hormigas:"Hormigas arrieras",
+  pupuna:"Pupuña (chontaduro silvestre)",
+  siringa:"Siringa (fruto del caucho)",
+  umari:"Umarí (fruto amazónico)",
+  yapura:"Yapurá (fruto amazónico)",
+  /* Biblioteca de cocinas tradicionales (lote) */
+  merey:"Merey (marañón)",
+  /* Biblioteca de cocinas tradicionales (lote) */
+  carambolo:"Carambolo",
+  /* Biblioteca de cocinas tradicionales (lote) */
+  ajichirere:"Ají chirere",
+  /* Biblioteca de cocinas tradicionales (lote) */
+  cachama:"Cachama",
+  /* Biblioteca de cocinas tradicionales (lote) */
+  arcilla:"Arcilla para cocción",
+  cachicamo:"Cachicamo (armadillo)",
+  chigüiro:"Chigüiro",
+  gallineta:"Gallineta (gallina de Guinea)",
+  mamona:"Mamona (ternera joven)",
+  morrocoy:"Morrocoy (galápago)",
+  /* Biblioteca de cocinas tradicionales (lote) */
+  milpesos:"Milpesos (palma)",
+  piangua:"Piangua (concha)",
+  /* Biblioteca de cocinas tradicionales (lote) */
+  borojo:"Borojó",
+  /* Biblioteca de cocinas tradicionales (lote) */
+  guacuco:"Guacuco ahumado",
   /* Biblioteca de cocinas tradicionales (lote) */
   achira:"Hojas de achira",
   pellejo:"Pellejo de cerdo",
@@ -3966,7 +4013,7 @@ function htmlProduccion(sel, M){
    calorías y por reparto de proteína, carbohidrato y grasa. La porción se
    ajusta (media, una, una y media...) para llegar a la meta. */
 let salud = store.get('salud', null) ||
-  { sexo: 'f', edad: '', peso: '', est: '', act: 1.375, obj: 'mantener', tipo: 'equilibrada', manual: '', semana: null };
+  { sexo: 'f', edad: '', peso: '', est: '', act: 1.375, obj: 'mantener', tipo: 'equilibrada', manual: '', semana: null, ayuno: null, elegir: null };
 const guardaSalud = () => store.set('salud', salud);
 /* Auditoría del módulo saludable (versión 2):
    · La proteína se calcula por kilo de peso (como la recomiendan las guías),
@@ -3995,6 +4042,40 @@ const SA_COMIDAS = [
   ['merienda', 0.10, ['bebida', 'desayuno', 'veg', 'postre']],
 ];
 const SA_SODIO = 2000;
+// Ventana de alimentación: cada comida tiene una hora típica; solo cuentan las que caen dentro de la ventana
+const SA_HORA = { desayuno: 7.5, almuerzo: 12.5, merienda: 16, cena: 19 };
+const ts = (es, en) => (IDIOMA === 'es' ? es : en);
+const SA_NOMBRE = { desayuno: ts('Desayuno', 'Breakfast'), almuerzo: ts('Almuerzo', 'Lunch'), merienda: ts('Merienda', 'Snack'), cena: ts('Cena', 'Dinner') };
+const hora2 = s => { const [h, m] = String(s || '').split(':').map(Number); return isNaN(h) ? null : h + (m || 0) / 60; };
+function comidasActivas(){
+  const a = salud.ayuno; if(!a) return [0, 1, 2, 3];
+  const i = hora2(a.inicio), f = hora2(a.fin); if(i == null || f == null) return [0, 1, 2, 3];
+  let dur = (f - i + 24) % 24; if(dur === 0) dur = 24;
+  const act = SA_COMIDAS.map((c, ci) => ((SA_HORA[c[0]] - i + 24) % 24 <= dur ? ci : -1)).filter(ci => ci >= 0);
+  if(act.length >= 2) return act;
+  // Ventana muy corta: se usan las dos comidas más cercanas al centro
+  const mid = i + dur / 2;
+  return SA_COMIDAS.map((c, ci) => ({ ci, d: Math.abs(SA_HORA[c[0]] - mid) })).sort((x, y) => x.d - y.d)
+    .slice(0, 2).map(o => o.ci).sort((x, y) => x - y);
+}
+// Porcentaje de las calorías del día que le toca a cada comida activa (suma 100 %)
+function comidaPct(ci){
+  const act = comidasActivas(); if(!act.includes(ci)) return 0;
+  return SA_COMIDAS[ci][1] / act.reduce((s, i) => s + SA_COMIDAS[i][1], 0);
+}
+// Semáforo por comida: verde en meta (±10 %), amarillo hasta +25 % (o más de 10 % por debajo), rojo por encima de +25 %
+function semaforo(kcal, tk){
+  const d = (kcal - tk) / tk * 100;
+  if(d > 25) return { c: 'rojo', d };
+  if(d > 10 || d < -10) return { c: 'amarillo', d };
+  return { c: 'verde', d };
+}
+function semTxt(s, tk){
+  const n = Math.round(Math.abs(s.d));
+  if(s.c === 'verde') return '● ' + ts('En meta', 'On target');
+  if(s.c === 'amarillo') return s.d > 0 ? '● +' + n + ' % ' + ts('sobre la meta', 'over target') : '● −' + n + ' % ' + ts('bajo la meta', 'under target');
+  return '● +' + n + ' % · +' + Math.round(s.d / 100 * tk) + ' kcal ' + ts('sobre la meta', 'over target');
+}
 // Lo que sirve de merienda entre las recetas de verdura: ensaladas, frutas y untables, no un guiso
 const SA_MERIENDA_VEG = /ensalad|hummus|guacamole|salpicon|fruta|crudit|baba ganoush|muhammara|tzatziki|cacik|haydari|labneh|pepino|compota/;
 const SA_NO_DESAYUNO = /pizza|empanad|fugazz|pide|lahmacun|focaccia|manakish|^masa|nixtamal|brisee|^roll |croque|paneton|pan dulce|rosquill|donut|tortas fritas|medialuna|concha|pan de muerto|bunuelo|hojaldra|pastelito|tabla de|canape|fugaz/;
@@ -4089,8 +4170,9 @@ function candidatosSalud(){
 }
 const porcionDe = (tk, k) => Math.min(2, Math.max(0.5, Math.round(tk / k * 4) / 4));
 function opcionesComida(ci, meta){
-  const [nom, pct, cats] = SA_COMIDAS[ci];
-  const tk = meta.k * pct;
+  if(!comidasActivas().includes(ci)) return [];
+  const [nom, , cats] = SA_COMIDAS[ci];
+  const tk = meta.k * comidaPct(ci);
   return candidatosSalud()
     .filter(x => cats.includes(x.r.cat) && (salud.tipo !== 'vegetariana' || x.veg))
     .filter(x => {
@@ -4113,8 +4195,8 @@ function opcionesComida(ci, meta){
 function totalDia(dia, meta){
   const T = { k: 0, p: 0, c: 0, g: 0, fib: 0, sod: 0, azu: 0 };
   dia.forEach((id, ci) => {
-    const x = id && _saMap.get(id); if(!x) return;
-    const f = porcionDe(meta.k * SA_COMIDAS[ci][1], x.k);
+    const x = id && _saMap.get(id); if(!x || !comidasActivas().includes(ci)) return;
+    const f = porcionDe(meta.k * comidaPct(ci), x.k);
     T.k += x.k * f; T.p += x.n.prot * f; T.c += x.n.carb * f; T.g += x.n.gras * f;
     T.fib += (x.n.fib || 0) * f; T.sod += (x.n.sod || 0) * f; T.azu += x.azu * f;
   });
@@ -4205,6 +4287,24 @@ function otraOpcion(d, ci, meta){
   guardaSalud();
 }
 
+function alternativaVerde(d, ci, meta){
+  candidatosSalud();
+  const pool = opcionesComida(ci, meta), tk = meta.k * comidaPct(ci), dia = salud.semana[d];
+  const ok = pool.find(x => !dia.includes(x.r.id) && semaforo(x.k * porcionDe(tk, x.k), tk).c === 'verde');
+  if(ok){ salud.semana[d][ci] = ok.r.id; guardaSalud(); } else otraOpcion(d, ci, meta);
+}
+function listaBusca(q, d, ci, meta){
+  candidatosSalud();
+  const tk = meta.k * comidaPct(ci), qs = sinTilde(q).trim();
+  const dif = x => Math.abs(x.k * porcionDe(tk, x.k) - tk);
+  const items = _saCand.filter(x => !qs || x.nom.includes(qs)).sort((a, b) => dif(a) - dif(b)).slice(0, 30);
+  return items.map(x => {
+    const s = semaforo(x.k * porcionDe(tk, x.k), tk);
+    return '<button class="sa-pick" data-sa-pick="' + d + ',' + ci + ',' + x.r.id + '">' + x.r.name +
+      ' <span class="sa-sem sa-' + s.c + '">' + semTxt(s, tk) + '</span></button>';
+  }).join('') || '<p class="como">' + ts('Sin resultados', 'No results') + '</p>';
+}
+
 function cuerpoSaludable(){
   const meta = metaSalud();
   const chip = (grupo, v, et) => '<button class="ftab' + (String(salud[grupo]) === String(v) ? ' on' : '') +
@@ -4218,6 +4318,10 @@ function cuerpoSaludable(){
     '<div class="f-sec mini">' + t('saObj') + '</div><div class="ftabs">' +
       chip('obj', 'bajar', t('saBajar')) + chip('obj', 'mantener', t('saMantener')) + chip('obj', 'subir', t('saSubir')) + '</div>' +
     '<div class="sa-campos">' + campo('manual', 'saManual', '1800') + '</div>' +
+    '<div class="f-sec mini">' + ts('Ventana de alimentación (ayuno)', 'Eating window (fasting)') + '</div>' +
+    '<div class="sa-campos"><label class="sa-campo"><span>' + ts('Desde', 'From') + '</span><input type="time" data-sa-hora="inicio" value="' + ((salud.ayuno && salud.ayuno.inicio) || '') + '"></label>' +
+    '<label class="sa-campo"><span>' + ts('Hasta', 'To') + '</span><input type="time" data-sa-hora="fin" value="' + ((salud.ayuno && salud.ayuno.fin) || '') + '"></label></div>' +
+    '<p class="como">' + (salud.ayuno ? ts('Comidas en tu ventana: ', 'Meals in your window: ') + comidasActivas().length : ts('Sin ayuno: 4 comidas al día.', 'No fasting: 4 meals a day.')) + '</p>' +
     '<div class="f-sec mini">' + t('saTipo') + '</div><div class="ftabs">' +
       Object.keys(SA_MACRO).map(k => chip('tipo', k, t('saT_' + k))).join('') + '</div>' +
   '</div>';
@@ -4234,8 +4338,8 @@ function cuerpoSaludable(){
       t('saMacros').replace('{p}', meta.p).replace('{c}', meta.c).replace('{g}', meta.g) + '</p>' +
     '<p>' + t('saMetasExtra').replace('{f}', meta.fib).replace('{s}', num(meta.sod)).replace('{a}', meta.azu) + '</p>' +
     (meta.bajo ? '<p class="coc-tip">' + t('saPiso').replace('{k}', meta.piso) + '</p>' : '') +
-    '<div class="sa-reparto">' + SA_COMIDAS.map(([c, pct]) =>
-      '<span>' + t('saComida_' + c) + ' <b>' + Math.round(meta.k * pct) + '</b></span>').join('') + '</div>' +
+    '<div class="sa-reparto">' + comidasActivas().map(ci =>
+      '<span>' + SA_NOMBRE[SA_COMIDAS[ci][0]] + ' <b>' + Math.round(meta.k * comidaPct(ci)) + '</b></span>').join('') + '</div>' +
     '<p class="sa-crit">' + t('saCriterios') + '</p>' +
     '<button class="sa-btn" data-sa-gen="1">' + t(salud.semana ? 'saRegenerar' : 'saGenerar') + '</button></div>';
 
@@ -4243,18 +4347,26 @@ function cuerpoSaludable(){
   if(salud.semana){
     candidatosSalud();
     semana = '<div class="f-sec">' + t('saSemana') + '</div>' +
+      '<p class="como">' + ts('Semáforo: verde = en meta (±10 %); amarillo = hasta +25 % o más de 10 % por debajo; rojo = más de +25 %.', 'Traffic light: green = on target (±10 %); yellow = up to +25 % or more than 10 % under; red = more than +25 %.') + '</p>' +
       salud.semana.map((dia, d) => {
         const T = totalDia(dia, meta);
         const filas = dia.map((id, ci) => {
-          const [c, pct] = SA_COMIDAS[ci];
+          if(!comidasActivas().includes(ci)) return '';
+          const c = SA_COMIDAS[ci][0], tk = meta.k * comidaPct(ci);
           const x = id && _saMap.get(id);
-          if(!x) return '<div class="sa-com"><span class="sa-c">' + t('saComida_' + c) + '</span><p class="como">' + t('saSinOpc') + '</p></div>';
-          const f = porcionDe(meta.k * pct, x.k);
-          return '<div class="sa-com"><span class="sa-c">' + t('saComida_' + c) + '</span>' +
+          const panel = salud.elegir && salud.elegir[0] === d && salud.elegir[1] === ci ?
+            '<div class="sa-busca"><input type="search" data-sa-q placeholder="' + ts('Buscar plato', 'Search dish') + '"><div id="sa-lista">' + listaBusca('', d, ci, meta) + '</div></div>' : '';
+          if(!x) return '<div class="sa-com"><span class="sa-c">' + SA_NOMBRE[c] + '</span><p class="como">' + t('saSinOpc') + '</p>' + panel + '</div>';
+          const f = porcionDe(tk, x.k), s = semaforo(x.k * f, tk);
+          return '<div class="sa-com"><span class="sa-c">' + SA_NOMBRE[c] + '</span>' +
             '<button class="lo-plato" data-receta="' + x.r.id + '">' + x.r.name + '</button>' +
             '<div class="lo-nu">' + t('saPorc').replace('{x}', String(f).replace('.', IDIOMA === 'es' ? ',' : '.')) + ' · ' +
               Math.round(x.k * f) + ' kcal · ' + Math.round(x.n.prot * f) + ' g ' + t('nuProt').toLowerCase() + '</div>' +
-            '<button class="lo-ir" data-sa-otra="' + d + ',' + ci + '">' + t('saOtra') + '</button></div>';
+            '<div class="sa-sem sa-' + s.c + '">' + semTxt(s, tk) + '</div>' +
+            '<div class="sa-acc"><button class="lo-ir" data-sa-otra="' + d + ',' + ci + '">' + t('saOtra') + '</button>' +
+              (s.c === 'rojo' ? '<button class="lo-ir" data-sa-verde="' + d + ',' + ci + '">' + ts('Alternativa en verde', 'Green option') + '</button>' : '') +
+              '<button class="lo-ir" data-sa-elegir="' + d + ',' + ci + '">' + ts('Elegir yo', 'Choose myself') + '</button></div>' +
+            panel + '</div>';
         }).join('');
         const alto = T.sod > meta.sod, poca = T.fib < meta.fib * 0.8;
         return '<div class="lo-dia sa-dia"><div class="lo-d-top"><b>' + diaN(d) + '</b>' +
@@ -4291,6 +4403,31 @@ function enlazarSalud(){
     const [d, ci] = b.dataset.saOtra.split(',').map(Number);
     otraOpcion(d, ci, meta); reFicha('saludable');
   });
+  document.querySelectorAll('[data-sa-hora]').forEach(inp => inp.addEventListener('change', () => {
+    const a = Object.assign({ inicio: '', fin: '' }, salud.ayuno || {});
+    a[inp.dataset.saHora] = inp.value;
+    salud.ayuno = a.inicio && a.fin ? { inicio: a.inicio, fin: a.fin } : null;
+    salud.semana = null; salud.elegir = null; guardaSalud(); reFicha('saludable');
+  }));
+  document.querySelectorAll('[data-sa-verde]').forEach(b => b.onclick = () => {
+    const [d, ci] = b.dataset.saVerde.split(',').map(Number);
+    if(meta && salud.semana) alternativaVerde(d, ci, meta);
+    reFicha('saludable');
+  });
+  document.querySelectorAll('[data-sa-elegir]').forEach(b => b.onclick = () => {
+    const [d, ci] = b.dataset.saElegir.split(',').map(Number);
+    salud.elegir = [d, ci]; guardaSalud(); reFicha('saludable');
+  });
+  const bq = document.querySelector('[data-sa-q]');
+  if(bq && meta && salud.elegir){
+    const [d, ci] = salud.elegir, lista = document.getElementById('sa-lista');
+    bq.addEventListener('input', () => { lista.innerHTML = listaBusca(bq.value, d, ci, meta); });
+    lista.addEventListener('click', e => {
+      const b = e.target.closest('[data-sa-pick]'); if(!b) return;
+      const [dd, cc, id] = b.dataset.saPick.split(',');
+      salud.semana[+dd][+cc] = id; salud.elegir = null; guardaSalud(); reFicha('saludable');
+    });
+  }
   document.querySelectorAll('[data-sa-lon]').forEach(b => b.onclick = () => {
     if(!salud.semana) return;
     [0, 1, 2, 3, 4].forEach(d => { const id = salud.semana[d][1]; if(id) loMia.dias[d] = id; });
