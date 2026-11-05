@@ -416,6 +416,8 @@
     border:1px solid rgba(242,237,228,.16);border-radius:2px;padding:10px 11px;
     font-family:var(--disp);font-size:18px;font-variant-numeric:tabular-nums}
   .sa-campo input:focus{outline:none;border-color:var(--laton)}
+  .sa-campo select{width:100%;box-sizing:border-box;background:rgba(242,237,228,.05);color:var(--papel);border:1px solid rgba(242,237,228,.18);border-radius:6px;padding:12px 8px;font:inherit;font-size:17px}
+  .sa-campo select option{background:#1d1f22;color:#f2ede4}
   .sa-meta{margin:20px 0 8px;padding:16px;border:1px solid rgba(184,145,79,.4);border-radius:5px;
     background:rgba(184,145,79,.07)}
   .sa-meta > b{display:block;font-family:var(--disp);font-weight:500;font-size:24px;color:var(--laton)}
@@ -4309,6 +4311,14 @@ function cuerpoSaludable(){
   const meta = metaSalud();
   const chip = (grupo, v, et) => '<button class="ftab' + (String(salud[grupo]) === String(v) ? ' on' : '') +
     '" data-sa="' + grupo + '" data-v="' + v + '">' + et + '</button>';
+  const horaSel = (k, etiqueta) => {
+    const v = (salud.ayuno && salud.ayuno[k]) || ':', [hh, mm] = v.split(':');
+    const hs = '<option value="">--</option>' + Array.from({ length: 24 }, (_, i) => { const x = String(i).padStart(2, '0'); return '<option value="' + x + '"' + (x === hh ? ' selected' : '') + '>' + x + '</option>'; }).join('');
+    const ms = '<option value="">--</option>' + ['00', '15', '30', '45'].map(x => '<option value="' + x + '"' + (x === mm ? ' selected' : '') + '>' + x + '</option>').join('');
+    return '<label class="sa-campo"><span>' + etiqueta + '</span><div style="display:flex;gap:6px">' +
+      '<select data-sa-hora="' + k + '" data-sa-part="h" aria-label="' + etiqueta + ' hora">' + hs + '</select>' +
+      '<select data-sa-hora="' + k + '" data-sa-part="m" aria-label="' + etiqueta + ' minutos">' + ms + '</select></div></label>';
+  };
   const campo = (k, et, ph) => '<label class="sa-campo"><span>' + t(et) + '</span>' +
     '<input type="number" inputmode="decimal" data-sa-in="' + k + '" value="' + (salud[k] || '') + '" placeholder="' + ph + '"></label>';
   const form = '<div class="sa-form">' +
@@ -4319,9 +4329,8 @@ function cuerpoSaludable(){
       chip('obj', 'bajar', t('saBajar')) + chip('obj', 'mantener', t('saMantener')) + chip('obj', 'subir', t('saSubir')) + '</div>' +
     '<div class="sa-campos">' + campo('manual', 'saManual', '1800') + '</div>' +
     '<div class="f-sec mini">' + ts('Ventana de alimentación (ayuno)', 'Eating window (fasting)') + '</div>' +
-    '<div class="sa-campos"><label class="sa-campo"><span>' + ts('Desde', 'From') + '</span><input type="time" data-sa-hora="inicio" value="' + ((salud.ayuno && salud.ayuno.inicio) || '') + '"></label>' +
-    '<label class="sa-campo"><span>' + ts('Hasta', 'To') + '</span><input type="time" data-sa-hora="fin" value="' + ((salud.ayuno && salud.ayuno.fin) || '') + '"></label></div>' +
-    '<p class="como">' + (salud.ayuno ? ts('Comidas en tu ventana: ', 'Meals in your window: ') + comidasActivas().length : ts('Sin ayuno: 4 comidas al día.', 'No fasting: 4 meals a day.')) + '</p>' +
+    '<div class="sa-campos" style="grid-template-columns:1fr 1fr">' + horaSel('inicio', ts('Desde', 'From')) + horaSel('fin', ts('Hasta', 'To')) + '</div>' +
+    '<p class="como">' + (salud.ayuno && salud.ayuno.inicio && salud.ayuno.fin ? ts('Comidas en tu ventana: ', 'Meals in your window: ') + comidasActivas().length : ts('Sin ayuno: 4 comidas al día.', 'No fasting: 4 meals a day.')) + '</p>' +
     '<div class="f-sec mini">' + t('saTipo') + '</div><div class="ftabs">' +
       Object.keys(SA_MACRO).map(k => chip('tipo', k, t('saT_' + k))).join('') + '</div>' +
   '</div>';
@@ -4403,10 +4412,14 @@ function enlazarSalud(){
     const [d, ci] = b.dataset.saOtra.split(',').map(Number);
     otraOpcion(d, ci, meta); reFicha('saludable');
   });
-  document.querySelectorAll('[data-sa-hora]').forEach(inp => inp.addEventListener('change', () => {
-    const a = Object.assign({ inicio: '', fin: '' }, salud.ayuno || {});
-    a[inp.dataset.saHora] = inp.value;
-    salud.ayuno = a.inicio && a.fin ? { inicio: a.inicio, fin: a.fin } : null;
+  document.querySelectorAll('[data-sa-hora]').forEach(sel => sel.addEventListener('change', () => {
+    const leer = k => {
+      const h = document.querySelector('[data-sa-hora="' + k + '"][data-sa-part="h"]').value;
+      const m = document.querySelector('[data-sa-hora="' + k + '"][data-sa-part="m"]').value;
+      return h ? h + ':' + (m || '00') : '';
+    };
+    const inicio = leer('inicio'), fin = leer('fin');
+    salud.ayuno = inicio || fin ? { inicio, fin } : null;
     salud.semana = null; salud.elegir = null; guardaSalud(); reFicha('saludable');
   }));
   document.querySelectorAll('[data-sa-verde]').forEach(b => b.onclick = () => {
