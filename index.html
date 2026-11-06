@@ -4053,12 +4053,9 @@ function comidasActivas(){
   const a = salud.ayuno; if(!a) return [0, 1, 2, 3];
   const i = hora2(a.inicio), f = hora2(a.fin); if(i == null || f == null) return [0, 1, 2, 3];
   let dur = (f - i + 24) % 24; if(dur === 0) dur = 24;
+  // Solo cuentan las comidas cuya hora típica cae entre la primera y la última comida
   const act = SA_COMIDAS.map((c, ci) => ((SA_HORA[c[0]] - i + 24) % 24 <= dur ? ci : -1)).filter(ci => ci >= 0);
-  if(act.length >= 2) return act;
-  // Ventana muy corta: se usan las dos comidas más cercanas al centro
-  const mid = i + dur / 2;
-  return SA_COMIDAS.map((c, ci) => ({ ci, d: Math.abs(SA_HORA[c[0]] - mid) })).sort((x, y) => x.d - y.d)
-    .slice(0, 2).map(o => o.ci).sort((x, y) => x - y);
+  return act.length ? act : [0, 1, 2, 3];
 }
 // Porcentaje de las calorías del día que le toca a cada comida activa (suma 100 %)
 function comidaPct(ci){
@@ -4328,9 +4325,9 @@ function cuerpoSaludable(){
     '<div class="f-sec mini">' + t('saObj') + '</div><div class="ftabs">' +
       chip('obj', 'bajar', t('saBajar')) + chip('obj', 'mantener', t('saMantener')) + chip('obj', 'subir', t('saSubir')) + '</div>' +
     '<div class="sa-campos">' + campo('manual', 'saManual', '1800') + '</div>' +
-    '<div class="f-sec mini">' + ts('Ventana de alimentación (ayuno)', 'Eating window (fasting)') + '</div>' +
-    '<div class="sa-campos" style="grid-template-columns:1fr 1fr">' + horaSel('inicio', ts('Desde', 'From')) + horaSel('fin', ts('Hasta', 'To')) + '</div>' +
-    '<p class="como">' + (salud.ayuno && salud.ayuno.inicio && salud.ayuno.fin ? ts('Comidas en tu ventana: ', 'Meals in your window: ') + comidasActivas().length : ts('Sin ayuno: 4 comidas al día.', 'No fasting: 4 meals a day.')) + '</p>' +
+    '<div class="f-sec mini">' + ts('Ventana de comida (ayuno)', 'Eating window (fasting)') + '</div>' +
+    '<div class="sa-campos" style="grid-template-columns:1fr 1fr">' + horaSel('inicio', ts('Primera comida', 'First meal')) + horaSel('fin', ts('Última comida', 'Last meal')) + '</div>' +
+    '<p class="como">' + (salud.ayuno && salud.ayuno.inicio && salud.ayuno.fin ? (comidasActivas().length < 2 ? ts('Esa ventana tiene menos de 2 comidas: amplíala.', 'That window has fewer than 2 meals: widen it.') : ts('Comidas en tu ventana: ', 'Meals in your window: ') + comidasActivas().length) : ts('Sin ayuno: 4 comidas al día.', 'No fasting: 4 meals a day.')) + '</p>' +
     '<div class="f-sec mini">' + t('saTipo') + '</div><div class="ftabs">' +
       Object.keys(SA_MACRO).map(k => chip('tipo', k, t('saT_' + k))).join('') + '</div>' +
   '</div>';
